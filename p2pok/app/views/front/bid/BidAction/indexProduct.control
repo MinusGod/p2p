@@ -1,0 +1,23 @@
+<ul class="y_jkul">
+#{list products}
+<li class="y_jkul${_index}">
+	<a href="@{detail(_?.id, 0, 1)}">
+					<!-- left -->
+					<span class="fl"><p>${_?.name}</p></span>
+					<!-- right -->
+					<span class="y_jknr" style="padding-top:20px;">
+
+						<i class="y_jkxqa"></i>
+						<span>
+							适合人群：${_?.fitCrowd}<br/>申请条件：<sd limit="40">${_?.applicantCondition}</sd><br/>
+							借款额度：#{format money:_?.minAmount}#{/format}—#{format money:_?.maxAmount}#{/format}
+					元 
+						</span>
+
+					</span>
+				</a>
+	
+</li>
+#{/list}
+</ul>
+

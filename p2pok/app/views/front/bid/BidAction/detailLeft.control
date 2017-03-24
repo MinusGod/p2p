@@ -1,0 +1,69 @@
+				
+				
+					<h2 class="xf_con_wyjk_lefth2">借款产品列表</h2>
+					<ul class="xf_con_wyjk_leftul">
+						#{list products}
+							<li 
+							#{if _?.id == productId}
+								class="xf_con_wyjk_leftliisshow"
+							#{/if}
+							#{else}
+								class="xf_con_wyjk_bone"
+							#{/else}
+							>
+								<b><img src="${_?.smallImageFilename}" width="20" height="20" /></b>
+								<a href="@{front.bid.bidAction.detail(_?.id)}">${_?.name}
+								</a>
+							</li>
+							
+						#{/list}
+					</ul>
+					<!-- 财富工具箱 -->
+					<div class="xf_con_wyjk_cfgjx">
+						<div class="xf_con_wyjk_cfgjx_t">
+							<b>&nbsp;</b>
+							<span>财富工具箱</span>
+						</div>
+						<ul  >
+                        			<li  style="float: left"  >
+                        				<a href="@{front.home.homeAction.wealthToolkit(1)}" class="xf_c_wyjkfb_2_items">
+                        					<div class="xf_c_wyjkfb_2_xyjsq">
+                        					</div>
+                        					<div class="xf_c_wyjkfb_2_titleWrap">
+                        						信用计算器
+                        					</div>
+                        				</a>
+                        			</li>
+                        			<li style="float: left"  >
+                        				<a href="@{front.home.homeAction.wealthToolkit(2)}" class="xf_c_wyjkfb_2_items">
+                        					<div class="xf_c_wyjkfb_2_hkjsq">
+                        					</div>
+                        					<div class="xf_c_wyjkfb_2_titleWrap">
+                        						还款计算器
+                        					</div>
+                        				</a>
+                        			</li>
+                                     <div>
+                        			<li style="float: left" >
+                        				<a href="@{front.home.homeAction.wealthToolkit(4)}" class="xf_c_wyjkfb_2_items">
+                        					<div class="xf_c_wyjkfb_2_lljsq">
+                        					</div>
+                        					<div class="xf_c_wyjkfb_2_titleWrap">
+                        						利息计算器
+                        					</div>
+                        				</a>
+                        			</li>
+
+                        			<li   >
+                        				<a href="@{front.home.homeAction.wealthToolkit(6)}" class="xf_c_wyjkfb_2_items">
+                        					<div class="xf_c_wyjkfb_2_cejk">
+                        					</div>
+                        					<div class="xf_c_wyjkfb_2_titleWrap">
+                        						信用额度
+                        					</div>
+                        					<div style="clear: both"  ></div>
+                        				</a>
+                        			</li>
+                        			<div>
+                        		</ul>
+					</div>

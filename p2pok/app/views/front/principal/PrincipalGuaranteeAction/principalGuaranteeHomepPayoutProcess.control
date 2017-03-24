@@ -1,0 +1,11 @@
+		<div class="y_aqbg2">
+		<div class="y_main">
+			<h3 class="y_aqh1">${types?.get(2)?.name}</h3>
+			<div class="y_aqdiv1">
+				<img class="y_aqimg1"  />
+				<div class="clr y_aqsdiv">
+					${paymentProcess?.content}
+				</div>
+			</div>
+		</div>
+	</div>

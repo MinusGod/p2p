@@ -1,0 +1,83 @@
+﻿<script type="text/javascript" src="@{'/public/javascripts/ZeroClipboard.js'}"></script>
+
+<!-- 右侧内容区域 我的借款账单 -->
+<div class="xf_mem_Account xf_mem_shzdjkb_box">
+	<div class="xf_cps_top">
+		<!--<div class="xf_cps_top_l">
+			<div class="xf_cps_top_lurl">
+				<span class="xf_cps_top_url" limit="50"style="text-overflow:ellipsis;white-space:nowrap; overflow:hidden;">${user?.spreadLink}</span>
+				<input type="hidden" value="${user?.spreadLink}" id="spread_link" />
+			</div>
+			<div class="xf_cps_top_linput clr">
+				<div class="xf_cps_top_linput_l">
+					<a id="copy_link_a">复制链接</a>
+				</div>
+				<div class="xf_cps_top_linput_r">
+					<div class="xf_wylc_contet_fx">
+						<div class="bdsharebuttonbox">
+							<span class="xf_gengduo">分享至：</span>
+							<a title="分享到QQ空间" href="#" class="bds_qzone" data-cmd="qzone"></a><a title="分享到新浪微博" href="#" class="bds_tsina" data-cmd="tsina"></a><a title="分享到腾讯微博" href="#" class="bds_tqq" data-cmd="tqq"></a><a title="分享到人人网" href="#" class="bds_renren" data-cmd="renren"></a><a title="分享到微信" href="#" class="bds_weixin" data-cmd="weixin"></a><a href="#" class="bds_more" data-cmd="more"></a><span class="xf_gengduo">更多</span></div>
+						<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdUrl" : "${user?.spreadLink}","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+					</div>
+				</div>
+			</div>
+		</div>-->
+		<div class="xf_cps_top_r">
+			<div class="xf_wylc_erweima xf_wylc_erweima3">
+				<img src="@{Application.images}?uuid=${user?.qrcode}" class="xf_wylc_erweima_img" alt="二维码" title="二维码">
+
+			</div>
+		</div>
+		<div style="float:left;padding-left:35px;">
+		    <h5 style="font-size:22px;color:#379ecb;">扫一扫 用手机浏览</h5>
+
+
+        <p>
+        #{form @weiCode(), id:'updateWeiCode'}
+        			<input type="submit" value="更新二维码" class="codef"/>
+        #{/form}
+        </p>
+
+        <p style="font-weight:bold;padding-top:30px;">温馨提示：</p>
+        <p>  1、若二维码显示异常，请点击“更新二维码”</p>
+        <p>  2、截图或点击鼠标右键复制图片</p>
+        </div>
+	</div>	
+	
+
+
+	<div class="xf_cps_conter">
+		分享工具-二维码
+	</div>	
+
+	<div class="xf_cps_conter_nr xf_cps_conter_nr2 ft14">
+		二维码是一个非常好用的工具，通过你专属的二维码向拥有可扫描的移动设备好友分享融友网， 当你的好友通过扫描二维码可直接进入融友网注册页面时，你的邀请码会自动出现在填写栏，无需手动填写，赶紧把你的二维码分享出去吧！
+	</div>
+
+	<div class="clear"></div>
+
+	<div class="xf_cps_conter_nr">
+
+	</div>
+</div>
+
+<script type="text/javascript">
+
+    
+	$(function(){
+	  $(".xf_cps_top_lurl").limit();
+		ZeroClipboard.setMoviePath("@{'/public/javascripts/ZeroClipboard.swf'}");
+		var clip = new ZeroClipboard.Client();
+		clip.setHandCursor(true);
+		clip.addEventListener("mouseUp", function(client) {
+			alert("复制链接成功！");
+		});
+		clip.setText($("#spread_link").val());
+		clip.glue('copy_link_a');
+		
+	 
+	});
+	
+	
+</script>
+

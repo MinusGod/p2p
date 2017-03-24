@@ -1,0 +1,269 @@
+%{
+	business.BackstageSet  currBackstageSet = business.BackstageSet.getCurrentBackstageSet();
+	
+}%
+#{extends 'common/frontMain.html' /} 
+#{set title:currBackstageSet.seoTitle+'| 我要投资' /}
+	<div class="y_lcbg y_wtbg" ></div>
+	#{form @investHome(),method:'GET',id :'bidsSearch'}
+<div class="y_lctop">
+
+<div class="y_main">
+			<h2 class="y_lch2">
+				<a href="@{front.invest.investAction.investHome()}" title="" class="click">投资产品</a>
+				<!--  <a href="@{front.debt.debtAction.debtHome()}" title="">债权转让</a>-->
+			</h2>
+	<!--投资流程开始- {include "front/invest/InvestAction/homeProcedure.control"/}->
+	<!--投标搜索-->
+			<input type="hidden"  id="keywords" name="keywords" value="${pageBean?.conditions?.keywords}"/>
+			<input type="hidden" id="currPage" name="currPage"/>
+      <input type="hidden" id="pageSize" name="pageSize"/>
+      <input type="hidden" id="aprtemp" name="apr" value="${pageBean?.conditions?.apr}"/>
+      <input type="hidden" id="amounttemp" name="amount" value="${pageBean?.conditions?.amount}"/>
+      <input type="hidden" id="loanScheduletemp" name="loanSchedule" value="${pageBean?.conditions?.loanSchedule}" />
+      <input type="hidden" id="orderType" name="orderType" value="${pageBean?.conditions?.orderType}"/>
+      <input type="hidden" id="loanTypetem" name="loanType" value="${pageBean?.conditions?.loanType}"/>
+	#{include "front/invest/InvestAction/homeSearch.control"/}
+	
+</div>
+</div>
+<div class="y_main">
+		<!-- pai-xu -->
+		<ul class="y_lcpxbox">
+			<li  onClick="conditonSearch(0)"  id="div_0" >默认排序</li>
+			<li onClick="conditonSearch(1)"  id="div_1">金额&nbsp;<span>↓</span></li>
+			<li onClick="conditonSearch(3)" id="div_3" >利率&nbsp;<span>↓</span></li>
+			<li onClick="conditonSearch(5)"  id="div_5">进度&nbsp;<span>↓</span></li>
+		</ul>
+		
+	<!-- 排序条件 -->
+	<!-- 搜索结果 -->
+		<div class="y_dexlcli" id="bidList">
+	
+	<!-- 搜索结果 -->
+	<ul class="clr">
+		<!--foreach start：-->
+		#{list items:pageBean.page, as:'bid'}
+			<li>  #{if bid?.is_hot ==true}
+					<img src="/public/images/001.png" class="y_tjbimg"/>
+					#{/if}
+					<h2 class="y_dexh1">#{img class:"lazy", data_original:"${bid?.small_image_filename}", src:"/public/images/loading.gif",alt:"",align:"absmiddle",width:"40px",height:"40px"}#{/img}
+                        <img src="/public/images/img/qy.png">
+                        <span>${bid?.repay_name}</span></h2>
+					<a href="@{invest(bid?.id)}" class="y_dexa1">${bid?.title}</a>
+					<div class="y_dexlcdiv">
+						<i class="i1 y_bg"></i>借款金额：&nbsp;&nbsp;${bid?.amount?.format('###,##0.00')}元<br/>
+						<i class="i2 y_bg"></i>可投金额：&nbsp;&nbsp;${(bid?.amount-bid?.has_invested_amount)?.format('###,##0.00')}元
+					</div>
+					<div class="y_dexjd"><span>进度：</span><span class="y_jd"><span class="y_jds" style="width:${bid?.loan_schedule}%;"></span></span>
+					<span>
+					    #{if 100==Math.floor(bid?.loan_schedule)}
+					    100%
+						#{/if}
+						#{else}
+						${bid?.loan_schedule.format('###,##0.00')}%
+						#{/else}
+					</span>
+					</div>
+					<div class="y_dexsj clr">
+						<span><span class="y_ff505"><span class="f24">${bid?.apr}</span>%</span>预期年化收益率</span>
+						<i></i>
+						<span><span class="y_333"><span class="f24">${bid?.period}</span>#{if bid?.period_unit ==-1}
+								年
+								#{/if}
+								#{if bid?.period_unit ==0}
+								个月
+								#{/if}
+								#{if bid?.period_unit ==1}
+								天
+								#{/if}</span>还款期限</span>
+					</div>
+					
+					#{if  bid?.amount > bid?.has_invested_amount}
+					 <a href="@{invest(bid?.id)}" title="" class="y_dexbto">立即投标</a>
+					 #{/if}
+					#{if bid?.amount == bid?.has_invested_amount && bid?.status!=2 && bid?.status!=33 }
+					  <a href="@{invest(bid?.id)}" title="" class="y_dexbto y_mbbto">${bid?.strStatus}</a>
+					#{/if}
+					#{if bid?.status==33 }
+					  <a href="@{invest(bid?.id)}" title="" class="y_dexbto y_mbbto">还款中</a>
+					#{/if}
+					#{if bid?.amount == bid?.has_invested_amount && bid?.status==2 }
+					 <a href="@{invest(bid?.id)}" title="" class="y_dexbto y_mbbto">已满标</a>
+					#{/if}
+				</li>
+		
+			#{/list}
+		<!--foreach ends-->
+	</ul>
+	<div class="y_page">
+		<!-- 分页器 -->
+			#{page pageTitle:"个标",currPage:pageBean.currPage,pageSize:pageBean.pageSize,totalCount:pageBean.totalCount,theme:2,style:3 /}
+	</div>
+	</div>
+	<!--投标搜索 ends-->
+</div>
+#{/form} 
+
+
+<!-- *{登录弹框层}* -->	
+#{include 'front/invest/InvestAction/login.control'/}		
+	
+ *{激活弹框层}* 
+#{include 'front/invest/InvestAction/activeEmail.control'/}	
+
+<script type="text/javascript" src="@{'/public/javascripts/tab/tab_invest.js'}"></script>
+
+<script>
+    $(function(){
+       $("#invests a span").addClass('clickedf');
+	  #{list items:pageBean.page, as:'bid'}
+	    $('#loanSchedule'+${bid_index}).css({"width":${bid?.loan_schedule}})
+	  #{/list}
+    })
+
+    function checkLogin(bidId){
+    	
+  	  /** 检查用户是否激活, fronMain.html 中的拦截器*/
+  	  var result = frontJSIntercepter();
+  	  
+  	  if(!result){
+  		  collectCurrentBid(bidId);  
+  	  }			
+     }   
+  
+    function collectCurrentBid(bidId){
+    	var collectBid = #{jsAction @collectBid(':bidId')/}
+    	$.post(collectBid({bidId:bidId}),function(data){
+    		//拦截器，拦截判断。frontMain.html
+			if(checkIntercepterResult(data)){
+				return;
+			}
+    		var arr=eval(data);
+			var result = arr.error.msg;
+			alert(result);
+    	})
+    
+    }
+    
+   
+    var apr="";
+    var amount="";
+    var loanSchedule="";
+    var startDate = "";
+ 	var endDate = "";
+ 	var loanType = "";
+ 	var orderType = "";
+ 	var startDate = "";
+ 	var endDate = "";
+ 	
+ 	$(function(){
+	    $("#apr td a").click(function(){ 
+	    	$("#apr td a").removeClass("click");
+		    $(this).addClass("click");
+		      apr = $(this).attr("value"); 
+		      $("#aprtemp").val(apr);
+		      showHomeBids();
+	   });
+	   $("#amount td a").click(function(){ 
+	    	$("#amount td a").removeClass("click");
+		    $(this).addClass("click");
+		     amount = $(this).attr("value"); 
+		      $("#amounttemp").val(amount);
+		    showHomeBids();
+	   });
+	   $("#loanSchedule td a").click(function(){ 
+	    	$("#loanSchedule td a").removeClass("click");
+		    $(this).addClass("click");
+		     loanSchedule = $(this).attr("value");  
+		     $("#loanScheduletemp").val(loanSchedule);
+		     showHomeBids();
+	   });
+
+	   $("#loanType td a").click(function(){ 
+	    	$("#loanType td a").removeClass("click");
+		    $(this).addClass("click");
+		    loanType = $(this).attr("value");  
+		     $("#loanTypetem").val(loanType);
+		     showHomeBids();
+	   });
+    });
+
+	$(function(){
+	   	 //条件查询控制样式
+	 	 var num= '${pageBean?.conditions?.orderType}';
+	
+		  if(num == 0){
+			  $("#div_0").attr("class","click")
+		    	return;
+		  }
+	
+		  var sum = num/2;
+		  if(sum.toString().indexOf('.') == -1){
+		    var sum2 = num -1;
+		    $("#div_"+sum2).addClass("click").find("span").text("↑");
+		    return;
+		  }else{
+		    $("#div_"+num).addClass("click").find("span").text("↓");;
+		  }
+     });
+	     
+	function conditonSearch(num){
+	
+	  var order= '${pageBean?.conditions?.orderType}';
+	  if(order == 0){
+	    $("#orderType").val(num);
+	    $("#bidsSearch").submit();
+	    return;
+	  }
+	  if(order == num){
+	    $("#orderType").val(num + 1);
+	    $("#bidsSearch").submit();
+	     return;
+	  }else{
+	    $("#orderType").val(num);
+	    $("#bidsSearch").submit();
+	     return;
+	  }
+	}
+	
+	    
+	  function showHomeBids(){
+	  
+	    var minLevel = $("#minLevel").val();
+	    
+	     $("#bidsSearch").submit();
+	}	
+	
+	function showCollect(){
+		var pageNum = 1;
+		var pageSize = 10;
+		showCollectBids(pageNum,pageSize);
+	}
+	
+	 function showCollectBids(pageNum,pageSize){
+		
+		$.ajax({
+		  url:"@{queryUserCollectBids()}",
+		  type:"POST",
+		  data:{"pageNum" : pageNum,"pageSize" : pageSize},
+		  success:function(data){
+		  	
+		  	//拦截器，拦截判断。frontMain.html
+			if(checkIntercepterResult(data)){
+				return;
+			}
+		  	
+		  	$("#bidList").html(data);
+		  },
+		  error:function(){alert("对不起，出现错误!");}
+		})
+	}
+	 function showPage(currPage, pageSize){
+	    $("#currPage").val(currPage);
+	    $("#pageSize").val(pageSize);
+	    $("#bidsSearch").submit();
+	}
+    
+  
+</script>

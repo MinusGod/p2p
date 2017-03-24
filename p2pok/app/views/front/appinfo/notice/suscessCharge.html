@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>提示信息</title>
+<script type="text/javascript">
+	function show() {
+		var htmlParam = document.getElementById("jsonParam").value;
+
+		localObj.showResult(htmlParam);
+	}
+</script>
+</head>
+<body>
+	<input type="hidden" id="jsonParam" value="${s}">
+	<script type="text/javascript">
+		show();
+	</script>
+</body>
+
+</html>

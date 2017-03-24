@@ -1,0 +1,127 @@
+%{
+business.User currUser = business.User.currUser();
+business.BackstageSet  currBackstageSet = business.BackstageSet.getCurrentBackstageSet();
+String platUrl = constants.Constants.BASE_URL;
+java.util.Map<String,java.util.List<business.BottomLinks>> bottomLinks = business.BottomLinks.currentBottomlinks();
+    java.lang.String type1Name = business.NewsType.queryName(1);
+    java.lang.String type2Name = business.NewsType.queryName(2);
+    java.lang.String type4Name = business.NewsType.queryName(4);
+    boolean ipsEnable = constants.Constants.IPS_ENABLE;
+    boolean debtUse = constants.Constants.DEBT_USE;
+}%
+    <link rel="stylesheet" href="@{'/public/images/image/style.css'}" type="text/css" />
+    <script type="text/javascript" src="@{'/public/images/image/jquery.flexslider-min.js'}"></script>
+
+
+
+    <style>
+        .login_btn ul{overflow:hidden;margin-bottom:10px;}
+        .login_btn ul li{float: left;font-size: 12px;}
+        .y_navbox{float: left;}
+    </style>
+    <div style="position: relative;z-index: 90; " class="slowf">
+    <div style="width: 1100px; position: relative; margin:0px auto;">
+
+        <div class="floatlogin">
+
+            <div class="login_btn" style="overflow: hidden;">
+
+                #{if currUser == null && loginOrRegister == null}
+                <ul>
+                    <img src="/public/images/gaitu.png" alt=""/>
+
+
+                </ul>
+                <div class="y_navbox">
+                    <a href="@{front.account.LoginAndRegisterAction.selectRoles}" title="" class="Index02Pc">快速注册</a>
+                    已有账号？<a href="@{front.account.LoginAndRegisterAction.newLogin}" title="" class=""><i class="y_topdl y_bg"></i>立即登录</a>
+
+                </div>
+                #{/if}
+                #{elseif currUser != null && loginOrRegister == null }
+                <div class="y_navbox f_navbox">
+                    <div><img src="/public/images/login_1.png"></div>
+                    <div style="line-height: 60px;" >欢迎你，<span  style="color:#86b34b;"><i class="y_topdl y_bg"></i>${currUser?.name}</span>
+                    </div>
+
+                    <a  href="@{front.account.AccountHome.home()}" class="f_ext" >会员中心</a>
+                    <br>
+                    <!--<a href="@{front.account.loginAndRegisterAction.logout()}" >安全退出</a>-->
+                </div>
+                #{/elseif}
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="y_banner"  >
+        <div class="block_home_slider">
+            <div id="home_slider" class="flexslider">
+                <ul class="slides">
+
+                    #{list homeAds}
+                    <li>
+                        <div class="slide">
+                            <a
+                            #{if _?.is_link_enabled}
+						href = "${_?.url}"
+                            #{if _?.target == 1}
+                            target = "_self"'
+                            #{/if}
+                            #{else}
+                            target = "_blank"
+                            #{/else}
+
+                            style="cursor: pointer;"
+                            #{/if}
+                            style="cursor: default;">
+                            <img  src="${_?.image_filename}" alt="" />
+                            </a>
+
+                        </div>
+                    </li>
+                    #{/list}
+
+
+
+                </ul>
+
+            </div>
+
+            <script type="text/javascript">
+                $(function () {
+                    $('#home_slider').flexslider({
+                        animation : 'slide',
+                        controlNav : true,
+                        directionNav : true,
+                        animationLoop : true,
+                        slideshow : true,
+                        useCSS : false
+                    });
+
+                });
+            </script>
+        </div>
+		<!--<ul class="y_bannerul">
+			#{list homeAds}
+			<li><a
+					#{if _?.is_link_enabled}
+						href = "${_?.url}"
+						#{if _?.target == 1}
+							target = "_self"'
+						#{/if}
+						#{else}
+							target = "_blank"
+						#{/else}
+
+						style="cursor: pointer;"
+					#{/if}
+					style="cursor: default;"
+				><img src="${_?.image_filename}" /></a></li>
+			#{/list}
+		</ul>
+		<div class="y_listul"></div>
+		-->
+
+	</div>
+
+    <script type="text/javascript" src="js/jquery.flexslider-min.js"></script>

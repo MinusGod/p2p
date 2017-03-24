@@ -1,0 +1,82 @@
+#{extends 'common/frontMain.html' /}
+%{
+business.BackstageSet  currBackstageSet = business.BackstageSet.getCurrentBackstageSet();
+java.lang.String type5Name = business.NewsType.queryName(5);
+}%
+#{set title:currBackstageSet.seoTitle+'|新手入门' /}
+<style>
+    body{
+        background: #ffffff;
+    }
+</style>
+
+<div class="xs_banner">
+</div>
+<div class="xs_main_bar">
+    <div class="xs_main1">
+        <div class="xs_main_con1">
+            <div class="xs_change_btn xs_jk_btn" style="font-family:'微软雅黑'; ">我是投资人</div>
+            <div class="xs_change_btn xs_jr_btn" style="font-family:'微软雅黑'; ">我是借款人</div>
+            <img src="/public/images/jc_img_03.jpg" alt=""/>
+        </div>
+        <div class="xs_main_con">
+            <img src="/public/images/jc_img_06.png" alt=""/>
+        </div>
+        <div class="xs_main_con">
+            <img src="/public/images/jc_img_08.png" alt=""/>
+        </div>
+        <div class="xs_main_con">
+            <img src="/public/images/jc_img_10.png" alt=""/>
+        </div>
+        <div class="xs_main_con xs_main_con2" style="position: relative;">
+            <a href="@{front.invest.InvestAction.investHome()}"><div class="xs_btn1"></div></a>
+            <a href="@{front.debt.debtAction.debtHome()}"><div class="xs_btn2"></div></a>
+            <a href=""><div class="xs_btn3"></div></a>
+            <img src="/public/images/jc_img_12.png" alt=""/>
+            <div>
+                <a href="@{front.invest.InvestAction.investHome()}"  style="left:285px;position: absolute;top:270px; width: 166px;height: 41px;"></a>
+            </div>
+        </div>
+    </div>
+    <div class="xs_main2">
+        <div class="xs_main_con1">
+            <div class="xs_change_btn xs_jk_btn"  style="font-family:'微软雅黑'; ">我是投资人</div>
+            <div class="xs_change_btn xs_jr_btn"  style="font-family:'微软雅黑'; ">我是借款人</div>
+            <img src="/public/images/jkr_img_03.png" alt=""/>
+        </div>
+        <div class="xs_main_con">
+            <img src="/public/images/jkr_img_06.png" alt=""/>
+        </div>
+        <div class="xs_main_con">
+            <img src="/public/images/jkr_img_08.png" alt=""/>
+        </div>
+    </div>
+</div>
+<div class="xs_bottom">
+    <div class="xs_bottom1"></div>
+    <div class="xs_bottom2"></div>
+</div>
+<script>
+    $(function(){
+
+        $('.xs_jk_btn').click(function(){
+            $('.xs_jk_btn').css({background:" #2e9ece",color:"#ffffff","border":"3px solid #2e9ece"});
+            $('.xs_jr_btn').css({background:" #ffffff",color:"#aeaeae","border":"3px solid #dedede"})
+            $('.xs_banner').css({background:'url("/public/images/banner_img00.png") no-repeat center'});
+            $('.xs_main1').css({display:'block'});
+            $('.xs_main2').css({display:'none'});
+            $('.xs_bottom1').css({display:'block'});
+            $('.xs_bottom2').css({display:'none'});
+        });
+        $('.xs_jr_btn').click(function(){
+            $('.xs_jr_btn').css({background:" #2e9ece",color:"#ffffff","border":"3px solid #2e9ece"});
+            $('.xs_jk_btn').css({background:" #ffffff",color:"#aeaeae","border":"3px solid #dedede"})
+            $('.xs_banner').css({background:'url("/public/images/banner_img01.png") no-repeat center'})
+            $('.xs_main2').css({display:'block'});
+            $('.xs_main1').css({display:'none'});
+            $('.xs_bottom2').css({display:'block'});
+            $('.xs_bottom1').css({display:'none'});
+        })
+    })
+</script>
+

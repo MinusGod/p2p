@@ -1,0 +1,23 @@
+	<div class="y_wtnav">
+			<ul>
+				<li><p>${parent?.name}</p></li>
+				#{list types}
+					#{if _?.name == '合作伙伴'}
+							<li id="aboutUs${_?.id}"><a href="@{front.help.HelpCenterAction.partner(-1008)}" title="">${_?.name}</a></li>
+					#{/if}
+					#{else}
+						<li id="aboutUs${_?.id}"><a href="@{front.home.HomeAction.aboutUs(_?.id)}" title="">${_?.name}</a></li>
+					#{/else}
+				#{/list}
+			</ul>
+		</div>
+
+
+<script type="text/javascript">
+<!--
+	$(function(){
+		$("#aboutUs" + ${id}).addClass("click");
+	});
+//-->
+
+</script>

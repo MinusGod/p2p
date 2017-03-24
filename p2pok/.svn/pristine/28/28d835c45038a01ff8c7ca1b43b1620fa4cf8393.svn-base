@@ -1,0 +1,3 @@
+$(function(){
+	$('#usr').toggleClass("clicked");
+});

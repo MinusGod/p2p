@@ -1,0 +1,842 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    %{
+    business.User currUser = business.User.currUser();
+    business.BackstageSet  currBackstageSet = business.BackstageSet.getCurrentBackstageSet();
+    String platUrl = constants.Constants.BASE_URL;
+    java.util.Map<String,java.util.List<business.BottomLinks>> bottomLinks = business.BottomLinks.currentBottomlinks();
+    java.lang.String type1Name = business.NewsType.queryName(1);
+    java.lang.String type2Name = business.NewsType.queryName(2);
+    java.lang.String type4Name = business.NewsType.queryName(4);
+    boolean ipsEnable = constants.Constants.IPS_ENABLE;
+    boolean debtUse = constants.Constants.DEBT_USE;
+    }%
+    <title>#{get 'title' /}</title>
+    <meta name="keywords" content="${currBackstageSet?.seoKeywords}" />
+    <meta name="description" content="${currBackstageSet?.seoDescription}" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta property="qc:admins" content="133011667666155146375" />
+    <meta property="wb:webmaster" content="6582954f8f7d9e1d" />
+    <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.ico'}">
+    <link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/temp.css'}" />
+    <link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/zccj.css'}" />
+    <script type="text/javascript" src="@{'/public/javascripts/koala.min.1.5.js'}"></script>
+    <script type="text/javascript" src="@{'/public/javascripts/jquery-2.0.js'}"></script>
+    <script type="text/javascript" src="@{'/public/javascripts/jquery.json-2.4.min.js'}"></script>
+    <script type="text/javascript" src="@{'/public/javascripts/xf_front.js'}"></script>
+    <script charset="utf-8" src="@{'public/javascripts/ajaxfileupload.js'}"></script>
+    <script type="text/javascript" src="@{'/public/javascripts/common.js'}"></script>
+    <script type="text/javascript" src="@{'/public/javascripts/jquery.lazyload.min.js'}"></script>
+    <link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/site1.css'}" />
+    <link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/reset1.css'}" />
+    <script type="text/javascript" src="@{'/public/javascripts/yycommon.js'}"></script>
+    <script type="text/javascript" src="@{'/public/javascripts/tab_center.js'}"></script>
+    <script type="text/javascript" src="@{'/public/javascripts/jquery.mousewheel.min.js'}"></script>
+
+</head>
+
+<body>
+
+#{include "front/account/LoginAndRegisterAction/head.html"/}
+<div  style="display: block; " >
+
+    <div class="regBg">
+        <div class="registerBg">
+            <div class="registerL">
+                <h2>投资用户注册<a href="@{front.account.LoginAndRegisterAction.registLoaner}" class="clr37 ft16">&nbsp;&nbsp;<b class="clr37">更换角色?</b></a><span>
+                <b class="col80">已有账户?</b>&nbsp;
+                <a href="@{front.account.LoginAndRegisterAction.newLogin}" class="clr37">立即登录</a></span>
+                </h2>
+            </div>
+            <div class="login400 regTer">
+                #{form @front.account.loginAndRegisterAction.registering(), id:'registerSubmit'}
+
+                <div class="form-item">
+                    <label class="uerN"></label>
+                    <input type="text" placeholder="请输入手机号码" id="mobile" name="mobile" registering  maxlength="13"  autocomplete="off">
+                </div>
+                <div class="input-tip">
+                        <b class="registerB" id="s_mobile"></b>
+                </div>
+                <style>
+                    .registerB{background-color: none;color:#ff1a05;font-size:12px;}
+                    .y_zcwro{background:none !important;}
+                </style>
+                <div class="form-item">
+                    <label class="usePw"></label>
+                    <input type="password"  id="password1" name="password" maxlength="16" placeholder="请输入密码">
+                </div>
+                <div class="input-tip">
+                        <b class="registerB" id="s_password"></b>
+                </div>
+                <div class="formCode">
+                    <div class="form-itemCode">
+                        <input type="text" id="code1" name="code" placeholder="图形验证码"  />
+                        <input type="hidden" name="randomID" id = "randomID1" />
+                    </div>
+                    <div>
+                        <a href="javascript:void(0);" title="" class="y_yzms"><img src="" onclick="change1()"  id="img1" class="y_zcyam" /></a>
+
+                    </div>
+                </div>
+                <div class="input-tip">
+                    <span class="colFd ft12">
+                        <i class="y_zcwrts" >1</i>
+                        <span id="s_code">2</span>
+                    </span>
+                </div>
+                <div  class="formText">
+                    #{if flash.recommendUserName != null && flash.recommendUserName != ""}
+                    <input  type="text" id="recommended" name="recommended"
+                            value="${flash?.recommendUserName}" readonly="readonly" placeholder="推荐人邀请码（选填）"/>
+                    #{/if}
+                    #{else}
+                    <input  type="text" id="recommendName" name="recommendName" placeholder="推荐人邀请码（选填）" />
+                    #{/else}
+
+
+
+                </div>
+
+
+
+
+                <div class="agreeUser">
+                    <input  name="checkbox" type="checkbox" id="remInput" checked=""><label for="remInput">我已阅读并同意《融友网注册协议》</label>
+
+
+                </div>
+
+                <div>
+                    <a onClick="register();focusError();" title="" class="y_dlsa">立即注册</a>
+                </div>
+<b  id="opa5" style="display:none;background-color:#000000;opacity:0.5;width: 100%;height:100%;position:fixed;top:0;left:0;z-index:20;"></b>
+<div id="register02_reg" style="display:none;text-align:center;padding:50px;width:600px;height:420px;background-color:#ffffff;position: fixed;top:20%;left:28%;z-index:29;border-radius:4px;" >
+    <span style="position: absolute;right:-30px;top:-37px;"><img src="/public/images/img/closed.png" alt="" id="closed"/></span>
+    <p style="width: 100%;text-align: right">已有账号？ <a href="@{front.account.LoginAndRegisterAction.newLogin}" style="color:#379ecb;">立即登录</a> </p>
+    <h1 style="color:#333333;font-size:24px;line-height: 80px;">手机号码认证</h1>
+    <p style="color: #999999;border-bottom:1px solid #e6e6e6;line-height:35px;height:35px;">手机号码是您在融友网注册的重要安全凭证，为确保您的手机号码是真实有效的，须进行验证。</p>
+    <div style="color:#333333;margin-top: 60px;">手机号码  &nbsp;&nbsp;&nbsp;<span id="telIpt"></span>&nbsp;&nbsp;&nbsp; <b id="changeTel" style="color:#379ecb;">更换号码</b></div>
+    <div class="form-item380" style="width: 380px;margin:30px auto;">
+        <div style="background-color: #ebf5fa;border:1px solid #94dfff;height: 42px;border-radius:4px;line-height: 42px;">
+            <style>
+                #smsCode{background-color: #ebf5fa;outline: none;border:none; }
+            </style>
+            <input type="text" id="smsCode" name="smsCode" placeholder="验证码" style="width:245px;"/>
+            <input type="hidden" name="randomID" id = "randomID" placeholder="验证码" style="width:245px;"/>
+            <a id="sendSmsCode" onclick="sendCode();focusError();" title="" class="" >获取验证码</a>
+        </div>
+        <a onClick="registing();focusError();" title="" class="y_dlsa" style="margin-top:30px;">立即验证</a>
+    </div>
+    <div>
+
+    </div>
+</div>
+                #{/form}
+            </div>
+        </div>
+    </div>
+
+
+
+
+</div>
+
+#{if registerFlag}
+<div class="index_bg02"></div>
+<div class="index_bg03">
+    <div style="text-align: right;height: 20px;width: 96%;display:block;"><h1 class="colse_s">×</h1></div>
+    <div style="text-align: center;width: 100%;float: left;padding-top: 86px;">
+        <img src="/public/images/index_r02.png" alt=""/>
+    </div>
+    <div class="btn_a">
+        <a href="@{front.home.HomeAction.home}">暂不开通</a>
+        <a href="@{front.account.CheckAction.createAcct}">马上开通</a>
+    </div>
+</div>
+#{/if}
+
+#{if logoutNotice}
+<div class="index_bg02"></div>
+<div class="index_bg05">
+    <div style="text-align: right;height: 20px;width: 96%;display:block;"><h1 class="colse_s">×</h1></div>
+    <div style="text-align: center;width: 100%;float: left;padding-top: 86px;">
+        <img src="/public/images/index_r05.png" alt=""/>
+    </div>
+
+</div>
+#{/if}
+<script>
+
+    $(function(){
+        setTimeout(function(){
+            $('.index_bg02').hide();
+            $('.index_bg05').hide();
+        },3000)
+    })
+</script>
+<style>
+    .index_bg02{background-color: #000000;opacity: 0.6;
+        width:100%;height:100%;position:fixed;top:0px;left:0px;z-index: 1000;}
+    .colse_s{cursor:pointer;color: #dcdbdb;}
+    .index_bg03{left:30%;position: fixed;top:22%;z-index: 1003;width: 640px;height: 400px;
+        background-color: #FFF;border-radius: 2px;}
+    .index_bg05{left:34%;position: fixed;top:30%;z-index: 1003;width: 484px;height:250px;
+        background-color: #FFF;border-radius: 2px;}
+    .btn_a{ float: left;width: 100%;border-top: 1px solid #e5e5e5;}
+    .btn_a a{font-size:20px;width:50%;float: left;display: inline-block; text-align: center;height: 70px;line-height: 70px;color: #379ecb;}
+    .btn_a a:hover{background-color:#379ecb;color: #fff;}
+</style>
+<script type="text/javascript" src="@{'/public/javascripts/jquery.cookie.js'}"></script>
+#{include "front/account/LoginAndRegisterAction/register.control"/}
+<script type="text/javascript">
+$(function(){
+    $(".colse_s").click(function(){
+        $(".index_bg02").stop().hide();
+        $(".index_bg03").stop().hide();
+        $(".index_bg05").stop().hide();
+    });
+})
+$(document).ready(function () {
+    if ($.cookie("rmbUser") == "true") {
+        $("#ck_rmbUser").attr("checked", true);
+        $("#name").val($.cookie("username"));
+
+    }
+});
+
+
+function Save() {
+    if ($("#ck_rmbUser").attr("checked")) {
+        var str_username = $("#name").val();
+        $.cookie("rmbUser", "true", { expires: 7 });
+        $.cookie("username", str_username, { expires: 7 });
+    }
+    else {
+        $.cookie("rmbUser", "false", { expire: -1 });
+        $.cookie("username", "", { expires: -1 });
+    }
+} ;
+function ffcheckusers(){
+    var namesv=$('#recommendName').val().length;
+    var ffpdst=$('#recommendName').val();
+    if(namesv==2 && !isNaN(ffpdst)){
+        $('#recommendName').val("00"+$('#recommendName').val());
+    }
+    else if(namesv==3  && !isNaN(ffpdst)){
+        $('#recommendName').val("0"+$('#recommendName').val());
+    }
+    else if(namesv==1  && !isNaN(ffpdst)){
+        $('#recommendName').val("000"+$('#recommendName').val());
+    }
+}
+$(function(){
+
+    var setCode = #{jsAction @front.account.loginAndRegisterAction.setCode()/}
+            $.post(setCode({}),function(data){
+                var arr=eval(data);
+                var img = arr.img;
+                $("#img1").attr("src","@{front.account.loginAndRegisterAction.getImg()}?id="+img);
+                $("#randomID1").val(img);
+            });
+    $(".xf_wyjkfb_4_windowClose").click(function(){
+        $(this).parents(".xf_zqzr_znx_window").hide(300);
+    });
+
+
+});
+
+function showProtocol() {
+    showDiv($("#xf_mem_zc_xytc"));
+}
+function change1(){
+    var setCode = #{jsAction @front.account.loginAndRegisterAction.setCode()/}
+            $.post(setCode({}),function(data){
+                var arr=eval(data);
+                var img = arr.img;
+                $("#randomID1").val(img);
+                $("#img1").attr("src","@{front.account.loginAndRegisterAction.getImg()}?id="+img)
+            });
+}
+
+var bName = 0;
+var bEmail = 0;
+var bRecommendedName = 0;
+var bRecommendedNameMsg = "";
+var bPrivative = 0;
+
+$(document).ready(function(){
+    $("form :input").blur(function(){
+
+        /*if($(this).attr("id") == "userName"){
+
+            if(this.value==""){
+                $("#s_userName").html("请填写用户名");
+                $("#s_userName").parent().addClass("y_zcwro");
+                $(".ryw_fw").css("display","none");
+
+
+            }
+
+            else if(this.value.length < 3){
+                $("#s_userName").html("用户名长度过短");
+                $("#s_userName").parent().addClass("y_zcwro");
+            }else if(this.value.length > 11){
+                $("#s_userName").html("用户名长度过长");
+                $("#s_userName").parent().addClass("y_zcwro");
+            }else if(!/^[\u4E00-\u9FA5A-Za-z0-9_]+$/.test(this.value)){
+                $("#s_userName").html("用户名含有敏感字符");
+                $("#s_userName").parent().addClass("y_zcwro");
+            }else{
+                var name = this.value;
+                var hasNameExist = #{jsAction @front.account.loginAndRegisterAction.hasNameExist(':name')/}
+                        $.post(hasNameExist({name:encodeURI(name)}),function(data){
+
+                            var arr=eval(data);
+
+                            if(arr.error.code < 0){
+                                bName = -1;
+                                $("#s_userName").html(arr.error.msg);
+                                $("#s_userName").parent().addClass("y_zcwro");
+                            }else{
+                                bName = 0;
+                                var hasNameExistPrivative = #{jsAction @front.account.loginAndRegisterAction.hasNameExistPrivative(':name')/}
+                                        $.post(hasNameExistPrivative({name:encodeURI(name)}),function(data){
+                                            var arr=eval(data);
+
+                                            if(arr.error.code < 0){
+                                                bPrivative = -1;
+                                                $("#s_userName").parent().addClass("y_zcwro");
+                                                $("#s_userName").html(arr.error.msg);
+                                                return;
+                                            }else{
+                                                bPrivative = 0;
+                                                $("#s_userName").html("&nbsp;");
+                                                $("#s_userName").parent().removeClass("y_zcwro");
+                                            }
+                                        });
+                            }
+                        });
+            }
+
+        }*/
+
+        if($(this).attr("id")=="recommendName"){
+            var name = this.value;
+            if(name == null || name.trim() == '' ){
+                $("#s_recommended").html("");
+                $("#s_recommended").parent().removeClass("y_zcwro");
+                return;
+            }
+            var hasNameExist = #{jsAction @front.account.loginAndRegisterAction.checkRecommendName(':name')/}
+                    $.post(hasNameExist({name:encodeURI(name)}),function(data){
+                        ffcheckusers();
+
+                        if(data.code == -2){
+                            bRecommendedName = 0;
+                            $("#s_recommended").html("&nbsp;");
+                            $("#s_recommended").parent().removeClass("y_zcwro");
+                        }else if(data.code == 0){
+                            bRecommendedName = -1;
+                            bRecommendedNameMsg = "该推荐人不存在";
+                            $("#s_recommended").html(bRecommendedNameMsg)
+                            $("#s_recommended").parent().addClass("y_zcwro");
+                        }else{
+                            bRecommendedName = -2;
+                            bRecommendedNameMsg = data.msg;
+                            $("#s_recommended").html(bRecommendedNameMsg);
+                            $("#s_recommended").parent().addClass("y_zcwro");
+                        }
+                    });
+        }
+        if($(this).attr("id") == "password1"){
+
+            if(this.value == ""){
+                $("#s_password").html("请设置密码");
+                $("#s_password").parent().addClass("y_zcwro");
+                $(".ryw_fww").css("display",'none');
+            }else if(this.value.length < 6){
+                $("#s_password").html("密码长度过短");
+                $("#s_password").parent().addClass("y_zcwro");
+            }else if(this.value.length >16){
+                $("#s_password").html("密码长度过长");
+                $("#s_password").parent().addClass("y_zcwro");
+            }else if(!/^[a-zA-Z0-9_]{1,}$/.test(this.value)){
+                $("#s_password").html("密码格式错误");
+                $("#s_password").parent().addClass("y_zcwro");
+            }
+            else{
+                $("#s_password").html("&nbsp;");
+                $("#s_password").parent().removeClass("y_zcwro");
+            }
+        }
+
+        if($(this).attr("id") == "mobile"){
+
+            if(this.value == ""){
+                $("#s_mobile").html("请输入手机号码");
+                $("#s_mobile").parent().addClass("y_zcwro");
+                $("#s_mobile").prev().css('display','none');
+            }else{
+                $.ajax({
+                    url : "@{front.account.LoginAndRegisterAction.hasMobileExists()}",
+                    type : "POST",
+                    data : {
+                        "mobile" : this.value
+                    },
+                    dataType:'json',
+                    success : function(data) {
+                        if(data.code < 0){
+                            $("#s_mobile").html(data.msg);
+                            $("#s_mobile").parent().addClass("y_zcwro");
+                        }else{
+                            $("#s_mobile").html('&nbsp;');
+                            $("#s_mobile").parent().removeClass("y_zcwro");
+                        }
+                    }
+                });
+            }
+        }
+        
+        
+        
+        if($(this).attr("id") == "code1"){
+
+            if(this.value == ""){
+                $("#s_code").html("请输入验证码2");
+                $("#code1").parent().addClass("y_zcwro");
+                $("#code1").prev().css('display','none');
+            }else{
+                $.ajax({
+                    url : "@{front.account.LoginAndRegisterAction.checkCode()}",
+                    type : "POST",
+                    data : {
+                    	"randomId" : $("#randomID1").val(),
+                        "code" : this.value
+                    },
+                    dataType:'json',
+                    success : function(data) {
+                    	if(data.error.code < 0){
+                        $("#s_code").html(data.error.msg);
+                        $("#code1").parent().addClass("y_zcwro");
+                    	}
+                    }                    
+                });
+            }
+        }
+       
+        
+        
+    });
+});
+
+function register(){
+
+    var mobile = $.trim($("#mobile").val());
+    if(mobile == ""){
+        $("#s_mobile").html("请输入手机号码");
+        $("#s_mobile").parent().addClass("y_zcwro");
+        return;
+    }else if(!(mobile).isMobileNum()){
+        $("#s_mobile").html("手机号格式有误");
+        $("#s_mobile").parent().addClass("y_zcwro");
+        return;
+    }
+
+    /*var username = $.trim($("#userName").val());
+
+    if(username =='' ||　username == "建议不用真实姓名作为用户名"){
+        $("#s_userName").html("请填写用户名");
+        $("#s_userName").parent().addClass("y_zcwro");
+        return;
+    }else if(username.length < 3){
+        $("#s_userName").html("用户名长度过短");
+        $("#s_userName").parent().addClass("y_zcwro");
+        return;
+    }else if(username.length > 11){
+        $("#s_userName").html("用户名长度过长");
+        $("#s_userName").parent().addClass("y_zcwro");
+        return;
+    }else if(!/^[\u4E00-\u9FA5A-Za-z0-9_]+$/.test(username)){
+        $("#s_userName").html("用户名含有敏感字符");
+        $("#s_userName").parent().addClass("y_zcwro");
+        return;
+    }else if(bPrivative < 0){
+        $("#s_userName").html("用户名含有敏感词汇");
+        $("#s_userName").parent().addClass("y_zcwro");
+        return;
+    }*/
+
+    var password = $("#password1").val();
+
+    if(password == ""){
+        $("#s_password").html("请设置您的密码");
+        $("#s_password").parent().addClass("y_zcwro");
+        return;
+    }else if(password.length < 6){
+        $("#s_password").html("密码长度为6-16个字符");
+        $("#s_password").parent().addClass("y_zcwro");
+        return;
+    }else if(password.length >20){
+        $("#s_password").html("密码长度为6-16个字符");
+        $("#s_password").parent().addClass("y_zcwro");
+        return;
+    }else if(!/^([^\s'‘’]{6,20})$/.test(password)){
+        $("#s_password").html("密码由6-16位字符组成（不含'）");
+        $("#s_password").parent().addClass("y_zcwro");
+        return;
+    }
+
+    /*var confirmPassword = $("#confirmPassword").val();
+    if (confirmPassword != password){
+        $("#s_confirmPassword").html("确认密码与输入密码不符");
+        $("#s_confirmPassword").parent().addClass("y_zcwro");
+        return;
+    }else{
+        $("#s_confirmPassword").html("");
+        $("#s_confirmPassword").parent().removeClass("y_zcwro");
+    }*/
+    if($("#code1").val() == '') {
+        $("#s_code").html("请输入验证码");
+        $("#s_code").parent().addClass("y_zcwro");
+        return;
+    }else{
+        $("#s_code").html("");
+        $("#s_code").parent().removeClass("y_zcwro");
+    }
+    var smsCode = $("#smsCode").val();
+
+    if(smsCode == ""){
+        $("#s_smsCode").html("请填写短信校验码");
+        $("#s_smsCode").parent().addClass("y_zcwro");
+        return;
+    }
+
+    var recommendName = $("#recommendName").val();
+
+    if(recommendName != null && recommendName.trim() !="" && bRecommendedName < 0){
+        $("#s_recommended").html(bRecommendedNameMsg);
+        $("#s_recommended").parent().addClass("y_zcwro");
+        return;
+    }
+    var remIp=document.getElementById("remInput");
+    if(remIp.checked){
+    }
+    else{
+        alert("没有同意《融友网注册协议》");
+        return;
+    }
+    document.getElementById("telIpt").innerText=mobile;
+    $("#opa5").show();
+    $("#register02_reg").show();
+    $("#changeTel").click(function(){
+        $("#opa5").hide();
+        $("#register02_reg").hide();
+    });
+    $("#closed").click(function(){
+            $("#opa5").hide();
+            $("#register02_reg").hide();
+    });
+
+/*     var verifyMobile = #{jsAction @front.account.loginAndRegisterAction.verifySmsCodeForReg(':mobile',':smsCode')/}
+            $.post(verifyMobile({mobile:$("#mobile").val().trim(),smsCode:$("#smsCode").val()}),function(data){
+                if(data.code < 0){
+                    $("#s_smsCode").html(data.msg);
+                    $("#s_smsCode").parent().addClass("y_zcwro");
+                }else{
+                    $("#s_smsCode").html('');
+                    $("#s_smsCode").parent().removeClass("y_zcwro");
+
+                    $("#opa5").show();
+                    $("#register02_reg").show();
+                    $("#changeTel").click(function(){
+                        $("#opa5").hide();
+                        $("#register02_reg").hide();
+
+                    });
+                    $("#closed").click(function(){
+
+
+                            $("#opa5").hide();
+                            $("#register02_reg").hide();
+                    });               
+                }
+            },'json');
+             */
+            
+   // $("#registerSubmit").submit();
+
+
+
+}
+
+function registing() {
+	$("#registerSubmit").submit();
+}
+
+
+var remain = 60;
+
+function countDown() {
+    if (remain == 0) {
+        remain = 60;
+        $("#sendSmsCode").html("点击发送");
+        $("#sendSmsCode").attr("onclick", "sendCode();");
+        $("#sendSmsCode").attr("style", "cursor:pointer");
+
+        return;
+    }
+
+    $("#sendSmsCode").html("" + remain-- + "秒后重发");
+    setTimeout("countDown()",1000);
+}
+
+function sendCode(){
+    var mobile = $("#mobile").val().trim();
+    var code = '';
+    var randomId = '';
+
+    if(mobile == ""){
+        $("#s_mobile").html("请输入手机号码");
+        $("#s_mobile").parent().addClass("y_zcwro");
+        return;
+    }else if(!(mobile).isMobileNum()){
+        $("#s_mobile").html("手机号格式有误");
+        $("#s_mobile").parent().addClass("y_zcwro");
+        return;
+    }
+
+
+   /*  code = $("#code1").val().trim();
+    randomID = $("#randomID1").val().trim();
+
+    if(code == '') {
+        $("#s_code").html("请输入验证码");
+        $("#s_code").parent().addClass("y_zcwro");
+        return;
+    } */
+
+    var verifyMobile = #{jsAction @front.account.loginAndRegisterAction.verifyMobileForReg(':mobile',':code',':randomID')/}
+            $.post(verifyMobile({mobile:mobile,code:code,randomID:randomID}),function(data){
+                if(data.code < 0){
+                    $("#s_code").html(data.msg);
+                    $("#s_code").parent().addClass("y_zcwro");
+                    change();
+                }else{
+                    $("#s_code").html("");
+                    $("#s_code").parent().removeClass("y_zcwro");
+                    countDown();
+                    $("#sendSmsCode").attr("onclick", "void(0);");
+                    $("#sendSmsCode").attr("style", "cursor: default");
+                }
+            },'json');
+}
+
+function focusError(){
+    $(".xf_register_intext1").first().parent().find('input').first().focus();
+}
+
+</script>
+
+
+#{include "front/account/LoginAndRegisterAction/foot.html"/}
+</body>
+<style>
+    #logoshow{width:113px;height:49px;display:inline-block;background: url("/public/images/ry_bottom_01.png") no-repeat;}
+    #_pingansec_bottomimagelarge_p2p{width:91px;height:41px;display:inline-block;background: url("/public/images/hlwa.png") no-repeat;}
+</style>
+
+<script type="text/javascript">
+
+    $(function(){
+        $('.wxffry').click(function(){
+            $('.weixryw').show();
+            $('.weixrywbg').show();
+            $('.wxbgbg').show();
+        });
+    });
+    $(function(){
+        $('.weixrywbg').click(function(){
+            $('.weixryw').hide();
+            $('.weixrywbg').hide();
+            $('.wxbgbg').hide();
+        });
+    });
+    $(function(){
+        $('.wxbgbg').click(function(){
+            $('.weixryw').hide();
+            $('.weixrywbg').hide();
+            $('.wxbgbg').hide();
+        });
+    });
+    $(document).keydown(function(event){
+        if(event.keyCode == 13){
+            if(document.activeElement.id == 'name' || document.activeElement.id == 'code' || document.activeElement.id == 'password'){
+                login();
+            }
+        }
+    });
+
+    (function(){document.getElementById('___szfw_logo___').oncontextmenu = function(){return false;}})();
+    $(function(){
+        $('img.lazy').lazyload({
+            //effect:'fadeIn'
+        });
+
+        var logins = '${login}';
+        if(logins=='login'){
+            $(".ydl_dl").click();
+        }else if(logins=="register"){
+            $(".y_topzc").click();
+        }
+        $("#xf_h_idx_1_hydjfdgdf").limit();
+
+        /* 所有继承页面flash.error的值弹框,被继承页面则无需再写 */
+        if('${flash.error}' !='') {
+            alert('${flash?.error}');
+            if('${flash?.emailUrl}' !='') {
+                window.open('${flash?.emailUrl}');
+            }
+        }
+        /*与重复提交冲突，注释，如功能发生冲突，请更改其他处
+         if('${flash.success}' != ''){
+         alert('${flash?.success}');
+         }
+         */
+        //获取图片验证码
+        if('${currUser?.name}' == '' && '${loginOrRegister}' == '') {
+            var setCode = #{jsAction @front.account.LoginAndRegisterAction.setCode()/}
+                    $.post(setCode({}),function(data){
+                        var arr=eval(data);
+                        var img = arr.img;
+                        $("#img").attr("src","@{front.account.LoginAndRegisterAction.getImg()}?id="+img)
+                        $("#randomID").val(img);
+                    });
+        }
+    });
+
+    function vipApply(){
+
+        /** 检查用户是否激活*/
+        var result = frontJSIntercepter();
+
+        if(!result){
+            showDiv($("#xf_mem_acc_sjvip_tcc"));
+        }
+    };
+
+    function login(){
+        var name = $("#name").val();
+
+        if(name == ''){
+            alert("请输入用户名或手机号");
+            return;
+        }
+
+        if($("#password").val() == ''){
+            alert("请输入密码");
+            return;
+        }
+
+        if($("#code").val() == ''){
+            alert("请输入验证码");
+            return;
+        }
+        $("#loginsubmit").submit();
+    };
+
+    function change(){
+        var setCode = #{jsAction @front.account.LoginAndRegisterAction.setCode()/}
+                $.post(setCode({}),function(data){
+                    var arr=eval(data);
+                    var img = arr.img;
+                    $("#img").attr("src","@{front.account.LoginAndRegisterAction.getImg()}?id="+img);
+                    $("#randomID").val(img);
+                });
+    };
+
+    function AddFavorite(url,title) {
+        var ua = navigator.userAgent.toLowerCase();
+        if(ua.indexOf("msie 8")>-1){
+            external.AddToFavoritesBar(url,title,'');//IE8
+        }else{
+            try {
+                window.external.addFavorite(url, title);
+            } catch(e) {
+                try {
+                    window.sidebar.addPanel(title, url, "");//firefox
+                } catch(e) {
+                    alert("加入收藏失败，请使用Ctrl+D进行添加");
+                }
+            }
+        }
+    }
+
+    /** 前台，拦截器 ，拦截内容：登陆拦截，资金托管开户拦截，已被拦截返回true */
+    function frontJSIntercepter(){
+        //未登录
+        if('${currUser?.name}' == ''){
+
+            window.location.href=http_path+"/login";
+            return true;
+        }
+
+        //托管未开户
+        if('${ipsEnable}'=='true' && '${currUser?.ipsAcctNo}'==''){
+
+            window.location.href=http_path+"/front/account/trustAccount";
+            return true;
+        }
+
+        //用户未激活
+        if('${ipsEnable}'=='false' && '${currUser?.isEmailVerified}'=='false' && '${currUser?.isMobileVerified}'=='false'){  //邮箱和手机都未激活，则用户未激活
+
+            window.location.href=http_path+"/front/account/inactiveUser";
+            return true;
+        }
+
+        if('${currUser?.realityName}' == ''){
+
+            window.location.href=http_path+"/front/account/certification";
+            return true;
+        }
+
+        return false;
+
+    }
+
+    /**
+     * 拦截器拦截后，跳转到相应的页面（AJAX）
+     */
+    function checkIntercepterResult(data){
+
+        if('UnLogin' == data){
+
+            window.location.href=http_path+"/login";
+            return true;
+        }
+
+        if('NullIpsAccount' == data){
+
+            window.location.href=http_path+"/front/account/trustAccount";
+            return true;
+        }
+
+        if('InactiveUser' == data){
+
+            window.location.href=http_path+"/front/account/inactiveUser";
+            return true;
+        }
+
+        if('NullRealName' == data){
+
+            window.location.href=http_path+"/front/account/certification";
+            return true;
+        }
+
+        return false;
+
+    }
+</script>
+</html> <!-- <a href="@{front.home.HomeAction.soolcenter}">a</a> -->

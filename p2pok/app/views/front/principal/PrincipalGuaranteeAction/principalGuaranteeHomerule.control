@@ -1,0 +1,9 @@
+
+	<div class="y_aqbg3">
+		<div class="y_main">
+			<h3 class="y_aqh1">${types?.get(1)?.name}</h3>
+			<ul class="y_aqul2">
+				${principalrul?.content}
+			</ul>
+		</div>
+	</div>

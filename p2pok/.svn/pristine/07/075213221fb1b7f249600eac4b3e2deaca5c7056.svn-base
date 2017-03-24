@@ -1,0 +1,428 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    %{
+    business.User currUser = business.User.currUser();
+    business.BackstageSet  currBackstageSet = business.BackstageSet.getCurrentBackstageSet();
+    String platUrl = constants.Constants.BASE_URL;
+    java.util.Map<String,java.util.List<business.BottomLinks>> bottomLinks = business.BottomLinks.currentBottomlinks();
+    java.lang.String type1Name = business.NewsType.queryName(1);
+    java.lang.String type2Name = business.NewsType.queryName(2);
+    java.lang.String type4Name = business.NewsType.queryName(4);
+    boolean ipsEnable = constants.Constants.IPS_ENABLE;
+    boolean debtUse = constants.Constants.DEBT_USE;
+    }%
+    <title>#{get 'title' /}</title>
+    <meta name="keywords" content="${currBackstageSet?.seoKeywords}" />
+    <meta name="description" content="${currBackstageSet?.seoDescription}" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta property="qc:admins" content="133011667666155146375" />
+    <meta property="wb:webmaster" content="6582954f8f7d9e1d" />
+    <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.ico'}">
+    <link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/temp.css'}" />
+    <link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/zccj.css'}" />
+    <script type="text/javascript" src="@{'/public/javascripts/koala.min.1.5.js'}"></script>
+    <script type="text/javascript" src="@{'/public/javascripts/jquery-2.0.js'}"></script>
+    <script type="text/javascript" src="@{'/public/javascripts/jquery.json-2.4.min.js'}"></script>
+    <script type="text/javascript" src="@{'/public/javascripts/xf_front.js'}"></script>
+    <script charset="utf-8" src="@{'public/javascripts/ajaxfileupload.js'}"></script>
+    <script type="text/javascript" src="@{'/public/javascripts/common.js'}"></script>
+    <script type="text/javascript" src="@{'/public/javascripts/jquery.lazyload.min.js'}"></script>
+    <link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/site1.css'}" />
+    <link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/reset1.css'}" />
+    <script type="text/javascript" src="@{'/public/javascripts/yycommon.js'}"></script>
+    <script type="text/javascript" src="@{'/public/javascripts/tab_center.js'}"></script>
+    <script type="text/javascript" src="@{'/public/javascripts/jquery.mousewheel.min.js'}"></script>
+
+</head>
+
+<body>
+
+
+#{include "common/frontMainTop.html"/}
+
+<div class="y_mainmax">
+
+    <!--ff-->
+
+    <div class="ff_top2">
+
+        <div class="ff_top1">
+
+            <div class="fftel">您身边的互联网金融服务平台<img src="/public/images/tel1.png" style="margin: 0px 6px;"> 40000-10068</div>
+            <ul class="fftopul">
+                <!--   <li><a href="" style="color: #85b348">立即登录</a>|</li>
+                       <li><a href="" style="color: #2e9ece">快速注册</a>|</li>
+                -->
+
+                <li><a href="@{front.wealthinfomation.WealthInfomationAction.newsList(7)}">官方资讯</a>|</li>
+                <li><a href="@{front.help.HelpCenterAction.index(13)}">帮助中心</a>|</li>
+                <li><a href="@{front.home.HomeAction.getStart(27)}">新手指引</a></li>
+            </ul>
+            #{if currUser == null || loginOrRegister == "loginOrRegister"}
+            <div class="y_navbox">
+                <a href="javascript:void(0);" title="" class="ydl_dl"><i class="y_topdl y_bg"></i><span style="color: #86b34b">立即登录</span></a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+                <a href="javascript:void(0);" title="" class="y_topzc"><span style="color: #2e9ece" class="kszcfff">快速注册</span></a>&nbsp;&nbsp;&nbsp;|
+            </div>
+            #{/if}
+            #{elseif currUser != null && loginOrRegister == null }
+            <div class="y_navbox">
+                您好，【<a href="@{front.account.AccountHome.home()}"><i class="y_topdl y_bg"></i>${currUser?.name}</a>】/
+                <a href="@{front.account.loginAndRegisterAction.logout()}" >安全退出</a>
+            </div>
+            #{/elseif}
+
+
+        </div>
+    </div>
+    <div class="y_top"><!-- style="background: #1A4BAA;"-->
+
+        <div class="y_head1">
+            <div class="ff_top1">
+                <a href="@{front.home.HomeAction.home}"  class="y_logo">#{img src:"${currBackstageSet.platformLogoFilename}"}#{/img}</a>
+                <div class="y_nav">
+                    <ul >
+                        <li id="index" ><a href="@{front.home.HomeAction.home()}"><span title="首页">首页</span></a></li>
+                        <li id="invests" ><a href="@{front.invest.InvestAction.investHome()}"><span title="我要投资">我要投资</span></a></li>
+                        <li id="biddf" ><a href="@{front.bid.bidAction.index()}" ><span title="我要借款">我要借款</span></a></li>
+                        <li id="printf"><a href="@{front.principal.PrincipalGuaranteeAction.principalGuaranteeHome()}"><span title="安全保障">${type4Name}</span></a></li>
+                        <li id="aboutf"><a href="@{front.home.HomeAction.aboutUs(16)}"><span title="关于我们">关于我们</span></a></li>
+                        <li id="usr"><a href="@{front.account.accountHome.home()}" class="y_usera">
+                            <span title="我的账户"><i class="y_wdzh"></i><div style="display: inline-block;position: relative;left:18px;">我的账户</div></span></a></li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--头部 end-->
+
+    </div>
+    #{doLayout /}
+    <!--ff-->
+    <!-- footer start -->
+
+    <footer class="ry_footer">
+        <div class="ry_footer">
+            <div style="width:1100px;margin:0 auto">
+                <table border="0" class="ft_table">
+                    <tr height="15">
+                        <td width="100" align="left"><a href="http://www.p2pok.com/category/index.do?id=387"> </a></td>
+                        <td width="90"><a href="http://www.p2pok.com/safe/index.do"> </a></td>
+                        <td width="100"><a href="http://www.p2pok.com/category/index.do?id=363"> </a></td>
+                        <td width="100"><a href="#"> </a></td>
+                        <td width="100"><a href="#"> </a></td>
+                        <td width="107"></td>
+                        <td width="107"></td>
+                        <td width="107"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+
+                    </tr>
+                    <tr>
+                        <td align="left" style="font-size: 15px;"><a href="@{front.home.HomeAction.aboutUs(16)}">公司介绍</a></td>
+                        <td align="left"><a href="@{front.principal.PrincipalGuaranteeAction.principalGuaranteeHome()}">安全保障</a></td>
+                        <td><a href="@{front.wealthinfomation.WealthInfomationAction.newsList(10)}">媒体报道</a></td>
+                        <td><a href="@{front.home.HomeAction.getStart(27)}">新手必读</a></td>
+                        <td><a href="@{front.home.HomeAction.aboutUs(19)}">招贤纳士</a></td>
+                        <td><a href="@{front.help.HelpCenterAction.index(13)}">帮助中心</a></td>
+                        <td  width="180" align="left"><a href="@{front.home.HomeAction.aboutUs(34)}">联系我们</a></td>
+                        <td width="125" rowspan="3" colspan="2" style="position:relative;text-align: center"><img src="/public/images/f_t1.png"><br>新浪微博订阅号</td>
+                        <td width="135" rowspan="3" colspan="2" style="position:relative;text-align: center"><img src="/public/images/f_t2.png"><br>腾讯微博订阅号</td>
+
+
+                        <td width="75" rowspan="3" colspan="2" style="position:relative;" align="right"><img  src="/public/images/f_t3.png"><br>微信服务号</td>
+
+                    </tr>
+                    <tr class="foot_wx">
+                        <td align="left" style="font-size: 15px;">客户服务</td>
+                        <td align="left"><a class="f_wx"><i></i><b class="wxffry">微信</b></a></td>
+                        <td><a href="http://weibo.com/rongyouwang?topnav=1&wvr=6&topsug=1" target="_blank" class="f_xl"><i></i>新浪微博</a></td>
+                        <td><a href="http://t.qq.com/rongyoo" target="_blank" class="f_tx"><i></i>腾讯微博</a></td>
+                        <td><a class="f_zxkf"  href="http://float2006.tq.cn/static.jsp?version=vip&admiuin=9637954&ltype=1&iscallback=1&page_templete_id=83395&is_message_sms=0&is_send_mail=1&uin=9637954"  target="_blank" ><i></i>在线客服</a></td>
+
+                    </tr>
+                    <tr>
+                        <td align="left" style="font-size: 15px;">客服电话</td>
+                        <td align="left"><span style="color:#2e9ece;">40000</span>-<span style="color: #ff7e30;">10068</span> </td>
+                        <td>&nbsp;&nbsp;&nbsp;9:00-18:00</td>
+                        <td style="font-size:0.875rem;"></td>
+                    </tr>
+                    <tr height="25">
+                        <td colspan="12" class="text-center"><div class="ry_bottom_hr"></div></td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="4" style="text-align:right;">
+                            <a id='___szfw_logo___' href='https://credit.szfw.org/CX20151207012561220358.html' target='_blank'>
+                                <span id="ry_bottom_01" onmouseover="ry_img_hover_in(1);" onmouseout="ry_img_hover_out(1);"  ></span></a>
+                            <script type='text/javascript'>(function(){document.getElementById('___szfw_logo___').oncontextmenu = function(){return false;}})();
+                            </script>
+                            <!--ff-->
+
+                            <a id="_pingansec_bottomimagelarge_p2p" target='_blank' href="http://si.trustutn.org/info?sn=886170119000565694046&certType=4"></a>
+                            <a id="logoshow" href='https://credit.szfw.org/CX20151207012561220358.html' target='_blank'> </a>
+                            <script>
+                                $("#_pingansec_bottomimagelarge_p2p").mouseover(function(){
+                                    $('#_pingansec_bottomimagelarge_p2p').css('background-image','url("/public/images/hlw.png")');
+                                });
+                                $("#_pingansec_bottomimagelarge_p2p").mouseout(function(){
+                                    $('#_pingansec_bottomimagelarge_p2p').css('background-image','url("/public/images/hlwa.png")');
+                                });
+
+
+                                $("#logoshow").mouseover(function(){
+                                    $('#logoshow').css('background-image','url("/public/images/ry_bottom_01_hover.png")');
+                                });
+                                $("#logoshow").mouseout(function(){
+                                    $('#logoshow').css('background-image','url("/public/images/ry_bottom_01.png")');
+                                });
+                            </script>
+                            <!--ff-->
+                        </td>
+                        <td colspan="7" style="text-align:left;font-size:0.875rem;">
+                            <div style="text-align:center;width:400px;">
+                                沪ICP备15020738号-2 | 融友网All rights reserved © 2016
+                                <br>
+                                WWW.P2POK.COM | 上海融友金融信息服务有限公司
+
+                            </div></td>
+
+                    </tr>
+
+                </table>
+
+
+                <div>
+
+                </div>
+                <br>
+
+            </div>
+        </div>
+
+        <div style="text-align: center;color: #c0c0c0; background-color: #6b6a6a;font-size: 14px;line-height: 30px;">市场有风险 &nbsp;&nbsp;&nbsp;投资需谨慎</div>
+
+    </footer>
+    <!-- footer end -->
+
+    <div style="display:none">
+        ${currBackstageSet?.baiduCode.raw()}
+    </div>
+    #{include "front/account/AccountHome/overBorrowIps.control"/}
+    #{include "common/homeVipApply2.control"/}
+</div>
+<div class="weixryw">
+    <div  class="weixrywbg" style="display:none;width:
+100%;position:fixed;top:0;left:0;height: 100%;background-color:#000;z-index:80;
+filter:alpha(opacity=50);opacity: 0.5;"></div>
+    <div class="wxbgbg" style="display: none;"><img src="/public/images/wx1.jpg"
+                                                    style="position: fixed;z-index:120;left:40%;top: 20%;" alt=""/></div>
+</div>
+<div style="font-size: 0px !important;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1256512809&web_id=1256512809" language="JavaScript"></script>
+</div>
+</body>
+<style>
+    #logoshow{width:113px;height:49px;display:inline-block;background: url("/public/images/ry_bottom_01.png") no-repeat;}
+    #_pingansec_bottomimagelarge_p2p{width:91px;height:41px;display:inline-block;background: url("/public/images/hlwa.png") no-repeat;}
+</style>
+
+<script type="text/javascript">
+
+$(function(){
+    $('.wxffry').click(function(){
+        $('.weixryw').show();
+        $('.weixrywbg').show();
+        $('.wxbgbg').show();
+    });
+});
+$(function(){
+    $('.weixrywbg').click(function(){
+        $('.weixryw').hide();
+        $('.weixrywbg').hide();
+        $('.wxbgbg').hide();
+    });
+});
+$(function(){
+    $('.wxbgbg').click(function(){
+        $('.weixryw').hide();
+        $('.weixrywbg').hide();
+        $('.wxbgbg').hide();
+    });
+});
+    $(document).keydown(function(event){
+        if(event.keyCode == 13){
+            if(document.activeElement.id == 'name' || document.activeElement.id == 'code' || document.activeElement.id == 'password'){
+                login();
+            }
+        }
+    });
+
+    (function(){document.getElementById('___szfw_logo___').oncontextmenu = function(){return false;}})();
+    $(function(){
+        $('img.lazy').lazyload({
+            //effect:'fadeIn'
+        });
+
+        var logins = '${login}';
+        if(logins=='login'){
+            $(".ydl_dl").click();
+        }else if(logins=="register"){
+            $(".y_topzc").click();
+        }
+    $("#xf_h_idx_1_hydjfdgdf").limit();
+
+    /* 所有继承页面flash.error的值弹框,被继承页面则无需再写 */
+    if('${flash.error}' !='') {
+	      alert('${flash?.error}');
+      if('${flash?.emailUrl}' !='') {
+        window.open('${flash?.emailUrl}');
+      }
+    }
+	/*与重复提交冲突，注释，如功能发生冲突，请更改其他处
+    if('${flash.success}' != ''){
+      alert('${flash?.success}');
+    }
+	*/
+    //获取图片验证码
+    if('${currUser?.name}' == '' && '${loginOrRegister}' == '') {
+      var setCode = #{jsAction @front.account.LoginAndRegisterAction.setCode()/}
+      $.post(setCode({}),function(data){
+        var arr=eval(data);
+        var img = arr.img;
+        $("#img").attr("src","@{front.account.LoginAndRegisterAction.getImg()}?id="+img)
+		$("#randomID").val(img);
+	  });
+	}
+  });
+
+  function vipApply(){
+
+	  /** 检查用户是否激活*/
+	  var result = frontJSIntercepter();
+
+	  if(!result){
+      	 showDiv($("#xf_mem_acc_sjvip_tcc"));
+	  }
+  };
+
+  function login(){
+    var name = $("#name").val();
+
+    if(name == ''){
+      alert("请输入用户名或手机号");
+      return;
+    }
+
+    if($("#password").val() == ''){
+      alert("请输入密码");
+      return;
+    }
+
+    if($("#code").val() == ''){
+      alert("请输入验证码");
+      return;
+    }
+    $("#loginsubmit").submit();
+  };
+
+  function change(){
+    var setCode = #{jsAction @front.account.LoginAndRegisterAction.setCode()/}
+	$.post(setCode({}),function(data){
+	  var arr=eval(data);
+	  var img = arr.img;
+	  $("#img").attr("src","@{front.account.LoginAndRegisterAction.getImg()}?id="+img);
+	  $("#randomID").val(img);
+	});
+  };
+
+  function AddFavorite(url,title) {
+    var ua = navigator.userAgent.toLowerCase();
+    if(ua.indexOf("msie 8")>-1){
+      external.AddToFavoritesBar(url,title,'');//IE8
+    }else{
+      try {
+        window.external.addFavorite(url, title);
+      } catch(e) {
+        try {
+          window.sidebar.addPanel(title, url, "");//firefox
+        } catch(e) {
+          alert("加入收藏失败，请使用Ctrl+D进行添加");
+        }
+      }
+    }
+  }
+
+  /** 前台，拦截器 ，拦截内容：登陆拦截，资金托管开户拦截，已被拦截返回true */
+  function frontJSIntercepter(){
+	  //未登录
+	  if('${currUser?.name}' == ''){
+
+		  window.location.href=http_path+"/login";
+	  	  return true;
+	  }
+
+	  //托管未开户
+	  if('${ipsEnable}'=='true' && '${currUser?.ipsAcctNo}'==''){
+
+		  window.location.href=http_path+"/front/account/trustAccount";
+	  	  return true;
+	  }
+
+	  //用户未激活
+	  if('${ipsEnable}'=='false' && '${currUser?.isEmailVerified}'=='false' && '${currUser?.isMobileVerified}'=='false'){  //邮箱和手机都未激活，则用户未激活
+
+		  window.location.href=http_path+"/front/account/inactiveUser";
+		  return true;
+	  }
+
+	  if('${currUser?.realityName}' == ''){
+
+	  		window.location.href=http_path+"/front/account/certification";
+	  		return true;
+	  }
+
+	  return false;
+
+  }
+
+  /**
+   * 拦截器拦截后，跳转到相应的页面（AJAX）
+   */
+  function checkIntercepterResult(data){
+
+  	if('UnLogin' == data){
+
+  		window.location.href=http_path+"/login";
+  		return true;
+  	}
+
+  	if('NullIpsAccount' == data){
+
+  		window.location.href=http_path+"/front/account/trustAccount";
+  		return true;
+  	}
+
+  	if('InactiveUser' == data){
+
+  		window.location.href=http_path+"/front/account/inactiveUser";
+  		return true;
+  	}
+
+  	if('NullRealName' == data){
+
+  		window.location.href=http_path+"/front/account/certification";
+  		return true;
+  	}
+
+  	return false;
+
+ }
+</script>
+</html> <!-- <a href="@{front.home.HomeAction.soolcenter}">a</a> -->

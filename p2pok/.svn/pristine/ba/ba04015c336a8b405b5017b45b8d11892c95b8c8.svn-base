@@ -1,0 +1,51 @@
+#{extends 'common/frontMain.html' /}
+
+<script type="text/javascript" src="@{'/public/javascripts/jquery-2.0.js'}"></script>
+
+<link rel="stylesheet" type="text/css"  href="@{'/public/stylesheets/css/base.css'}">
+<link rel="stylesheet" type="text/css"  href="@{'/public/stylesheets/css/layer.css'}">
+<link rel="stylesheet" type="text/css"  href="@{'/public/stylesheets/css/safety.css'}">
+<link rel="stylesheet" type="text/css"  href="@{'/public/stylesheets/css/sina.css'}">
+
+
+
+
+
+
+	<div class="sina-banner">
+		<img src="/public/images/banner.png" alt="">
+	</div>
+        <div style="width: 100%;background-color: #ffffff;overflow:hidden;">
+            <div class="w">
+                <div class="con1 rel">
+                    <img src="/public/images/contf.png">
+
+                </div>
+            </div>
+        </div>
+<div style="width: 100%;background-color: #f3fbff;overflow:hidden;">
+    <div class="w">
+        <div class="con1 rel">
+            <img src="/public/images/content1.png">
+
+        </div>
+    </div>
+</div>
+        <div style="width: 100%;background-color: #fff;overflow:hidden;">
+            <div class="w">
+                <div class="con2 rel">
+                    <img src="/public/images/content2.png">
+
+                </div>
+            </div>
+        </div>
+        <div style="width: 100%;background-color: #f3fbff;overflow:hidden;">
+            <div class="w">
+                <div class="con3 rel">
+                    <img class="con3_top" src="/public/images/content3.png">
+
+                </div>
+            </div>
+        </div>
+
+

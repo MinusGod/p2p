@@ -1,0 +1,88 @@
+%{
+	business.User currUser = business.User.currUser();
+}%
+<div class="y_wtbg">
+		<div class="y_zhtop clr">
+			<!-- peo -->
+			<div class="y_zhimg">
+				<div class="y_zhimgs">
+					#{img src:"${user?.photo}",id:"image",alt:"头像",width:"146",height:"140"}#{/img}
+					<a href="#" title="">更换头像</a>
+					<input type="file"  name="imgFile" id="imgFile" onchange="upload('imgFile','image');" />
+				</div>
+			</div>
+			<!-- left -->
+			<div class="y_zhtlef">
+				<p>
+					<span>您好，${user?.name}</span>
+					<a href="@{front.account.Message.systemMsgs()}">未读站内信（<sapn id="unreadSystemMsgCount"></sapn>）封 </a>
+				</p>
+				<i class="i1 #{if currUser?.idNumber !='' && currUser?.realityName !='' && currUser?.idNumber !=null && currUser?.realityName !=null} click #{/if}" title="身份认证"></i>
+				
+				<i class="i2 #{if currUser?.isMobileVerified} click #{/if}"" title="手机认证"></i>
+				<i class="i3 #{if currUser?.isEmailVerified} click #{/if}" title="邮箱认证"></i>
+				<i class="i4 #{if currUser?.payPassword !='' && currUser?.payPassword!=null} click #{/if}" title="密码认证"></i>
+			<!-- 	<i class="i5 #{if currUser?.vipStatus} click #{/if}" title="开启VIP"></i> -->
+			</div>
+			<!-- right -->
+			<div class="y_zhtrgh">
+				<a href="@{front.account.FundsManage.recharge()}" title="" class="cz">充值</a>
+				<a href="@{front.account.FundsManage.withdrawal()}" title="" class="tx">提现</a>
+			</div>
+		</div>
+	</div>
+	
+	
+	<script>
+	 count();
+	function count(){
+				var countMessage = #{jsAction @front.account.Message.countMessage()/}
+	      		$.post(countMessage(),function(data){
+    					var unreadSystemMsgCount = data.unreadSystemMsgCount;
+    					var unreadInboxMsgCount = data.unreadInboxMsgCount;
+    					var userBidQuestions = data.userBidQuestions;
+    					var count=0;
+    					if(typeof(unreadSystemMsgCount) != "undefined"){
+    						count+=unreadSystemMsgCount;
+    						
+    					}
+    					
+    					if(typeof(unreadInboxMsgCount) != "undefined"){
+    						count+=unreadInboxMsgCount;
+    						
+    					}
+    					
+    					if(typeof(userBidQuestions) != "undefined"){
+    						count+=userBidQuestions;
+    		
+    					}
+    					$("#unreadSystemMsgCount").html(count);
+    	          })
+	}
+
+
+	function upload(imgFile, image) {
+		$.ajaxFileUpload({
+			url : '@{front.account.AccountHome.uploadPhoto()}',
+			secureuri : false,
+			fileElementId : 'imgFile',
+			dataType : 'text',
+			success : function(data) {
+				data = $.evalJSON(data);
+				if (data.code < 0) {
+					alert(data.msg);
+
+
+
+
+					return;
+				}
+				$("#image").attr("src", data.filename);
+				$("#imgFile").val('');
+			},
+			error : function(data, status, e) {
+				alert("上传图片失败");
+			}
+		})
+	}
+</script>

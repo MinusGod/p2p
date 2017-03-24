@@ -1,0 +1,27 @@
+#{extends 'common/supervisor.html' /}
+#{set title:'奖励统计' /}
+<div class="xn_c_contentwarp">
+  <div class="xn_c_contentlist">
+    #{include "supervisor/awardStatistics/leftBar.control"/}
+    #{include 'supervisor/awardStatistics/AwardStatisticsAction/voucherSend.control'/} 
+  </div>
+</div>
+
+<div class="xn_c_ban_jox xn_c_ban_jox_qxsz" id="xf_ht_fkzh_ttc" style="display:none">
+</div>
+
+<div class="xn_c_ban_jox" id="xf_ht_tjgly_ttc" style="display:none;height:400px;overflow:auto;">
+</div>
+
+<div class="xn_c_ban_jox" id="xf_ht_bjgly_ttc" style="display:none;height:400px;overflow:auto;">
+</div>
+
+<div class="xn_c_ban_jox xn_c_ban_jox_qxsz" id="xf_ht_szqxz_ttc">
+</div>
+
+<script type="text/javascript">  
+
+$("#close1").click(function(){
+  $("#xf_ht_fkzh_ttc").hide();
+});
+</script>

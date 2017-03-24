@@ -1,0 +1,127 @@
+#{extends 'wechat/common.html' /}
+<body>
+	<div class="s_center">
+		<header class="s_header">
+            <a onclick="javascript:history.go(-1)" class="s_goback"></a>
+			<span>充值</span>
+			<a href="@{wechat.account.WechatAccountHome.accountInfo()}" class="icobg"></a>
+		</header>
+		<div class="s_czbody">
+		#{form @wechat.account.WechatAccountHome.submitRecharge(), id:'paySubmit'}
+    <input type="hidden" name="uuidRepeat" value="${flash?.success}">
+    <input type="hidden" id="type" name="type" />
+    <input type="hidden" id="bankType" name="bankType" />
+			<ul class="s_czuser">
+				<li>真实姓名：<strong>${user?.realityName}</strong></li>
+				<li>账户：<strong>${user?.name}</strong></li>
+				<li>请输入充值金额：<input type="text" class="text" id="money" name="money" onkeyup="ndigitInteger(this,8)"/><span>元，最低充值${rechargeLowest}元</span></li>
+				<li>
+					充值类型：
+					
+					  <span class="s_likeradio"><i class="s_radio" checked="checked" id="guofuCheck" onclick="select(2)"></i><label>账号直充</label></span>
+				</li>
+				<li>
+				
+				</li>
+				<li>
+					<input value="确定充值" type="button" class="s_czsubbtn"  Onclick="recharge()"/>
+				</li>
+			</ul>
+		#{/form}
+		</div>
+	</div>
+	
+	<script type="text/javascript">
+var bankNum;
+var typeNum
+
+$(function(){
+	
+	if('${flash.error}' != '') {
+		alert('${flash.error}');
+	}
+})
+
+$(function(){
+ if(${payType[0]?.is_use} & ${payType[1]?.is_use}){
+      $("#payTypes").hide();
+      $("#selectBank").show();
+      $("#type").val(1);
+      $("#bankType").val(0);
+ }else{
+     if(${payType[0]?.is_use}){
+        $("#payTypes").hide();
+        $("#selectBank").show();
+        $("#type").val(1);
+        $("#bankType").val(0);
+        return;
+     }
+     
+     if(${payType[1]?.is_use}){
+        $("#payTypes").show();
+        $("#selectBank").hide();
+        $("#type").val(2);
+        $("#bankType").val(0);
+        return;
+     }
+   }
+});
+
+function recharge(){
+   
+    
+    if($("#money").val() == ''){
+  	  alert("充值金额不能为空");
+  	  return;
+    }
+    if($("#money").val() < ${rechargeLowest}){
+    	  alert("最低充值${rechargeLowest}元");
+    	  return;
+      }
+    if($("#money").val() > ${rechargeHighest}){
+  	  alert("充值金额不能大于${rechargeHighest}");
+  	  return;
+    }
+    
+    
+    $("#paySubmit").submit();
+}	
+
+function select(num){
+ if(num == 1){
+ /*    $("#payTypes").hide();
+    $("#selectBank").show();
+    $("#huanxunCheck").removeAttr("checked");
+    $("#guofuCheck").attr("checked","checked"); */
+    $("#type").val(num);
+ }
+  
+  if(num == 2){
+  /*   $("#payTypes").show();
+    $("#selectBank").hide();
+    $("#guofuCheck").removeAttr("checked");
+    $("#huanxunCheck").attr("checked","checked"); */
+    $("#type").val(num);
+  }
+}
+
+function selectBank(num){
+  $("#bank_0").removeClass("clicked");
+  $("#bank_"+bankNum).removeClass("clicked");
+  $("#bank_"+num).addClass("clicked");
+  $("#bankType").val(num)
+  bankNum = num;
+}
+
+function payTypes(num){
+  $("#pay_"+typeNum).removeClass("clicked");
+  $("#pay_0").removeClass("clicked");
+  $("#pay_"+num).addClass("clicked");
+  $("#bankType").val(num);
+  typeNum = num;
+}
+</script>
+</body>
+
+
+

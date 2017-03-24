@@ -1,0 +1,39 @@
+﻿<div class="xn_c_content_left">
+  <div class="xn_c_content_leftul">
+    <ul>
+      <li>
+        <div class="xn_c_li_head_one" id="lab_1">
+          <a class="xn_c_li_head_a" href="@{supervisor.awardStatistics.AwardStatisticsAction.countTop()}">粉丝王</a>
+        </div>
+      </li>
+      <li>
+        <div class="xn_c_li_head_one" id="lab_2">
+          <a class="xn_c_li_head_a" href="@{supervisor.awardStatistics.AwardStatisticsAction.speedTop()}">速度王</a>
+        </div>
+      </li>
+      <li>
+        <div class="xn_c_li_head_one" id="lab_3">
+          <a class="xn_c_li_head_a" href="@{supervisor.awardStatistics.AwardStatisticsAction.bidTop()}">投标王</a>
+        </div>
+      </li>
+      <li>
+        <div class="xn_c_li_head_one" id="lab_3">
+          <a class="xn_c_li_head_a" href="@{supervisor.awardStatistics.AwardStatisticsAction.voucherSend()}">红包推送</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="xn_c_con_leftbutton">
+    <div class="xn_c_con_enimg">导航点击</div>
+  </div>
+</div>
+<script>
+$(function(){
+$(".xn_c_li_head_one").click(function(){
+	$(this).addClass("xn_c_li_head_oneishow");
+
+});
+})
+</script>
+<script type="text/javascript" src="@{'/public/javascripts/tab/tab_mg_award.js'}"></script>
+ 

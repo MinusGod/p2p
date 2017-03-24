@@ -1,0 +1,10 @@
+
+		
+		<div class="y_aqbg3">
+		<div class="y_main">
+			<h3 class="y_aqh1">${types?.get(4)?.name}</h3>
+			<ul class="y_aqul2">
+				${FAQ?.content}
+			</ul>
+		</div>
+	</div>

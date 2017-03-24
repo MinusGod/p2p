@@ -1,0 +1,72 @@
+#{extends 'common/supervisor.html' /} #{set title:'直客规则设置' /}
+<div class="xfht_t_j_k"> 
+<!--左-->
+#{include "supervisor/networkMarketing/CPSSpreadAction/networkMarketingLeft.control"/}
+  <div class="xn_c_content">
+  <style type="text/css">
+			.xf_ht_gl_jgone_botton ul li{line-height:35px;padding-left:180px;margin-bottom: 15px;}
+			.xf_ht_gl_jgone_botton ul li input{height:21px;margin-left:15px;margin-right:5px;padding-left:10px;}
+  </style>
+    <div class="xf_content_add">
+      <div class="xfht_t_j_y_2">
+      <!--右上-->
+        <div class="xf_ht_obu_fklm">
+                           直客规则设置
+        </div>
+        <!-- 直客设置 -->
+        <div class="xf_ht_gl_jgone_botton" align="center">
+				<br/>
+				<li>直客提成：新增投资会员人数 &nbsp;*&nbsp; <input class="xfht_zr_input" type="text" style="width:60px;" id="everyUserFee" value="${spreaderRule?.everyUserFee}" onkeyup="value=value.replace(/[^\d\.]/g, '').replace(/^\.+/, '').replace(/^(100|\d{1,2}(\.\d{0,2})?).*/,'$1')"/> 元 + 
+					投资金额 &nbsp;*&nbsp; <input class="xfht_zr_input" type="text" style="width:60px;" id="everyMonthInvestRate" value="${spreaderRule?.everyMonthInvestRate}" onkeyup="value=value.replace(/[^\d\.]/g, '').replace(/^\.+/, '').replace(/^(100|\d{1,2}(\.\d{0,2})?).*/,'$1')"/> ‰ + 
+					投资金额 &nbsp;*&nbsp; (当月投资人数/当月推广人数) &nbsp;*&nbsp; <input class="xfht_zr_input" type="text" style="width:60px;" id="transformRate" value="${spreaderRule?.transformRate}" onkeyup="value=value.replace(/[^\d\.]/g, '').replace(/^\.+/, '').replace(/^(100|\d{1,2}(\.\d{0,2})?).*/,'$1')"/> ‰
+				</li>
+				<br/>
+				<li>
+					被推广人理财手续费折扣：<input class="xfht_zr_input" type="text" style="width:60px;" id="investDiscount" value="${spreaderRule?.investDiscount}" onkeyup="value=value.replace(/[^\d\.]/g, '').replace(/\.+/, '').replace(/^(100|\d{1,2})*/,'$1')"/> %
+			    </li>
+			    <br/>
+		</div>
+		<div class="xf_htgl_jgsix">
+            <input class="xf_ht_tcc_button_ok" style="position: relative; top: 10px; left: 417px;" type="button" onclick="saveInvitationCode();" value="保存">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+	//正整数正则表达式
+	
+	$(function(){
+		//高亮显示
+		showHighLight(4,4,9);
+	})
+	
+	function saveInvitationCode(){
+
+		var everyUserFee = $("#everyUserFee").val();
+		var everyMonthInvestRate = $("#everyMonthInvestRate").val();
+		var transformRate = $("#transformRate").val();
+		var investDiscount = $("#investDiscount").val();
+		
+		$.ajax({
+			url : "@{supervisor.networkMarketing.SpreadAction.saveSpreaderRule()}",
+			type : "POST",
+			data : {
+			"everyUserFee" : everyUserFee,
+			"everyMonthInvestRate" : everyMonthInvestRate,
+			"transformRate" : transformRate,
+			"investDiscount" : investDiscount
+			},
+			success : function(data) {
+				alert(data.msg);
+			},
+	        error : function(data) {
+	            //如请求错将错误信息输出到当前页面
+	            document.write(data.responseText);
+	            return;
+		    }
+		});
+	}
+	
+</script>

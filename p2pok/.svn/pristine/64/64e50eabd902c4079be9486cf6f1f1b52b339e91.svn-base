@@ -1,0 +1,28 @@
+ %{
+  business.BackstageSet  currBackstageSet = business.BackstageSet.getCurrentBackstageSet();
+}%
+
+
+		<!-- left-nav -->
+	<div class="y_wtrgh">
+		<!-- right-main -->
+		#{if contentList != null && contentList.size > 0}
+			#{list contentList}
+			
+		  		<h3 class="y_wth2"><span>${news?.name}</span></h3>
+		  			
+		  			<div class="y_gydiv">	${_?.raw()}
+			</div>
+			
+			#{/list}
+		#{/if}
+		
+		</div>
+	
+
+	
+ <script>
+	$(function(){
+			$("#companyDescription").addClass("click");
+	})
+</script>			

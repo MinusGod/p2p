@@ -1,0 +1,376 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    %{
+    business.User currUser = business.User.currUser();
+    business.BackstageSet  currBackstageSet = business.BackstageSet.getCurrentBackstageSet();
+    String platUrl = constants.Constants.BASE_URL;
+    java.util.Map<String,java.util.List<business.BottomLinks>> bottomLinks = business.BottomLinks.currentBottomlinks();
+    java.lang.String type1Name = business.NewsType.queryName(1);
+    java.lang.String type2Name = business.NewsType.queryName(2);
+    java.lang.String type4Name = business.NewsType.queryName(4);
+    boolean ipsEnable = constants.Constants.IPS_ENABLE;
+    boolean debtUse = constants.Constants.DEBT_USE;
+    }%
+    <title>#{get 'title' /}</title>
+    <meta name="keywords" content="${currBackstageSet?.seoKeywords}" />
+    <meta name="description" content="${currBackstageSet?.seoDescription}" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta property="qc:admins" content="133011667666155146375" />
+    <meta property="wb:webmaster" content="6582954f8f7d9e1d" />
+    <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.ico'}">
+    <script type="text/javascript" src="@{'/public/javascripts/jquery-2.0.js'}"></script>
+    <link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/site1.css'}" />
+    <link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/reset1.css'}" />
+    <script type="text/javascript" src="@{'/public/javascripts/yycommon.js'}"></script>
+    <script type="text/javascript" src="@{'/public/javascripts/commonmark.js'}"></script>
+
+<script type="text/javascript">
+    function redPush()
+    {
+        JSInterface.changeActivity();
+    }
+</script>
+
+</head>
+
+<body>
+
+
+#{include "common/frontMainTop.html"/}
+<div style="position: relative;z-index: 20;background-color: #ffffff;width: 100%;">
+    <div style="width: 1085px;margin: 0px auto;height: 80px;">
+        <a href="@{front.home.HomeAction.home}"  class="y_logo">#{img src:"${currBackstageSet.platformLogoFilename}"}#{/img}</a>
+        <div style="height:20px;padding-top:25px;float: right;width:600px;text-align: right;">
+            <ul class="fftopul" style="float: right;">
+
+                <li><a href="@{front.help.HelpCenterAction.index(13)}">帮助中心</a>|</li>
+                <li><a href="@{front.home.HomeAction.getStart(27)}">新手指引</a></li>
+                <li>全国服务热线：40000-10068</li>
+            </ul>
+
+            #{if currUser == null || loginOrRegister == "loginOrRegister"}
+            <div class="y_navbox" style="float:right;">
+                <a href="javascript:void(0);" title="" class="ydl_dl"><i class="y_topdl y_bg"></i><span style="color: #86b34b">立即登录</span></a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+                <a href="javascript:void(0);" title="" class="y_topzc"><span style="color: #2e9ece" class="kszcfff">快速注册</span></a>&nbsp;&nbsp;&nbsp;|
+            </div>
+            #{/if}
+            #{elseif currUser != null && loginOrRegister == null }
+            <div class="y_navbox">
+                您好，【<a href="@{front.account.AccountHome.home()}"><i class="y_topdl y_bg"></i>${currUser?.name}</a>】/
+                <a href="@{front.account.loginAndRegisterAction.logout()}" >安全退出</a>
+            </div>
+            #{/elseif}
+        </div>
+    </div>
+</div>
+<!--<div class="y_mainmax">-->
+
+
+<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+<meta name="renderer" content="webkit"/>
+
+
+<style>
+    a{text-decoration:none;}
+    .red_p1{width: 100%;height: 286px;background: url("/public/images/marketImgs/red_push_01.png") top center no-repeat;}
+    .red_p2{width: 100%;height: 362px;background: url("/public/images/marketImgs/red_push_02.png") top center no-repeat;}
+    .red_p3{width: 100%;height: 279px;background: url("/public/images/marketImgs/red_push_03.png") top center no-repeat;}
+    .red_p4{width: 100%;height: 248px;background: url("/public/images/marketImgs/red_push_04.png") top center no-repeat;}
+    .red_p5{width: 100%;height: 296px;background: url("/public/images/marketImgs/red_push_05.png") top center no-repeat;}
+    .red_p6{width: 100%;height: 275px;background: url("/public/images/marketImgs/red_push_06.png") top center no-repeat;}
+    .red_p7{width: 100%;height: 264px;background: url("/public/images/marketImgs/red_push_07.png") top center no-repeat;}
+    .red_p8{width: 100%;height: 312px;background: url("/public/images/marketImgs/red_push_08.png") top center no-repeat;}
+    .red_p9{width: 100%;height: 292px;background: url("/public/images/marketImgs/red_push_09.png") top center no-repeat;}
+    .red_p10{width: 100%;height: 299px;background: url("/public/images/marketImgs/red_push_10.png") top center no-repeat;}
+    .red_p11{width: 100%;height: 271px;background: url("/public/images/marketImgs/red_push_11.png") top center no-repeat;}
+    .red_p12{width: 100%;height: 409px;background: url("/public/images/marketImgs/red_push_12.png") top center no-repeat;}
+    .red_p13{width: 100%;height: 287px;background: url("/public/images/marketImgs/red_push_13.png") top center no-repeat;}
+    .red_p14{width: 100%;height: 545px;background: url("/public/images/marketImgs/red_push_14.png") top center no-repeat;}
+    .red_p15{width: 100%;height: 370px;background: url("/public/images/marketImgs/red_push_15.png") top center no-repeat;}
+    .red_p16{width: 100%;height: 486px;background: url("/public/images/marketImgs/red_push_16.png") top center no-repeat;}
+    .special_bot h5{width:220px;position:relative;top:225px;left:30px;font-family:'microsoft yahei';font-size:32px;margin: auto auto;}
+    .special_bot h5 a{color: #8f0100;}
+    .special_bot h5 a:hover{color: #8f0100;}
+
+</style>
+
+
+
+<div>
+
+    <div class="special_center">
+
+         <div class="red_p1"></div>
+         <div class="red_p2"></div>
+         <div class="red_p3"></div>
+         <div class="red_p4"></div>
+         <div class="red_p5"></div>
+         <div class="red_p6"></div>
+         <div class="red_p7"></div>
+         <div class="red_p8"></div>
+         <div class="red_p9"></div>
+         <div class="red_p10"></div>
+         <div class="red_p11"></div>
+         <div class="red_p12"></div>
+         <div class="red_p13"></div>
+         <div class="red_p14"></div>
+         <div class="red_p15">
+             <div class="special_bot">
+                 <h5>
+                     #{if currUser == null || loginOrRegister == "loginOrRegister"}
+                     <div class="y_navbox">
+                         <span id="hideIos">您已是会员</span>
+                         <a href="javascript:void(0);" title="" class="y_topzc" id="iosPs"><span style="position: relative;z-index: 500;" class="kszcfff" onclick="redPush()">注册享豪礼</span></a>
+                     </div>
+                     #{/if}
+                     #{elseif currUser != null && loginOrRegister == null }
+                     <div class="y_navbox">
+                         <span style="color:#c22c25;">您已是会员</span>
+                     </div>
+                     #{/elseif}
+
+
+                 </h5>
+             </div>
+         </div>
+         <div class="red_p16"></div>
+
+    </div>
+
+</div>
+<style>
+    #hideIos{display:none;color:#c22c25;}
+</style>
+<!--ff-->
+<!-- footer start -->
+
+<div class="ry_footer" style="padding-top:20px;padding-bottom: 20px;">
+    <table style="width: 1085px;margin: 0px auto; text-align: center;position: relative;z-index: 3000;">
+        <tr>
+            <td rowspan="2" align="right" width="400">
+                <a id="logoshow" href='https://credit.szfw.org/CX20151207012561220358.html' target='_blank' style="background:url('/public/images/ry_bottom_01.png') no-repeat;width: 113px;height: 49px;display: block;">
+                </a>
+            </td>
+            <script>
+                $("#logoshow").mouseover(function(){
+                    $('#logoshow').css('background-image','url("/public/images/ry_bottom_01_hover.png")');
+                });
+                $("#logoshow").mouseout(function(){
+                    $('#logoshow').css('background-image','url("/public/images/ry_bottom_01.png")');
+                });
+            </script>
+            <td style="width:10px"></td>
+            <td align="left">沪ICP备15020738号-2 | 融友网All rights reserved © 2016</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td align="left">WWW.P2POK.COM | 上海融友金融信息服务有限公司</td>
+        </tr>
+    </table>
+</div>
+<div style="text-align: center;color: #c0c0c0; background-color: #6b6a6a;font-size: 14px;line-height: 30px;">市场有风险 &nbsp;&nbsp;&nbsp;投资需谨慎</div>
+<!-- footer end -->
+
+
+
+</body>
+
+
+<script type="text/javascript">
+
+    $(function(){
+        $('.wxffry').click(function(){
+            $('.weixryw').show();
+            $('.weixrywbg').show();
+            $('.wxbgbg').show();
+        });
+    });
+    $(function(){
+        $('.weixrywbg').click(function(){
+            $('.weixryw').hide();
+            $('.weixrywbg').hide();
+            $('.wxbgbg').hide();
+        });
+    });
+    $(function(){
+        $('.wxbgbg').click(function(){
+            $('.weixryw').hide();
+            $('.weixrywbg').hide();
+            $('.wxbgbg').hide();
+        });
+    });
+    $(document).keydown(function(event){
+        if(event.keyCode == 13){
+            if(document.activeElement.id == 'name' || document.activeElement.id == 'code' || document.activeElement.id == 'password'){
+                login();
+            }
+        }
+    });
+
+    (function(){document.getElementById('___szfw_logo___').oncontextmenu = function(){return false;}})();
+    $(function(){
+        $('img.lazy').lazyload({
+            //effect:'fadeIn'
+        });
+
+        var logins = '${login}';
+        if(logins=='login'){
+            $(".ydl_dl").click();
+        }else if(logins=="register"){
+            $(".y_topzc").click();
+        }
+        $("#xf_h_idx_1_hydjfdgdf").limit();
+
+        /* 所有继承页面flash.error的值弹框,被继承页面则无需再写 */
+        if('${flash.error}' !='') {
+            alert('${flash?.error}');
+            if('${flash?.emailUrl}' !='') {
+                window.open('${flash?.emailUrl}');
+            }
+        }
+        /*与重复提交冲突，注释，如功能发生冲突，请更改其他处
+         if('${flash.success}' != ''){
+         alert('${flash?.success}');
+         }
+         */
+        //获取图片验证码
+        if('${currUser?.name}' == '' && '${loginOrRegister}' == '') {
+            var setCode = #{jsAction @front.account.LoginAndRegisterAction.setCode()/}
+                    $.post(setCode({}),function(data){
+                        var arr=eval(data);
+                        var img = arr.img;
+                        $("#img").attr("src","@{front.account.LoginAndRegisterAction.getImg()}?id="+img)
+                        $("#randomID").val(img);
+                    });
+        }
+    });
+
+    function vipApply(){
+
+        /** 检查用户是否激活*/
+        var result = frontJSIntercepter();
+
+        if(!result){
+            showDiv($("#xf_mem_acc_sjvip_tcc"));
+        }
+    };
+
+    function login(){
+        var name = $("#name").val();
+
+        if(name == ''){
+            alert("请输入用户名或手机号");
+            return;
+        }
+
+        if($("#password").val() == ''){
+            alert("请输入密码");
+            return;
+        }
+
+        if($("#code").val() == ''){
+            alert("请输入验证码");
+            return;
+        }
+        $("#loginsubmit").submit();
+    };
+
+    function change(){
+        var setCode = #{jsAction @front.account.LoginAndRegisterAction.setCode()/}
+                $.post(setCode({}),function(data){
+                    var arr=eval(data);
+                    var img = arr.img;
+                    $("#img").attr("src","@{front.account.LoginAndRegisterAction.getImg()}?id="+img);
+                    $("#randomID").val(img);
+                });
+    };
+
+    function AddFavorite(url,title) {
+        var ua = navigator.userAgent.toLowerCase();
+        if(ua.indexOf("msie 8")>-1){
+            external.AddToFavoritesBar(url,title,'');//IE8
+        }else{
+            try {
+                window.external.addFavorite(url, title);
+            } catch(e) {
+                try {
+                    window.sidebar.addPanel(title, url, "");//firefox
+                } catch(e) {
+                    alert("加入收藏失败，请使用Ctrl+D进行添加");
+                }
+            }
+        }
+    }
+
+    /** 前台，拦截器 ，拦截内容：登陆拦截，资金托管开户拦截，已被拦截返回true */
+    function frontJSIntercepter(){
+        //未登录
+        if('${currUser?.name}' == ''){
+
+            window.location.href=http_path+"/login";
+            return true;
+        }
+
+        //托管未开户
+        if('${ipsEnable}'=='true' && '${currUser?.ipsAcctNo}'==''){
+
+            window.location.href=http_path+"/front/account/trustAccount";
+            return true;
+        }
+
+        //用户未激活
+        if('${ipsEnable}'=='false' && '${currUser?.isEmailVerified}'=='false' && '${currUser?.isMobileVerified}'=='false'){  //邮箱和手机都未激活，则用户未激活
+
+            window.location.href=http_path+"/front/account/inactiveUser";
+            return true;
+        }
+
+        if('${currUser?.realityName}' == ''){
+
+            window.location.href=http_path+"/front/account/certification";
+            return true;
+        }
+
+        return false;
+
+    }
+
+    /**
+     * 拦截器拦截后，跳转到相应的页面（AJAX）
+     */
+    function checkIntercepterResult(data){
+
+        if('UnLogin' == data){
+
+            window.location.href=http_path+"/login";
+            return true;
+        }
+
+        if('NullIpsAccount' == data){
+
+            window.location.href=http_path+"/front/account/trustAccount";
+            return true;
+        }
+
+        if('InactiveUser' == data){
+
+            window.location.href=http_path+"/front/account/inactiveUser";
+            return true;
+        }
+
+        if('NullRealName' == data){
+
+            window.location.href=http_path+"/front/account/certification";
+            return true;
+        }
+
+        return false;
+
+    }
+</script>
+</html>
+
+
+
+

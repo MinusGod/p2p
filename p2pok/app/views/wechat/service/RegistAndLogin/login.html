@@ -1,0 +1,159 @@
+
+#{extends 'wechat/common.html' /}
+#{set title:'登录' /}
+ 
+<div class="s_main s_center">
+    <header class="s_header">
+    登录
+    </header>
+    <div class="s_fffbg">
+    <form id="form1" method="post" action="@{wechat.service.RegistAndLogin.logining()}">
+    <input type="hidden" name="url" value="${url}">
+    <div class="s_bindbody">
+    <div class="s_bindinput">
+    <label><i class="icobg ico01"></i></label>
+    <input id="name" onblur="blu()" name="name" type="text" value="${flash?.name}" placeholder="请输入用户名/手机号" />
+    <div class="s_usernames">
+    </div>
+    </div>
+    <div class="s_error"></div>
+    <div class="s_bindinput">
+    <label><i class="icobg ico02"></i></label>
+    <input id="password" name="password" type="password" onblur="blur_pw()" value="" placeholder="请输入密码" />
+    </div>
+    <div class="s_error" style="display:none;">用户名长度为3-11位中文、字母、数字、'_'组合</div>
+    <p class="s_forgetpw"><a href="/wechat/registAndLogin/forgetPassword">忘记密码？</a></p>
+    <div class="s_bindinput">
+    <label><i class="icobg ico03"></i></label>
+    <input id="code" name="code" type="text" class="shorttext"  placeholder="请输入验证码" />
+    <img class="s_yzm" id="img"  />
+
+    <!-- 验证码随机码 /public/images/wechat/yzm.png-->
+    <input type="hidden" name="randomID" id="randomID" />
+    </div>
+
+    <div   class="s_error"><span id="errorInfo" style="color: red;font-size: 12px;">${flash?.error}</span></div>
+    <div  class="s_error" ><span id="error" style="color: red;font-size: 12px;"> </span></div>
+     <!--暂时屏蔽此功能 modify by xd.wang  -->  
+      <!--  <div class="s_rembermsg">
+        <input type="checkbox"  class="s_checkbox" id="checkbox" name="checkbox">记住用户名</input>
+        </div> --> 
+        <input id="submit" type="submit" value="立即登录" class="s_bindbtn" />
+    </div>
+    </form>
+    </div>
+    <div class="s_loginbtm">没有账户，<a href="@{wechat.service.registAndLogin.register}">马上注册</a></div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        document.title='融友网-登录'
+    });
+    $("#checkbox").click(function(){
+            $("#checkbox").toggleClass("s_checkbox[checked]");
+    });
+    $(function () {
+
+        var checkbox = "${flash?.checkbox}";
+        if ("on" == checkbox) {
+            $("#checkbox").attr("checked", true);
+        } else {
+            $("#checkbox").attr("checked", false);
+        }
+    });
+    //得到验证码
+    $(function () {
+        var setCode = #{jsAction @front.account.loginAndRegisterAction.setCode()/}
+                $.post(setCode({}), function (data) {
+                    var arr = eval(data);
+                    var img = arr.img;
+                    $("#img").attr("src", "@{front.account.loginAndRegisterAction.getImg()}?id=" + img);
+                    $("#randomID").val(img);
+                });
+    });
+    //改变验证码
+    $("#img").click(function () {
+        var setCode = #{jsAction @front.account.loginAndRegisterAction.setCode()/}
+                $.post(setCode({}), function (data) {
+                    var arr = eval(data);
+                    var img = arr.img;
+                    $("#img").attr("src", "@{front.account.loginAndRegisterAction.getImg()}?id=" + img)
+                    $("#randomID").val(img);
+                });
+    });
+    function blu() {
+        $("#errorInfo").empty();
+        $("#error").empty();
+        if ($("#name").val() == '') {
+            $("#error").html("请输入密码");
+            return false;
+        }
+        if ($("#name").val().length < 3 || $("#name").val().length > 11) {
+            $("#error").html("用户名长度为3-11位中文、字母、数字、'_'组合");
+            return false;
+        }
+        ;
+        if (!/^[\u4E00-\u9FA5a-zA-Z0-9_]{1,}$/.test($("#name").val())) {
+            $("#error").html("用户名长度为3-11位中文、字母、数字、'_'组合");
+            return false;
+        }
+        ;
+
+    }
+    function blur_pw() {
+        $("#errorInfo").empty();
+        $("#error").empty();
+        if ($("#password").val() == '') {
+            $("#error").html("请输入密码");
+            return false;
+        }
+
+        if (!/^[a-zA-Z0-9_]{1,}$/.test($("#password").val())) {
+            $("#error").html("密码长度为6-16位数字、字母、'_'组合");
+            return false;
+        }
+
+
+    }
+    $("#submit").click(function () {
+    
+        var user = $("#name");
+        check = $("#checkbox");
+        loUser = localStorage.getItem("user") || "";
+        user.value = loUser;
+        if(loUser !== ""){
+            check.setAttribute("checked","");
+        };
+        if(check.checked){
+            localStorage.setItem("user",user.value);
+        }else{
+            localStorage.setItem("user","");
+        };
+        $("#error").empty();
+        $("#errorInfo").empty();
+        if ($("#name").val() == '') {
+            $("#errorInfo").html("请输入用户名");
+            return false;
+        }
+
+        if ($("#password").val() == '') {
+            $("#errorInfo").html("请输入密码");
+            return false;
+        }
+        var pas = $("#password").val();
+        if (!/^[a-zA-Z0-9_]{1,}$/.test(pas)) {
+            $("#errorInfo").html("密码长度为6-16位数字、字母、'_'组合");
+            return false;
+        }
+
+        if ($("#code").val() == '') {
+            $("#errorInfo").html("请输入验证码");
+            return false;
+        }
+        $("#form1").submit();
+
+
+    });
+
+</script>

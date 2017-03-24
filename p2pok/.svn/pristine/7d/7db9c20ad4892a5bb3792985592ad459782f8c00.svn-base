@@ -1,0 +1,100 @@
+#{extends 'wechat/common.html' /}
+<body>
+<div id="paypop"  >
+    <div class="ln_bobo"  >
+        <br>
+        <a href="@{wechat.account.WechatAccountHome.accountInfo}"><img id="close"
+                 src="/public/images/wechat/popup/clos.jpg"></a>
+        <img class="err"  src="/public/images/wechat/popup/err.png"><br><br>
+        <img class="rig" style="" src="/public/images/wechat/popup/right.png"><br><br>
+        <p>
+            <span class="val">${error.msg}</span>!</p>
+        <br><br>
+        <p   id="jumpTo">
+            <span>5秒后将自动跳转至${error.returnMsg}！</span></p>
+        <br>
+              <button><a href="@{wechat.service.InvestAction.queryAllBids}"
+				>我要投资</a></button>
+
+    </div>
+</div>
+<style>
+  #paypop{
+      background-color: #666666;width:100%;min-height: 600px; text-align: center
+  }
+    .ln_bobo{
+        padding-bottom: 20px;position: relative;top:50px;
+        -moz-border-radius: 10px 10px 10px 10px;
+        -webkit-border-radius: 10px 10px 10px 10px;
+        border-radius: 10px 10px 10px 10px;width: 90%;height:auto;background-color: #ffffff;
+        margin-left: 5%
+    }
+#close{
+    float: right;margin-right: 10px;width: 24px;height: 24px
+}
+    .err{
+        margin-left:6%;display:none
+    }
+.rig{
+    margin-left: 6%
+}
+  .ln_bobo>p:first-child{
+      font-size: 25px; font-weight: bold; color: #309DCD;
+  }
+  .ln_bobo>p:last-child{
+      font-size: 20px; font-weight: bold; color: #999999;
+  }
+  button{
+      border-radius: 5px ;border:solid 1px #309DCD;
+      background-color: #309DCD;width: 80%;height: 40px;
+      font-size: 20px;
+  }
+  button>a{
+      color:#ffffff;
+  }
+
+</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+        if(($(".val").text())=="提现成功"){
+            $("button").css("display", "none");
+            $(".err").css("display", "none");
+            $(".rig").css("display", "inline-block");
+             return false;
+        }else
+        if(($(".val").text())=="充值成功"){
+            $(".err").css("display", "none");
+            $(".rig").css("display", "inline-block");
+            return false;
+        }else
+        {
+            $("button").css("display", "none");
+            $(".err").css("display", "inline-block");
+            $(".rig").css("display", "none");
+
+        }
+    });
+    $("#close").click(function () {
+        $("#paypop").css("display", "none");
+
+
+    });
+
+
+    function countDown(secs, surl) {
+        var jumpTo = document.getElementById('jumpTo');
+        jumpTo.innerHTML = secs + "秒后将自动跳转至${error.returnMsg}！";
+        if (--secs > 0) {
+            setTimeout("countDown(" + secs + ",'" + surl + "')", 1000);
+        } else {
+            location.href = surl;
+            //window.close();
+        }
+    }
+</script>
+
+<script type="text/javascript">$(function () {
+    countDown(5, '${error.returnUrl}');
+})</script>
+ 
+ 

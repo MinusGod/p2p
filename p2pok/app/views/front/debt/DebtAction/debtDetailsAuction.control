@@ -1,0 +1,78 @@
+%{
+	business.User currUser = business.User.currUser();
+}%
+<div class="y_bdrgh">
+				<div class="y_bdrgh1">
+					<input type="hidden" id = "investLocation"/>
+					<span class="y_bdrgwid">本息合计</span><span class="y_bdrgspan">#{format money:debt.debtAmount}#{/format}元</span><br/>
+					<span class="y_bdrgwid">
+						拍卖底价</span><span class="y_bdrgspan">${debt.transferPrice?.format('###,##0.00')}元</span><br/>
+				</div>
+				<div class="y_bdrgh2">
+						您的账户可用余额<br/>
+					<span class="y_bdrgspan">￥#{if currUser==null}0.00#{/if}#{else}${currUser?.balance?.format('###,##0.00')}#{/else}元</span>
+						<a href="@{front.account.FundsManage.recharge()}" title="">充值</a>
+				</div>
+				
+				<p class="y_bdp3"></br>目前拍价:
+				<span class="y_bdtxt">￥#{if currUser==null}0.00#{/if}#{else}#{format money:debt?.maxOfferPrice}#{/format}#{/else}元</span>
+				</br>
+				</p>
+				
+				#{if debt.status == 1 && new java.util.Date() < debt?.endTime}
+					<a class="y_bdtba" onclick="showDivDebt();">我要竞拍</a>
+			    #{/if}
+			</div>	
+
+
+					
+		<script>
+				
+				showTime();
+				
+				 function showTime(){
+				 		
+				      var endTime =" ${debt?.endTime?.format('yyyy/MM/dd HH:mm:ss')}";
+				      var date = new Date(endTime);
+			          var tt = date.getTime();
+				      var now = new Date().getTime();
+		              var cha = tt-now;
+		              var SysSecond=parseInt(cha);
+				 
+				 	 if (SysSecond > 0) { 
+				 	 
+   	                  int_day=Math.floor(SysSecond/86400000);
+                      SysSecond-=int_day*86400000;
+                      int_hour=Math.floor(SysSecond/3600000);
+                      SysSecond-=int_hour*3600000;
+                      int_minute=Math.floor(SysSecond/60000);
+                      SysSecond-=int_minute*60000;
+                      int_second=Math.floor(SysSecond/1000);
+            
+                    if(int_hour<10){
+             	       int_hour="0"+int_hour;
+			          }
+			 
+                   if(int_minute<10){
+           		       int_minute="0"+int_minute;
+		              }
+		     
+       		       if (int_second<10){
+            	      int_second="0"+int_second;
+                       }
+             
+  			       $("#day").html(int_day);
+  			       $("#hour").html(int_hour);
+  			       $("#minutes").html(int_minute);
+  			       $("#seconds").html(int_second);
+  		       }else{
+  		       
+  		       	   $("#day").html("00");
+  			       $("#hour").html("00");
+  			       $("#minutes").html("00");
+  			       $("#seconds").html("00");
+  		       }
+			setTimeout('showTime()',1000); 
+	     }
+				
+		</script>

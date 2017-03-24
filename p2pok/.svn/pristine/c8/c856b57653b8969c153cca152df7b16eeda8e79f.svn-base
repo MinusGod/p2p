@@ -1,0 +1,184 @@
+#{extends 'wechat/common.html' /}
+<body>
+<div class="s_center">
+    <header class="s_header1 text_center">
+        <a href="@{wechat.account.WechatAccountHome.home}" class="s_goshouye"></a>
+        <span><a href="@{wechat.account.WechatAccountHome.baseInfo()}">我的账户</a></span>
+        <a href="@{wechat.account.WechatAccountHome.securitySet}" class="s_shezhi"></a>
+    </header>
+    <div class="s_accounttop">
+        <div class="s_user">
+            <div class="userl">
+                #{img src:"${user?.photo}",alt:"",class:"userhead"}#{/img}<br/>
+                <span class="s_username" limit="5">${user?.name}</span>
+            </div>
+            <div class="userr">
+                账户总额：￥${accountInfo?.user_account?.format('###,##0.00')}<br/>
+                冻结金额：￥${accountInfo?.freeze?.format('###,##0.00')}<br/>
+                可用余额：￥${(accountInfo?.user_account-accountInfo?.freeze)?.format('###,##0.00')}
+
+                <div class="userlink">
+                    <!--后台可通过类名“have”，切换样式-->
+                    <a href="@{wechat.account.WechatAccountHome.message()}" class="icobg ico01 have">
+                        #{if unReadCount == 0}
+                        #{/if}
+                        #{else}
+                        <i class="num">
+                            ${unReadCount}
+                        </i>
+                        #{/else}
+                    </a>
+                    <!--<a href="@{wechat.account.WechatAccountHome.securitySet}" class="icobg ico03 have  "></a>-->
+                </div>
+
+               <p><button class="qdbtn" onclick="signIn()">签到</button></p> 
+            </div>
+        </div>
+    </div>
+    <ul class="s_accountlink ">
+        <li  >
+            <a onclick="isActive(2)">
+                <span><i class="icobg ico01"></i>充值</span>
+                <i class="arrow"></i>
+            </a>
+        </li>
+        <li  >
+            <a onclick="isActive(3)">
+                <span><i class="icobg ico02"></i>提现</span>
+                <i class="arrow"></i>
+            </a>
+        </li>
+        <li >
+            <a href="@{wechat.account.WechatAccountHome.dealRecord}">
+                <span><i class="icobg ico03"></i>交易记录</span>
+                <i class="arrow"></i>
+            </a>
+        </li>
+    </ul>
+    <ul class="s_accountlink">
+        <li  >
+            <a href="@{wechat.account.WechatAccountHome.myLoanBids('0', '','1','')}">
+                <span><i class="icobg ico04"></i>我的借款标</span>
+                <i class="arrow"></i>
+            </a>
+        </li>
+        <li  >
+            <a href="@{wechat.account.WechatAccountHome.myLoanBills}">
+                <span><i class="icobg ico05"></i>我的借款账单</span>
+                <i class="arrow"></i>
+            </a>
+        </li>
+        <li  >
+            <a href="@{wechat.account.WechatAccountHome.uploadAuthDatas}">
+                <span><i class="icobg ico06"></i>上传认证资料</span>
+                <i class="arrow"></i>
+            </a>
+        </li>
+    </ul>
+    <ul class="s_accountlink">
+        <li  >
+            <a href="@{wechat.account.WechatAccountHome.myInvestBids}">
+                <span><i class="icobg ico07"></i>我的投资标</span>
+                <i class="arrow"></i>
+            </a>
+        </li>
+        <li  >
+            <a href="@{wechat.account.WechatAccountHome.myInvestBills}">
+                <span><i class="icobg ico08"></i>我的投资账单</span>
+                <i class="arrow"></i>
+            </a>
+        </li>
+        <!--  <li class="i">
+            <a href="@{wechat.account.WechatAccountHome.debeManage('1')}">
+                <span><i class="icobg ico09"></i>债权转让管理</span>
+                <i class="arrow"></i>
+            </a>
+        </li>-->
+        <li class="bag" >
+            <a href="javascript:notifyInfo()">
+                <span><i class="icobg ico09"></i>债权转让管理</span>
+                <i class="arrow"></i>
+            </a>
+        </li>
+        
+    </ul>
+    <input type="button" value="退出当前账号" class="s_loadout" onclick="loginOut()"></input>
+</div>
+</body>
+
+<script type="text/javascript">
+$(document).ready(function(){
+    document.title='融友网-我的账户'
+});
+    $(".s_accountlink li").click(function () {
+        $(this).css("background-color", "#F2F0F1");
+    });
+    $(".s_username").limit();
+
+    if ('${flash.error}' != '') {
+        alert('${flash.error}');
+    }
+
+    function loginOut() {
+        window.location.href = "@{wechat.account.WechatAccountHome.loginOut()}";
+    }
+
+
+    function isActive(num) {
+
+        var listAction = #{jsAction @wechat.account.WechatAccountHome.checkUserStatusAndActiveEmail() /};
+        $.post(listAction(), function (data) {
+            var status = data.status * 1;
+
+            if (status == '-2') {
+
+                var info = data.email;
+
+                alert("您账号未激活\n邮箱已经发送到您的:" + info + "请激活！");
+                return;
+            }
+
+            switch (num) {
+                case 1:
+                    window.location.href = "@{wechat.account.WechatAccountHome.bankManage()}";
+                    break;
+                case 2:
+                    window.location.href = "@{wechat.account.WechatAccountHome.recharge()}";
+                    break;
+                case 3:
+                    window.location.href = "@{wechat.account.WechatAccountHome.withdraw()}";
+                    break;
+            }
+        });
+    }
+    
+    function notifyInfo(){
+    	alert("即将开通此功能");
+        $(".s_accountlink .bag" ).css("background-color", "#FFFFFF");
+
+     false;
+    }
+    
+    function signIn(){
+    	 $.ajax({
+             type: "GET",
+             dataType :"json",  
+             url: "@{wechat.account.WechatAccountHome.accountSign()}",
+             data: {},
+             success: function(data){ 
+            	       alert(data.msg);
+                       },
+             error: function() {  
+                         alert('签到失败');  
+                      },
+         });
+    
+    }
+    
+    
+</script>
+<style>
+    .qdbtn{text-align:center;margin-top:10px;color:#fff;width:90px;height: 25px;line-height: 25px;
+        background-color:#2B9ECD;border: 0px;border-radius: 2px;}
+
+</style>

@@ -1,0 +1,8 @@
+
+/*上传文件*/
+.upload_btn{ border:1px solid #ddd; background: url(../images/xf_ht_jkb_06.jpg) repeat-x; width: 70px; /* height: 26px;  */text-align: center !important; /* line-height: 26px; */ display: block; float: left; margin-left: 10px; border-radius: 4px; padding-bottom:1px; -moz-border-radius:4px; -webkit-border-radius:4px; color: #333; cursor: pointer;} 
+.upload_file{ /*background-color:#F00;*/ position: absolute;top:-5px; left:-220px; height:26px; width:70px; filter:alpha(opacity:0);opacity: 0; cursor: pointer;}
+.bgcover{margin-top: 180px; width:100%;position:relative;left:-8%;height:700px;bottom: 0px;
+    z-index:1200; background:url(../images/bg.jpg) top center  no-repeat;
+    background-size:cover;}
+

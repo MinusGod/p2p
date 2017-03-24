@@ -1,0 +1,32 @@
+	<!-- part1 -->
+<ul class="y_zhzj clr">
+	<li>
+		<i class="i1"></i>
+		<div><span>￥${warmPrompt?.user_account?.format('###,##0.00')}</span>负债总额</div>
+	</li>
+	<li>
+		<i class="i2"></i>
+		<div><span>￥${(warmPrompt?.user_account-warmPrompt?.freeze+warmPrompt?.user_account2)?.format('###,##0.00')}</span>已还金额</div>
+	</li>
+	<li>
+		<i class="i3"></i>
+		<div><span>￥${warmPrompt?.freeze?.format('###,##0.00')}</span>待还金额</div>
+	</li>
+</ul>
+
+				<!--
+            <ul class="y_zhzj clr">
+            	<li>
+            		<i class="i1"></i>
+            		<div><span>￥${warmPrompt?.user_account?.format('###,##0.00')}</span>账户余额</div>
+            	</li>
+            	<li>
+            		<i class="i2"></i>
+            		<div><span>￥${(warmPrompt?.user_account-warmPrompt?.freeze+warmPrompt?.user_account2)?.format('###,##0.00')}</span>可用余额</div>
+            	</li>
+            	<li>
+            		<i class="i3"></i>
+            		<div><span>￥${warmPrompt?.freeze?.format('###,##0.00')}</span>冻结金额</div>
+            	</li>
+            </ul>
+            		-->

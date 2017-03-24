@@ -1,0 +1,64 @@
+
+html, body, div, span, iframe, h1, h2, h3, h4, h5, h6, p, pre, a, em, font, img, small, strong, b, u, i, s, dl, dt, dd, ol, ul, li, fieldset, form, label, input, textarea {
+    margin: 0;
+    padding: 0;
+}
+
+ol, ul, li {
+    list-style: outside none none;
+}
+img {
+    border: 0 none;
+}
+input, a, select {
+    outline: 0 none;
+}
+.w a {
+    color: #5bbde9;
+    text-decoration: underline;
+}
+.w a:link {
+    color: #5bbde9;
+    text-decoration: underline;
+}
+.w a:visited {
+    color: #5bbde9;
+}
+.w a:hover {
+    color: #f00;
+    text-decoration: underline;
+}
+.w a:active {
+    color: #5bbde9;
+}
+.w {
+    width: 1100px;
+    margin: 0 auto;
+}
+.fl {
+    float: left;
+}
+.fr {
+    float: right;
+}
+.hide {
+    display: none;
+}
+.show {
+    display: block;
+}
+.rel {
+    position: relative;
+}
+.abs {
+    position: absolute;
+}
+.clearfix {
+	zoom: 1;
+}
+.clearfix:after {
+    clear: both;
+    content: " ";
+    display: block;
+    height: 0;
+}

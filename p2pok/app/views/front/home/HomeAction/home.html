@@ -1,0 +1,186 @@
+%{
+	business.BackstageSet  currBackstageSet = business.BackstageSet.getCurrentBackstageSet();
+}%
+#{extends 'common/frontMain.html' /} 
+#{set title:currBackstageSet.seoTitle /}
+
+
+<!-- 大广告 -->
+#{include "front/home/HomeAction/banner.html"/}
+<div class="y_dexsjdiv" style="#{if business.BackstageSet.getCurrentBackstageSet().isDisplayStatistics == 0} display: none; #{/if}"> 
+<ul class="clr"> 
+<li><i class="y_dexsji1 y_bg"></i>累计${flage}投资：<strong class="leijis">${investAmount}</strong></li>
+    <!--#{format money:investAmount} #{/format}-->
+<li><i class="y_dexsji2 y_bg"></i>累计收益：<strong class="touzy">#{if interest>0}${interest?.format('###,##0.0000')} #{/if}
+    #{else}0.00#{/else}</strong></li>
+<li><i class="y_dexsji3 y_bg"></i>注册人数：<strong class="cc">32898</strong><span style="font-size: 20px;color: #2e9ece;">人</span></li>
+    <!--<li><i class="y_dexsji3 y_bg"></i>注册人数：<strong class="cc">${userCount}人</strong></li>-->
+</ul> 
+</div>
+	#{include "front/home/HomeAction/security.control"/}
+	#{include "front/home/HomeAction/bids.control"/}
+<!--侧边栏-->
+
+<div class="buz"><img src="/public/images/buz.png" alt=""/></div>
+<div class="y_bkff">
+#{include "front/home/HomeAction/sidebar.control"/}
+<!-- 合作伙伴 -->
+	#{include "front/home/HomeAction/partner.control"/}
+</div>
+
+
+<script>
+    var pels=23.17;
+    //alert($(".leijis").html()/100000000);
+    var sums=parseFloat($(".leijis").html()/100000000);
+    $(".leijis").html((pels+=sums).toFixed(3)+"亿");
+    var pelsm=46357958;
+    var sumsm=parseFloat($(".touzy").html());
+    //$(".touzy").html(pelsm+=sumsm);
+    var sma=String(pelsm+=sumsm);
+    var sma=sma.split('').reverse().join('').replace(/(\d{3})/g,'$1,').replace(/\,$/,'').split('').reverse().join('');
+    $(".touzy").html(sma+"元")
+
+</script>
+<script>
+    var k=32898;
+    window.setInterval(function(){
+        var m=Math.random()*1+1;
+        var n=parseInt(m);
+        $('.cc').html(k+=n);
+    },80000);
+</script>
+<script type="text/javascript">
+	$(function() {
+		showbids();
+		/**tab切换 start */
+		$("#xf_c_idx_8_tabsColName li a").first().addClass(
+				"xf_c_idx_8_tabsColNameActive");
+		$("#xf_c_idx_8_tabsColName li").click(
+				function() {
+					$(this).children().addClass("xf_c_idx_8_tabsColNameActive")
+							.parent().siblings().children().removeClass(
+									"xf_c_idx_8_tabsColNameActive");
+					$("#xf_c_idx_8_content").children().eq(
+							$(".xf_c_idx_8_tabsColName li").index($(this)))
+							.show().siblings().hide();
+
+				});
+		/**tab切换 ends */
+
+		/***截取字数 append 链接 start***/
+		$(".xf_c_idx_5_gfggIntroduce p").limit();
+		$(".xf_c_idx_5_gfggIntroduce p").append(
+				"<a  class='xf_c_idx_5_gfggIntroduceMore'>[全文]</a>");
+		/***截取字数 append 链接 end***/
+		
+	});
+</script>
+<script>
+function showbids(){
+	$("#bids").show();
+	$("#agencybids").hide();
+}
+function showagencybids(){
+	$("#bids").hide();
+	$("#agencybids").show();
+}
+$(function(){
+    $("#index a span").addClass('clickedf');
+})
+(function($){
+	    $.fn.FontScroll = function(options){
+	        var d = {time: 3000,s: 'fontColor',num: 1}
+	        var o = $.extend(d,options);
+	        
+
+	        this.children('ul').addClass('line');
+	        this.children('ul').attr("style",'margin-top:0');
+	        var _con = $('.line').eq(0);
+	        var _conH = _con.height(); //滚动总高度
+	        var _conChildH = _con.children().eq(0).height();//一次滚动高度
+	        var _temp = _conChildH;  //临时变量
+	        var _time = d.time;  //滚动间隔
+	        var _s = d.s;  //滚动间隔
+
+
+	        _con.clone().insertAfter(_con);//初始化克隆
+
+	        //样式控制
+	        var num = d.num;
+	        var _p = this.find('li');
+	        var allNum = _p.length;
+
+	        _p.eq(num).addClass(_s);
+
+
+	        var timeID = setInterval(Up,_time);
+			this.hover(function(){clearInterval(timeID)},function(){timeID = setInterval(Up,_time);});
+
+	        function Up(){
+	        
+	            _con.animate({marginTop: '-'+_conChildH});
+	            //样式控制
+	            _p.removeClass(_s);
+	            num += 1;
+	            _p.eq(num).addClass(_s);
+	            
+	            if(_conH == _conChildH){
+	                _con.animate({marginTop: '-'+_conChildH},"normal",over);
+	            } else {
+	                _conChildH += _temp;
+	            }
+	        }
+	        function over(){
+	       
+	            _con.attr("style",'margin-top:0');
+	            _conChildH = _temp;
+	            num = 1;
+	            _p.removeClass(_s);
+	            _p.eq(num).addClass(_s);
+	        }
+	        
+	        
+	    }
+	})(jQuery);
+	
+	$('#FontScroll2').FontScroll({time: 2000,num: 1});
+	$('#FontScroll3').FontScroll({time: 2000,num: 1});
+	$('#FontScroll').FontScroll({time: 2000,num: 1});
+	
+	
+</script>
+
+<div id="ryw_d" style="position: fixed;top:520px;right: 0px;">
+    <a href="/front/marketAction/newYear" target="_blank">
+        <!--<img src="/public/images/ryw.gif" alt="" border="0"/>-->
+    </a>
+</div>
+<script type="text/javascript" src="@{'/public/javascripts/tab/tab_index.js'}"></script>
+<script>
+    var datas=new Date();
+
+    var getF=datas.getFullYear();
+    var getM=datas.getMonth()+1;
+
+    var ryw_d=document.getElementById("ryw_d");
+    if(getF!=2017){
+        ryw_d.style.display='none';
+
+    }
+    if(getM > 2){
+        ryw_d.style.display='none';
+    }
+    window.onscroll = function () {
+        var t = document.documentElement.scrollTop || document.body.scrollTop;
+        var ryw_d=document.getElementById("ryw_d");
+        if (t > 1400) {
+            ryw_d.style.top='300px';
+        }
+        else if(t<410){
+            ryw_d.style.top='520px';
+        }
+    }
+</script>
+
+

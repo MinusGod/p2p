@@ -1,0 +1,132 @@
+
+
+<div class="xn_c_ban_jox_zzaqyd">
+        <div class="xf_ht_jr_obu_width">
+            <div class="xf_ht_glylist_ss">
+                <div class="xfht_t_jk_zt2">
+                   <input type="hidden" name="currPage" id="currPage" value="${pageDetail?.currPage}"/>
+				<input type="hidden" name="currSize" id="currSize" value="${pageDetail?.pageSize}"/>
+				<input type="hidden" name="year" id="year" value="${pageDetail?.conditions?.year}"/>
+				<input type="hidden" name="month" id="month" value="${pageDetail?.conditions?.month}"/>
+                  <input class="search_w"  #{if reality_name}placeholder="${reality_name}"#{/if}#{else}placeholder="请输入业务员真实姓名"#{/else} type="text" id="reality_name" name="reality_name" >
+                  <a class="xf_ht_jkbgl_page_prev xf_ht_dfp" onClick="showPagessDetail(1, 10)">搜索</a>
+                  <a class="xf_ht_jkbgl_page_prev xf_ht_dfp" onClick="spreadStatisticDetailExport()">导出当月报表</a>
+                </div>
+            </div>
+            <div class="xf_ht_glylist_two">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="xf_con_mem_r_b_table">
+                    <tr>
+						<th>推广码</th>
+			            <th>业务员</th>
+						<th>真实姓名</th>
+			            <th>新增推广会员</th>
+			            <th>新增充值会员</th>
+			            <th>新增投资会员</th>
+			            <th>充值总额(元)</th>
+			            <th>投资总额(元)</th>
+			            <th>提成总额(元)</th>
+                    </tr>
+                     #{list items:pageDetail.page,as:'statisticSpread'}
+                    	<tr>
+			        
+			             <td align="center">
+							${statisticSpread.spread_code}
+						</td>
+						 <td align="center">
+							${statisticSpread.name}
+						</td>
+						 <td align="center">
+							${statisticSpread.reality_name}
+						</td>
+			            <td align="center">
+							${statisticSpread.spread_user_count}
+						</td>
+						<td align="center">
+							${statisticSpread.recharge_user_count}
+						</td>
+						<td align="center">
+							${statisticSpread.invest_user_count}
+						</td>
+						<td align="center">
+							${statisticSpread.recharge_amount?.format('###,##0.00')}
+						</td>
+						<td align="center">
+							${statisticSpread.invest_amount?.format('###,##0.00')}
+						</td>
+						<td align="center">
+							${statisticSpread.cut_amount?.format('###,##0.00')}
+						</td>
+			          </tr>
+         			 #{/list}
+         			 #{else}
+         			 	<tr><td colspan="9">没有任何的数据!</td></tr>
+         			 #{/else}
+                </table>
+            </div>
+             <div class="xf_ht_shmx_button xf_ht_jobx_page">
+                  <div class="page_warp">
+                  	#{if pageDetail}
+                      #{page funMethod:"showPagessDetail",currPage:pageDetail?.currPage,totalCount:pageDetail?.totalCount,pageSize:pageDetail?.pageSize,theme:2,style:4}
+				      #{/page}
+				     #{/if}
+                  </div>
+                </div>
+        </div>
+    </div>
+<script type="text/javascript">
+
+
+      $("#xf_ht_mememail_ttc").center();
+      $("#xf_ht_mememail_ttc").show();
+      
+      $("#close").click(function(){
+          $("#xf_ht_mememail_ttc").hide();
+      })
+      
+      
+      function spreadStatisticDetailExport(){
+    	  var url = "@{supervisor.networkMarketing.SpreadAction.spreadStatisticDetail()}?year="+$("#year").val()+"&month="+$("#month").val()+"&isExport=1";
+    	  window.location.href=url;
+      }
+      
+      //搜索
+	function searchall() {
+		//var url = "@{supervisor.networkMarketing.SpreadAction.spreadStatisticDetail()}?year="++"&month="++"&reality_name="++"&currPage=" + + "&currSize=" + $("#currSize").val();
+		$.ajax({
+			url:"@{supervisor.networkMarketing.SpreadAction.spreadStatisticDetail()}",
+			type:"POST",
+			data:{
+				"year":$("#year").val(),
+				"month":$("#month").val(),
+				"reality_name":$("#reality_name").val(),
+				"currPage": $("#currPage").val(),
+				"currSize":$("#currSize").val()
+			},
+			success:function(dat){
+				if(dat.code<0){
+					alert(dat.msg);
+					return;
+				}
+				$("#xf_ht_fkzh_ttc").html(dat);
+				$.layer({
+					type:1,
+					area:['820px','auto'],
+					title:'提成明细',
+					page:{dom:'#xf_ht_fkzh_ttc'}
+				});
+			},
+			error:function(){
+				alert("出现了未知的系统错误!");
+			}
+		});
+
+	}
+	
+	function showPagessDetail(currPage,pageSize){
+		$("#currPage").val(currPage);
+		$("#currSize").val(pageSize);
+		
+		searchall();
+	}
+      
+</script>

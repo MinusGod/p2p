@@ -1,0 +1,223 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    %{
+    business.User currUser = business.User.currUser();
+    business.BackstageSet  currBackstageSet = business.BackstageSet.getCurrentBackstageSet();
+    String platUrl = constants.Constants.BASE_URL;
+    java.util.Map<String,java.util.List<business.BottomLinks>> bottomLinks = business.BottomLinks.currentBottomlinks();
+    java.lang.String type1Name = business.NewsType.queryName(1);
+    java.lang.String type2Name = business.NewsType.queryName(2);
+    java.lang.String type4Name = business.NewsType.queryName(4);
+    boolean ipsEnable = constants.Constants.IPS_ENABLE;
+    boolean debtUse = constants.Constants.DEBT_USE;
+    }%
+    <title>#{get 'title' /}</title>
+    <meta name="keywords" content="${currBackstageSet?.seoKeywords}" />
+    <meta name="description" content="${currBackstageSet?.seoDescription}" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta property="qc:admins" content="133011667666155146375" />
+    <meta property="wb:webmaster" content="6582954f8f7d9e1d" />
+    <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.ico'}">
+    <link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/temp.css'}" />
+    <link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/zccj.css'}" />
+    <script type="text/javascript" src="@{'/public/javascripts/koala.min.1.5.js'}"></script>
+    <script type="text/javascript" src="@{'/public/javascripts/jquery-2.0.js'}"></script>
+    <script type="text/javascript" src="@{'/public/javascripts/jquery.json-2.4.min.js'}"></script>
+    <script type="text/javascript" src="@{'/public/javascripts/xf_front.js'}"></script>
+    <script charset="utf-8" src="@{'public/javascripts/ajaxfileupload.js'}"></script>
+    <script type="text/javascript" src="@{'/public/javascripts/common.js'}"></script>
+    <script type="text/javascript" src="@{'/public/javascripts/jquery.lazyload.min.js'}"></script>
+    <link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/site1.css'}" />
+    <link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/reset1.css'}" />
+    <script type="text/javascript" src="@{'/public/javascripts/yycommon.js'}"></script>
+    <script type="text/javascript" src="@{'/public/javascripts/tab_center.js'}"></script>
+    <script type="text/javascript" src="@{'/public/javascripts/jquery.mousewheel.min.js'}"></script>
+
+</head>
+
+<body>
+<!--ff-->
+#{include "front/account/LoginAndRegisterAction/head.html"/}
+<div class="login-bg loginFl">
+    <div class="widthCtl">
+        <div class="login-white loginFl"></div>
+        <div class="bg-white loginFl">
+            <div class="login400">
+                #{form @front.account.loginAndRegisterAction.logining(), id:'loginsubmit'}
+                <div  class="titleLg">
+                    <b>会员登录</b> <span>还没有账户? <a href="@{front.account.LoginAndRegisterAction.selectRoles}">免费注册</a> </span>
+                </div>
+                <div class="form-item">
+                    <label class="uerN"></label>
+                    <input type="text" placeholder="请输入手机号码" maxlength="11"  name="name" id="name"  autocomplete="off">
+                </div>
+
+                <div class="input-tip">
+                    <span class="colFd ft12" id = "s_name"> </span>
+                </div>
+                <div class="form-item">
+                    <label class="usePw"></label>
+                    <input type="password" maxlength="16" minlength="6" name="password"  id="password" placeholder="请输入密码">
+                </div>
+
+                <div class="input-tip">
+                    <span class="colFd ft12" id = "s_password"> </span>
+                </div>
+                <div class="formCode">
+                    <div class="form-itemCode">
+                        <input type="text" id="code" name="code" placeholder="图形验证码"  />
+                        <input type="hidden" id="randomID" name="randomID"  />
+                    </div>
+                    <div>
+                        <a href="javascript:void(0);" title="" class="y_yzms"><img src="" id="img" onclick="change()" alt="" title=""></a>
+                    </div>
+                </div>
+                <p id = "s_code" class="colFd ft12"></p>
+
+                <div class="remUser">
+                    <input type="checkbox" id="remInput"><label for="remInput">记住用户名</label>
+                    <a href="@{front.account.loginAndRegisterAction.resetPasswordByMobile()}">忘记密码</a>
+                </div>
+                <p id="errorMsg" class="textCenter colRed"></p>
+                <div><a href="javascript:login();" title="" class="y_dlsa">立即登录</a></div>
+                <p class="textCenter padTop25 col80">您的信息已使用SSL加密技术，数据传输安全</p>
+                #{/form}
+            </div>
+        </div>
+    </div>
+</div>
+#{include "front/account/LoginAndRegisterAction/foot.html"/}
+<!--ff-->
+</body>
+
+
+<script type="text/javascript">
+
+    $(function(){ 
+        //获取图片验证码
+        if('${currUser?.name}' == '' && '${loginOrRegister}' == '') {
+            var setCode = #{jsAction @front.account.LoginAndRegisterAction.setCode()/}
+                    $.post(setCode({}),function(data){
+                        var arr=eval(data);
+                        var img = arr.img;
+                        $("#img").attr("src","@{front.account.LoginAndRegisterAction.getImg()}?id="+img)
+                        $("#randomID").val(img);
+                    });
+        }
+    });
+    
+    var flag1 = -1;
+    var flag2 = -1;
+    var flag3 = -1;
+    function login(){
+   	
+   	 if($("#code").val() == ""){
+            $("#s_code").html("请输入验证码");
+        }else{
+            $.ajax({
+                url : "@{front.account.LoginAndRegisterAction.checkCode()}",
+                type : "POST",
+                data : {
+                	"randomId" : $("#randomID").val(),
+                    "code" : $("#code").val()
+                },
+                dataType:'json',
+                success : function(data) {
+                	if(data.error.code < 0){
+                      $("#s_code").html(data.error.msg);                    
+                	}else{
+                      $("#s_code").html(" ");
+                      flag3 = 0;
+                      if(flag1==0 && flag2==0 && flag3==0){
+                    	  loginsubmit();
+                  	}
+                  }
+
+                }                    
+            });
+        }
+    	
+    	
+    };
+    
+    function loginsubmit() {
+    	$.ajax({
+            url : "@{front.account.LoginAndRegisterAction.logining()}",
+            type : "POST",
+            data : {
+            	"name" : $("#name").val(),
+            	"password" : $("#password").val(),
+            	"randomID" : $("#randomID").val(),
+                "code" : $("#code").val()
+            },
+            dataType:'json',
+            success : function(data) {
+            	if(data.code == 200){
+            		window.location.href="/";
+            	}else{
+                  $("#errorMsg").html(data.msg);                    
+            	}
+            }                    
+        });
+    }
+
+    function change(){
+
+        var setCode = #{jsAction @front.account.LoginAndRegisterAction.setCode()/}
+
+                $.post(setCode({}),function(data){
+                    var arr=eval(data);
+                    var img = arr.img;
+                    $("#img").attr("src","@{front.account.LoginAndRegisterAction.getImg()}?id="+img);
+
+                    $("#randomID").val(img);
+                });
+    };
+
+   
+    $(document).ready(function(){
+        $("form :input").blur(function(){
+
+        	  if($(this).attr("id") == "name"){
+
+                  if(this.value == ""){
+                      $("#s_name").html("请输入手机号");
+                  }else{               	  
+                      $.ajax({
+                          url : "@{front.account.LoginAndRegisterAction.hasMobileExists()}",
+                          type : "POST",
+                          data : {
+                              "mobile" : this.value
+                          },
+                          dataType:'json',
+                          success : function(data) {
+                              if(data.code == -2){
+                                  $("#s_name").html('&nbsp;');
+                                  flag1 = 0;
+                              }else{
+                                  $("#s_name").html("用户不存在");
+                              }
+                          }
+                      });
+                  }
+        	  }
+
+              if($(this).attr("id") == "password"){
+
+                  if(this.value == ""){
+                      $("#s_password").html("请输入密码");
+                  }else{
+                	  $("#s_password").html('&nbsp;');
+                	  flag2 = 0;
+                  }
+              }
+              
+                                                       
+          });
+    });
+
+
+ 
+</script>
+</html>

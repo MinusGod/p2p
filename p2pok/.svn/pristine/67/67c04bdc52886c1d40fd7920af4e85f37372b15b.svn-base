@@ -1,0 +1,10 @@
+﻿<h3 class="y_zhh3">快捷操作</h3>
+				<div class="y_zhkj">
+					<a href="@{front.invest.InvestAction.investHome()}"><i class="i1"></i>我要投资</a>
+					<a href="@{front.bid.bidAction.index()}"><i class="i2"></i>我要借款</a>
+					<!-- <a href="@{front.account.InvestAccount.myDebts()}"><i class="i3"></i>债权转让</a>
+					<a href="@{front.debt.debtAction.debtHome()}"><i class="i4"></i>购买债权</a>-->
+					<a href="@{front.account.accountHome.myLoanBills()}"><i class="i5"></i>我要还款</a>
+					<a href="@{front.account.InvestAccount.investBills()}"><i class="i6"></i>待收款</a>
+					<a href="@{front.account.FundsManage.dealRecord()}"><i class="i7"></i>资金流水</a>
+				</div>

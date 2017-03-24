@@ -1,0 +1,9 @@
+
+		<div class="y_bkff2">
+		<div class="y_main">
+			<h3 class="y_aqh1">${types?.get(3)?.name}</h3>
+			<ul class="y_aqul clr">
+				${investmentStrategy?.content}
+			</ul>
+		</div>
+	</div>

@@ -1,0 +1,131 @@
+﻿%{
+	boolean  ipsEnable = constants.Constants.IPS_ENABLE;
+	boolean debtUse = constants.Constants.DEBT_USE;
+	boolean isMsg = constants.Constants.IS_MSG;
+}%
+
+<div class="y_wtnav">
+			<ul>
+				<li><p>我的账户</p></li>
+				<li id="li_1">
+					<a href="javascript:void(0);" title="">账户总览</a>
+					<ul class="y_zhnav">
+						<li ><a href="@{front.account.accountHome.home()}" title="" id="child0">账户总览</a></li>
+					<!--	<li ><a href="@{front.account.accountHome.myAttentionUser()}" title="" id="child1">我关注的人</a></li>-->
+					</ul>
+				</li>
+				<li id="li_2" onclick="count();">
+					<a href="javascript:void(0);" title="">站内信</a>
+					<ul class="y_zhnav">
+						<li ><a href="@{front.account.Message.systemMsgs()}" title="" id="child2">系统消息</a></li>
+                        <!-- <li><a href="@{front.account.Message.inboxMsgs()}" title="" id="child3">收件箱</a></li>
+                        <li><a  href="@{front.account.Message.outboxMsgs()}" title="" id="child4">发件箱</a></li>
+                        <li><a href="@{front.account.Message.sendMsgInit()}" title="" id="child5">发站内信</a></li>
+                        <li><a href="@{front.account.Message.bidQuestions()}" title="" id="child6">借款提问</a></li>-->
+					</ul>
+				</li>
+				<li id="li_3">
+					<a href="javascript:void(0);" title="">借款账户</a>
+					<ul class="y_zhnav">
+						<li><a href="@{front.account.accountHome.loanAccount()}" id="child7">借款账户首页</a></li>
+                        <li><a  href="@{front.account.accountHome.myLoanBills()}" id="child8">我的借款账单</a></li>
+                        <li><a href="@{front.account.accountHome.auditingLoanBids()}" id="child9">审核中的借款标</a></li>
+                        <li><a href="@{front.account.accountHome.loaningBids()}" id="child10">等待满标的借款标</a></li>
+						#{if ipsEnable && isMsg}
+						  <li><a href="@{front.account.accountHome.waitVerifyBids()}" id="child40">待验证的借款标</a></li>
+			
+				#{/if}
+                        <li><a href="@{front.account.AccountHome.readyReleaseBid()}" id="child38">待放款的借款标</a></li>
+                        <li><a  href="@{front.account.accountHome.repaymentBids()}" id="child11">还款中的借款标</a></li>
+                        <li><a href="@{front.account.accountHome.successBids()}" id="child12">已完成的借款标</a></li>
+                        <li><a href="@{front.account.accountHome.failBids()}" id="child39">失败的借款标</a></li>
+                        <li><a href="@{front.account.AccountHome.auditMaterialsIPS()}" id="child13">借款资料审核认证</a></li>
+					</ul>
+				</li>
+				<li id="li_4">
+					<a href="javascript:void(0);" title="">投资账户</a>
+					<ul class="y_zhnav">
+
+						<li><a id="child14"  href="@{front.account.InvestAccount.investAccount()}">投资账户首页</a></li>
+						<li><a id="child15"  href="@{front.account.InvestAccount.investBills()}">我的投资账单</a></li>
+						<li><a id="child16"  href="@{front.account.InvestAccount.investRecord()}">我的投标记录</a></li>
+						<li><a id="child17"  href="@{front.account.InvestAccount.loaningInvestBid()}">等待满标的投资标</a></li>
+						<li><a id="child40"  href="@{front.account.InvestAccount.readyReleaseBid()}">待放款的投资标</a></li>
+						<li><a id="child18"  href="@{front.account.InvestAccount.repayingInvestBid()}">收款中的投资标</a></li>
+						<li><a id="child19"  href="@{front.account.InvestAccount.successInvestBid()}">已完成的投资标</a></li>
+						#{if debtUse}
+						<!-- <li><a id="child20"  href="@{front.account.InvestAccount.myDebts()}">债权转让管理</a></li>-->
+						#{/if}
+						<!--	<li><a id="child21"  href="@{front.account.InvestAccount.blackList()}">我的黑名单</a></li>-->
+						<!--<a id="child22"  href="@{front.account.InvestAccount.investStatistics()}">投资情况统计表</a>
+						<li><a id="child23"  href="@{front.account.InvestAccount.auditmaticInvest()}">投标机器人</a></li>-->
+					</ul>
+				</li>
+				<li id="li_5">
+					<a href="javascript:void(0);" title="">资金管理</a>
+					<ul class="y_zhnav">
+						<li><a id="child25"  href="@{front.account.FundsManage.accountInformation()}">账户信息</a></li>
+						<li>	<a id="child26"  href="@{front.account.FundsManage.myCredit()}">我的信用等级</a></li>
+						<li>	<a id="child27"  href="@{front.account.FundsManage.recharge()}">充值</a></li>
+						<li>	<a id="child28"  href="@{front.account.FundsManage.withdrawal()}">提现</a></li>
+						<li>	<a id="child29" href="@{front.account.FundsManage.dealRecord()}">交易记录</a></li>
+							#{if ipsEnable}
+						<li>		<a id="child56" href="@{front.account.CheckAction.trustAccount()}">我的托管账户</a></li>
+								#{if constants.Constants.TRUST_FUNDS_HF == constants.Constants.TRUST_FUNDS_TYPE}
+						<li>			<a id="child40" target="_blank"  href="@{front.account.FundsManage.userBindCard()}">绑定汇付银行卡</a></li>
+								#{/if}
+							#{/if}
+					</ul>
+				</li>
+				<li id="li_6">
+					<a href="javascript:void(0);" title="">账户设置</a>
+					<ul class="y_zhnav">
+							<li>	<a id="child30"  href="@{front.account.basicInformation.basicInformation()}">基本资料</a></li>
+						<li><a id="child31"  href="@{front.account.basicInformation.modifyPassword()}">修改密码</a></li>
+						<li><a id="child32"  href="@{front.account.basicInformation.setSafeQuestion()}">安全问题设置</a></li>
+						<li><a id="child33"  href="@{front.account.basicInformation.modifyEmail()}">安全邮箱设置</a></li>
+						<li><a id="child34"  href="@{front.account.basicInformation.modifyMobile()}">安全手机设置</a></li>
+						<li><a id="child55"  href="@{front.account.basicInformation.certification()}">实名认证</a></li>
+					</ul>
+				</li>
+				<!--<li id="li_7">
+					<a href="javascript:void(0);" title="">CPS推广</a>
+					<ul class="y_zhnav">
+						<li><a id="child35"  href="@{front.account.spread.spreadLink()}">我的推广链接</a></li>
+						<li><a id="child36"  href="@{front.account.spread.spreadUser()}">我成功推广的会员</a></li>
+					</ul>
+				</li>-->
+				<li id="li_7">
+                <a href="javascript:void(0);" title="">我的财富圈</a>
+                <ul class="y_zhnav">
+                	<li><a id="child35"  href="@{front.account.spread.spreadLink()}">我的分享工具</a></li>
+                	<li><a id="child36"  href="@{front.account.spread.spreadUser()}">我邀请的会员</a></li>
+                	</ul>
+                </li>
+
+
+				<!-- <li id="li_8">
+<li id="li_8">
+					<a href="javascript:void(0);" title="">我的财富圈</a>
+					<ul class="y_zhnav">
+						<li><a id="child36"  href="@{front.account.spread.spreadUser()}">我邀请的会员</a></li>
+					</ul>
+				</li>
+				<a href="javascript:void(0);" title="">我的财富圈</a>
+					<ul class="y_zhnav">
+						<li><a id="child50"  href="@{front.account.WealthCircle.wealthHome()}">我的邀请码</a></li>
+						<li><a id="child51"  href="@{front.account.WealthCircle.invitationMember()}">我邀请的会员</a></li>
+					</ul>
+				</li> -->
+			</ul>
+		</div>
+
+
+<script>
+
+$(function(){
+
+    $("#usr a span").addClass('clickedf');
+    $('.y_wdzh').css("background","url(/public/images/y_yh.png) center no-repeat");
+})
+</script>

@@ -1,0 +1,57 @@
+#{extends 'common/frontMain.html' /} 
+%{
+	business.BackstageSet  currBackstageSet = business.BackstageSet.getCurrentBackstageSet();
+}%
+#{set title:currBackstageSet.seoTitle+'|财富资迅|列表' /}
+	<div class="y_gybg y_zxbg">
+		<!-- <div class="y_wtss">
+			<input type="text" />
+			<span>请输入你要查询的关键字</span>
+			<i class="y_bg"></i>
+		</div> -->
+	</div>
+<div class="y_wtmain" id="xf_wyjkview_xxk">
+ #{form @newsList(),id:'submitother'}
+    <input type="hidden" id="currPage" name="currPage"/>
+    <input type="hidden" id="pageSize" name="pageSize"/>
+     <input type="hidden" id="typeId" name="typeId" value="${typeId}"/>
+	<ul class="y_zxul clr">
+		#{list items:types, as:'type'}
+		<li id="li${type?.id}" >
+			<a href="@{newsList(type?.id)}">${type?.name}</a>
+		</li>
+		#{/list}
+	</ul>
+			<ul class="y_cfzxmain">
+				#{list items:newsList.page, as:'news'}
+				<li>
+						<a href="@{newDetails(news?.id)}" class="y_cfzxa" target="_blank">${news?.title}</a>
+					<div class="y_cfdiv" limit="100">
+						${news?.content?.raw()}
+					</div>
+					<p class="y_xfpp">
+						<span >${news?.start_show_time?.format('yyyy-MM-dd')}</span>
+						<span >阅读次数：${news?.read_count}</span>
+					</p>
+				</li>
+				#{/list}
+			</ul>
+			#{/form}
+			<div class="xf_wylc_page xf_membill_view_page1" style="width:100%">
+				#{page pageTitle:"财富咨询列表", currPage:newsList.currPage,totalCount:newsList.totalCount,pageSize:newsList.pageSize,theme:2,style:2}
+				#{/page}
+			</div>
+			</div>
+<script type="text/javascript">
+	$(function(){
+	     $("#li" + ${typeId}).addClass("click");
+	})
+</script>
+<script>
+    function showPage(currPage, pageSize){
+         $("#currPage").val(currPage);
+         $("#pageSize").val(pageSize);
+         $("#submitother").submit();
+    }
+</script>
+<script type="text/javascript" src="@{'/public/javascripts/tab/tab_wealth.js'}"></script>

@@ -1,0 +1,180 @@
+# ~~~~~
+application.name=p2pok
+
+# Application mode
+# ~~~~~
+# Set to dev to enable instant reloading and other development help.
+# Otherwise set to prod.
+application.mode=dev
+%prod.application.mode=dev
+
+# Secret key
+# ~~~~~
+# The secret key is used to secure cryptographics functions
+# If you deploy your application to several instances be sure to use the same key !
+# play自生成加密串。
+application.secret=kA01Y3A8ospzxJNXnpMVLlWmOFXgYQ1s0RVUdPWXmRQx9mxGxr997fyydEdIWTZN
+# 系统加密串，每个项目请独立生成。必须16位字母或数字
+fixed.secret=VCA02I84XE9HGRat
+# APP连接PC的加密串。
+app.fixed.secret=D0NB8ietxpCkdRCy
+
+# 数据库备份文件路径
+sql.path=/home/backup-file-mysql/
+
+# Date format
+# ~~~~~
+date.format=yyyy-MM-dd
+# date.format.fr=dd/MM/yyyy
+
+# Server configuration
+# ~~~~~
+# If you need to change the HTTP port, uncomment this (default is set to 9000)
+ http.port=80
+
+# 自定义项目路径配置，如果没有写请至为空
+http.path=
+
+# Session configuration
+# ~~~~~~~~~~~~~~~~~~~~~~
+# By default, session will be written to the transient PLAY_SESSION cookie.
+# The cookies are not secured by default, only set it to true
+# if you're serving your pages through https.
+application.session.cookie=SP2P
+# application.session.maxAge=1h
+# application.session.secure=false
+# 限制Cookie访问权限
+application.session.httpOnly=true
+
+# JVM configuration
+jvm.memory=-Xmx1024m -Xms1024m -XX:PermSize=256m -XX:MaxPermSize=512m
+
+# Log level
+# ~~~~~
+# Specify log level for your application. debug/info
+# If you want a very customized log, create a log4j.properties file in the conf directory
+application.log=debug
+
+# 数据库连接地址
+db=mysql://root:p2pok*dev@192.168.0.80/p2pok
+#db=mysql://rywp2p:Ryw0602p2pLcokxjfYXgs12@rm-2zel6k11n3f89655xs4o.mysql.rds.aliyuncs.com/rywp2p
+# 连接池信息 
+db.pool.maxSize=500
+db.pool.minSize=5
+# 单位：S
+db.pool.maxIdleTimeExcessConnections=120
+
+# 是否在控制台显示调试的SQL（正式上线建议注释，或者为false）
+# jpa.debugSQL=true
+
+# Specify the ddl generation pattern to use. Set to none to disable it 
+# (default to update in DEV mode, and none in PROD mode):
+jpa.ddl=none
+
+# 上传资源路径
+attachments.path=data/attachments
+
+# 访问域名，请勿在后面加上 “/”，即  http://localhost:9000/（错误的，因为在末尾加了“/”）
+test.application.baseUrl=http://192.168.0.80
+
+# 以下内容，请增加到 play 框架项目的 application.conf 中
+
+# 是否启动拦截器，default is true
+ injectionInterceptor=true
+# 截获到注入等风险后，转跳到的目标 url
+# injectionInterceptor.alert.url=
+
+# 各 Controller 的例外级别，0-最严格；1-严格；2-直接放行，default is 0. 例如：
+# SupervisorBidManage=2
+# UserQuery=1
+
+# 环迅支付
+# 普通网关充值地址和回调URL
+# 测试环境：
+ipsURL=https://pay.ips.net.cn/ipayment.aspx
+# 生产环境
+# ipsURL=https://pay.ips.com.cn/ipayment.aspx
+# 同步回调地址
+ips_merchant_url=front/account/callback
+# 异步回调地址
+ips_server_url=front/account/callbackSys
+
+# 国付宝支付(https://www.gopay.com.cn/PGServer/Trans/WebClientAction.do 旧的线上地址只适用于老的商户号) 
+go_url=https://gateway.gopay.com.cn/Trans/WebClientAction.do 
+gopay_server_time_url=https://gateway.gopay.com.cn/time.do 
+go_mer_url=front/account/gCallback 
+go_mer_back_url=front/account/gCallbackSys 
+
+# QQ快速登录
+authorizationURL_QQ=https://graph.qq.com/oauth2.0/authorize
+accessTokenURL_QQ=https://graph.qq.com/oauth2.0/token
+clientid_QQ=
+secret_QQ=
+responseType_QQ=code
+getUserINFOURL_QQ=https://graph.qq.com/user/get_user_info
+getOpenIDURL_QQ=https://graph.qq.com/oauth2.0/me
+ 
+# 微博快速登录
+authorizationURL_WB=https://api.weibo.com/oauth2/authorize
+accessTokenURL_WB=https://api.weibo.com/oauth2/access_token
+clientid_WB=
+secret_WB=
+responseType_WB=code
+getUserINFOURL_WB=https://api.weibo.com/2/users/show.json
+
+# 百度云推送参数
+# 24位（每个项目生成，不重复）
+api_key=
+# 32位（每个项目生成，不重复）
+secret_key=
+
+#v7.2.0新增
+bank_list=农村商业银行,上海浦发银行,农村信用合作社,中国建设银行,中国邮政储蓄银行,中国银行,长安银行,中国工商银行,交通银行,中信银行,中国农业发展银行,中国光大银行,中国民生银行,招商银行,兴业银行,华夏银行,平安银行,中国农业银行,中国人民银行
+wechat.token=
+wechat.appId=
+wechat.appSecret=
+wechat.redirect_uri=http://www.niumail.com/wechat/others/userOAuth
+
+#v7.2.2新增
+#是否需要短信验证码，测试环境配置成false，正式环境true(用于：微信注册)
+check_msg_code=false
+#是否需要图形验证码(为测试方便可配置false，正式上环境要配置为true)
+check_pic_code=false
+#是否需要普通验证码(为测试方便可配置false，正式上环境要配置为true)
+check_code=false
+
+#APP文件服务器地址，IOS版本(公网APP)
+ipa.path=https://appstore.qiwangyun.com/sp2p/ios/hahadai/download.html
+#APP文件服务器地址，android版本(公网APP)
+apk.path=http://p2p-15.test11.shovesoft.com/public/sp2p6.0.apk
+
+#################################################################################
+####### 如上都为开放出来，且用到的配置项，如果有其它的配置项，请自己添加。#######
+#################################################################################
+
+#托管参数开始
+# 是否本地测试(测试:true／线上:false)
+is.localhost=false
+# 支付运营模式(资金托管:true／普通网关:false)
+pay.trustFunds=true
+#托管接口类型(环讯: HX; 汇付:HF;新浪:SN; 普通网关：空)
+trust.funds.type=HF
+#加载托管配置文件路径前缀  ，请勿在后面加上 “/”。如：Play.configuration.getProperty("trust.funds.path") + "/chinapnr/chinapnr.properties";
+trust.funds.path=E:/workspace/p2pok/conf
+#托管参数结束
+
+isJob = 1
+
+#是否禁止百度收录, 禁止收录:false; 百度收录:true
+is.robots=false
+
+#短信九维URL
+jwURL=http://q.hl95.com:8061/
+#九维产品ID
+jw_productID=120652
+
+#微信账号
+wechat.token=vMs9OFeGupHhMS1Nv5AfRuN3ikVGIP7M
+wechat.appId=wxccd56a8618a594b5
+wechat.appSecret=daa0d7416407eadf3333965eda8eeef6
+wechat.redirect_uri=http://p2p-15.test11.shovesoft.com/wechat/others/userOAuth

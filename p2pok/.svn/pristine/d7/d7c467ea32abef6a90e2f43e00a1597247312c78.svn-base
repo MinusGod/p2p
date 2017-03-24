@@ -1,0 +1,41 @@
+#{extends 'common/frontMain.html' /} 
+#{set title:'资金托管账户注册' /}
+
+<!-- 内容区域 start -->
+#{include "front/account/AccountHome/homeTop.html"/}
+<div class="y_wtmain clr">
+	<!-- 左边导航区域 -->
+	#{include "front/account/AccountHome/homeLeft.control"/}
+	<!-- 右侧内容区域 -->
+	<div class="y_wtrgh">
+		<h3 class="y_wth2"><span>托管账户</span></h3>
+		<div class="y_zhrgh" >
+		<div class="s_tuguan-list clearfix">
+			<dl>
+				<dt>#{img src:"${src}",width:"192",height:"61"}#{/img}</dt>
+				#{if business.User.currUser().getIpsStatus() != 4}
+					<dd><p>您还没有开通资金托管账户？</p><a href="@{front.account.CheckAction.createAcct()}" target="_blank" >注册我的资金托管账户</a></dd>
+				#{/if}
+				#{else}
+					<dd><p>您已经开通资金托管账户</p></dd>
+					#{if constants.Constants.IS_LOGIN}
+					<p style="margin-left:63px;" ><a href="@{front.account.FundsManage.loginAccount()}" target="_blank">登录支付账户</a></p>
+					#{/if}
+				#{/else}
+			
+			</dl>
+		</div>
+	</div>
+	<!-- 清除浮动 -->
+	<div class="clear"></div>
+</div>
+</div>
+<script type="text/javascript" src="@{'/public/javascripts/layer/layer.min.js'}"></script>
+<script type="text/javascript" src="@{'/public/javascripts/tab/tab_usr.js'}"></script>
+<script type="text/javascript">
+$(function(){
+	/* 高亮显示 */
+	showHighLightFront(56);
+	showHighLightFront2(7, 5);
+});
+</script>

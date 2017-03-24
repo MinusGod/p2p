@@ -1,0 +1,45 @@
+#{extends 'common/supervisor.html' /}
+#{set title:'金额校正' /}
+<div class="xn_c_contentwarp">
+  <div class="xn_c_contentlist">
+   #{include "supervisor/systemSettings/common/leftBar.control"/}
+   #{include 'supervisor/systemSettings/SoftwareLicensAction/amountAdjust.control'/}
+  </div>
+</div>
+
+<div class="xn_c_ban_jox xn_c_ban_jox_qxsz" id="xf_ht_fkzh_ttc" style="display:none">
+</div>
+
+<div class="xn_c_ban_jox" id="xf_ht_tjgly_ttc" style="display:none;height:400px;overflow:auto;">
+</div>
+
+<div class="xn_c_ban_jox" id="xf_ht_bjgly_ttc" style="display:none;height:400px;overflow:auto;">
+</div>
+
+<div class="xn_c_ban_jox xn_c_ban_jox_qxsz" id="xf_ht_szqxz_ttc">
+</div>
+
+<script type="text/javascript"> 
+
+$(function() {
+	//高亮显示
+	showHighLight(7,7,19);
+	  
+    $("#province").change(function(){
+      var selectVal = $(this).children('option:selected').val();
+      var jsAction = #{jsAction @Application.getCity(":provinceId")/}
+      $.post(jsAction({provinceId:selectVal}),function(data) {
+        var cityList = [];
+        for(var i = 0; i < data.length; i ++){
+          cityList.push("<option value='"+data[i].id+"'>"+data[i].name+"</option>");
+        }
+        $("#city").html(cityList);
+      });
+    });
+  })
+
+
+$("#close1").click(function(){
+  $("#xf_ht_fkzh_ttc").hide();
+});
+</script>

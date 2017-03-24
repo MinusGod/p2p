@@ -1,0 +1,151 @@
+%{
+	business.BackstageSet  currBackstageSet = business.BackstageSet.getCurrentBackstageSet();
+}%
+#{extends 'common/frontMain.html' /}
+#{set title:currBackstageSet.seoTitle +'| 债权转让  |' +debt?.title+'债权标详情'/}
+	<html>
+	<div  style="display: none"  >
+	<script src="http://s95.cnzz.com/z_stat.php?id=1256512809&web_id=1256512809" language="JavaScript"></script>
+	</div>
+	<body>
+<div class="y_bdbg y_wtbg"></div>
+
+<div class="y_bdtops">
+		<div class="y_bdtop">
+				  #{include 'front/debt/DebtAction/debtDetailsBidInfo.control' /}
+				  #{include 'front/debt/DebtAction/debtDetailsAuction.control' /}
+			</div>
+</div>
+					 #{include 'front/debt/DebtAction/debtDetailsRecords.control' /}
+		<!-- 确认竞拍 -->
+		#{form @front.debt.debtAction.auction(debt?.id), method:'POST', id:'auction'}
+		<div class="xf_wyjkfb_4_window_debt" id="xf_wyjkfb_4_window_debt" >
+			<div class="xf_wyjkfb_4_windowInner xf_wylcfb_4_windowInner">
+				<div class="xf_wyjkfb_4_windowClose"></div>
+				<div class="xf_wyjkfb_4_windowColName">
+					我要竞拍<span class="xf_zqzr_jpbh">${debt?.no}号债权转让</span>
+				</div>
+				<div class="xf_zqzrtb_4_windowCot">
+					<div class="xf_wyjkfb_4_windowCol">转让人：  <span class="xf_wyjkfb_4_windowNo">${debt?.invest?.user?.name}</span></div>
+					<div class="xf_wyjkfb_4_windowCol">本息合计：#{format money:debt.debtAmount}#{/format}元 <span class="xf_zqzr_pmdj">拍卖底价：</span>#{format money:debt.transferPrice}#{/format}元</div>
+					<div class="xf_wyjkfb_4_windowCol">目前最高拍价：<span class="xf_wyjkfb_4_windowNum"></span>#{format money:debt.maxOfferPrice}#{/format}元</div>
+					<div class="xf_zqzrtb_4_windowCol">我的出价：<input class="xf_zqzrtb_input" name="offerPrice" id="offerPrice"></input> 元</div>
+					
+					 #{if debt?.invest?.bid?.product?.isDealPassword == true}
+					 <div class="xf_zqzrtb_4_windowCol">交易密码：<input type="password" class="xf_zqzrtb_input" name="dealpwd" id="dealpwd" onMouseOver="checkPwdDel();"></input> </div>
+				       #{if user != null && user.payPassword == null}
+				      <a href="@{front.account.BasicInformation.modifyPassword()}" class="xf_ta_onclick">您未设置交易密码！点击此处设置交易密码</a>
+				     #{/if}
+				     #{/if}
+					<div class="xf_zqzrtb_4_windowCol xf_zqzrtb_4_windowgo">
+						<a class="xf_con_inputfbjk" id="xf_con_inputfbjk" >确 定</a> 	
+						<a class="xf_con_inputfbqux" id="xf_con_inputfbqux">取 消</a> 	
+					</div>
+				</div>
+			</div>
+		</div>
+		#{/form}
+		<!-- 竞拍成功 -->
+#{if success > 0}
+		
+		
+		<div class="xf_zqzrtb_4_window" id="success">
+			<div class="xf_zqzrtb_4_windowInner">
+				<div class="xf_zqzr_4_windowClose"></div>
+				<h2 class="xf_zqzrh2_titl">恭喜您，竞拍成功！</h2>
+			</div>
+		</div>
+	#{/if}	
+	#{if success < 0}
+		<script type="text/javascript">
+		#{if success == -999} //余额不足
+			if (confirm('${descrption}')) {
+				window.open("@{front.account.FundsManage.recharge()}");
+		    }
+		#{/if}
+		#{else}
+			alert('${descrption}');
+		#{/else}
+		</script>
+	#{/if}
+	</body>
+	</html>
+	
+	<script type="text/javascript">
+		$(function(){
+
+			$(".xf_zqzr_4_windowClose").click(function(){				
+				$("#success").hide();
+			});	
+			
+			$(".xf_wyjkfb_4_windowClose,#xf_wyjkfb_4_windowCancle,#xf_con_inputfbqux").click(function(){				
+				$("#xf_wyjkfb_4_window_debt").hide();
+			});
+			
+			$("#xf_wyjkfb_4_window_debt").center();
+			$("#success").center();
+			
+			$("#xf_con_inputfbjk").click(function(){				
+					var maxOfferPrice = ${debt?.maxOfferPrice};
+					var  transferPrice = ${debt?.transferPrice};
+					var debtAmount = ${debt?.debtAmount};
+					var offerPrice = $("#offerPrice").val();
+
+					var patrn=/^\d+$/; 
+					var flag = patrn.exec(offerPrice);
+	            	
+	            	if(offerPrice.replace(/\s+/g,"") == "" || null == offerPrice.replace(/\s+/g,"")){
+			             alert("对不起！竞拍出价不能为空！");
+			            return;
+		             }
+				    if(!flag){
+						alert("对不起！请您输入正整数！");
+					 	return;
+				   }
+					
+					if(offerPrice <= 0){
+						alert("对不起！您的出价不能小于0！");
+				 	    return;
+					}
+					if(offerPrice < transferPrice){
+						alert("对不起！您的出价不能低于债权拍卖底价！");
+				 	    return;
+					}
+					if(offerPrice > debtAmount){
+						alert("对不起！您的出价不能高于债权总额！");
+				 	    return;
+					}
+					if(offerPrice <= maxOfferPrice){
+						alert("对不起！您的出价应该高于目前竞拍最高价！");
+				 	    return;
+					}
+					$("#auction").submit();
+					
+			});
+			$(".xf_zqzr_4_windowClose").click(function(){
+				$("#xf_wyjkfb_4_window_debt").hide();
+			});
+		});
+
+	function showDivDebt(){
+	  /** 拦截器拦截, fronMain.html 中的拦截器*/
+	  var result = frontJSIntercepter();
+	  
+	  if(!result){
+      	 $("#xf_wyjkfb_4_window_debt").show(); 
+	  }
+	}
+
+	function checkPwdDel(){
+		var str = "请输入交易密码";
+		#{if debt?.invest?.bid?.product?.isDealPassword == true}	
+		
+			#{if user != null && user.payPassword == null}
+			 str = "您还未设置交易密码,请设置交易密码";
+        	#{/if}
+		#{/if}
+
+		$("#dealpwd").attr("title",str);
+	}
+	</script>
+<script type="text/javascript" src="@{'/public/javascripts/tab/tab_claim.js'}"></script>

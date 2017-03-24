@@ -1,0 +1,55 @@
+#{extends 'common/frontMain.html' /}
+%{
+	business.BackstageSet  currBackstageSet = business.BackstageSet.getCurrentBackstageSet();
+}%
+#{set title:currBackstageSet.seoTitle+'|交易提示' /}
+<style>
+.btn_s{margin-top:20px;width:100%;text-align:center;float: left;line-height: 45px;  top:25%;z-index: 4000;}
+.bg_fff h2{padding-top:10px;width: 96%;text-align: right;float:left;}
+.bg_fff h2 a{color:#d6d5d5;cursor: pointer; display:block;}
+.btn_s a{font-size:18px;display:inline-block;border-radius:4px;height: 45px;width: 300px;
+    background-color: #379ecb;color: #fff;}
+.bg_fff{background-color: #fff;border-radius:4px;position: fixed;left:34%; top:25%;z-index: 40000000;width:500px;height:250px;}
+.img_p{position: relative;top:4px;}
+#jumpTo{font-size: 18px;color: #999; }
+</style>
+<div class="bg_dvi" style="background:#000;opacity:0.6;top:0px;left: 0px;width: 100%;height: 100%;position:fixed;z-index:1000025;"></div>
+<div class="y_wtmain clr" style="margin-bottom: 240px;text-align: center;"> 
+        <div class="wrap" style="margin-top: 300px;">
+            <div class="p_zctctextword1">
+
+            	<!--<div class="ln_bobo">-->
+                <div>
+                    <div class="bg_fff">
+                        <h2><a href="javascript:;" class="closed">×</a></h2>
+	            	<div style="width: 90%;text-align: center;float:left;margin-top: 20px;">
+                        <p class="p_zcyougg"><span style="color:#3d9fc9;font-size: 24px;">${error.msg}</span></p>
+                        <p class="ln_zcyougg" id="jumpTo" style="margin-top:15px;margin-bottom: 15px;"><span >5秒后将自动跳转至${error.returnMsg}！</span></p>
+	            	</div>
+			         </div>
+
+                </div>
+            </div>						  
+          </div>    
+</div>     
+<script type="text/javascript">    
+
+function countDown(secs,surl){
+	 var jumpTo = document.getElementById('jumpTo');
+	 jumpTo.innerHTML=secs+"秒后将自动跳转至${error.returnMsg}！";
+	 if(--secs>0){
+	     setTimeout("countDown("+secs+",'"+surl+"')",1000);
+	 }else{
+	     location.href=surl;
+	 //window.close();
+	 }
+}
+    $(function(){
+        $(".closed").click(function(){
+            location.href="/front/account/dealRecord";
+        });
+    })
+</script>
+
+ <script type="text/javascript">$(function(){countDown(5, '${error.returnUrl}');})</script>
+ 

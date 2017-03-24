@@ -1,0 +1,47 @@
+<div class="y_dexaq">	
+		<ul class="y_dexaqul">
+			#{list items:adsEnsure,as:'ensure'}
+			<li>	#{if ensure?.isLinkEnabled}
+				#{if ensure?.target == 2}
+				<a href="${ensure?.url}" target="_blank" #{if ensure_isLast} #{/if}>
+					#{if ensure_isLast}
+					#{img class:"lazy", data_original:"${ensure?.imageFileName}",src:"/public/images/loading.gif",alt:""}#{/img}
+					#{/if}
+					#{else}
+					#{img class:"lazy", data_original:"${ensure?.imageFileName}", src:"/public/images/loading.gif",alt:""}#{/img}
+					#{/else}
+					
+				</a>
+				#{/if}
+				#{else}
+				<a href="${ensure?.url}" #{if ensure_isLast}  #{/if}/>
+					#{if ensure_isLast}
+					#{img class:"lazy", data_original:"${ensure?.imageFileName}", src:"/public/images/loading.gif",alt:""}#{/img}
+					#{/if}
+					#{else}
+					#{img class:"lazy", data_original:"${ensure?.imageFileName}", src:"/public/images/loading.gif",alt:""}#{/img}
+					#{/else}
+				
+				</a>
+				#{/else}
+				#{/if}
+				#{else}
+					<a >
+					#{img class:"lazy", data_original:"${ensure?.imageFileName}", src:"/public/images/loading.gif",alt:""}#{/img}
+				
+					
+					</a>
+				#{/else}</li>
+			#{/list}
+		</ul>
+	</div>
+<div class="gonggaff" style="background-color:#fff;position:relative;top:10px;margin:0px auto;width:1100px;height:30px;line-height:30px;" >
+<h1 style="font-size:14px;float:left;width:1023px;padding-left:10px;">
+    <img src="/public/images/gong1.png" alt="公告" style="float:left;position:relative;top:5px;"/>
+    
+    <a href="front/wealthinfomation/newDetails?id=${news?.get(0)?.id}"   style="float:left;width:910px;padding-left:10px;">${news?.get(0)?.title}</a>
+    <span  style="float:left;">${news?.get(0)?.start_show_time?.format('yyyy-MM-dd')}</span>
+   
+</h1>
+<a href="@{front.wealthinfomation.WealthInfomationAction.newsList(7)}" title="" style="float:left;">更多公告</a>
+</div>

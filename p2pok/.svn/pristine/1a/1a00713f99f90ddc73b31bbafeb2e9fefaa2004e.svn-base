@@ -1,0 +1,42 @@
+<div class="xn_c_content_left">
+  <div class="xn_c_content_leftul">
+    <ul>
+      <li>
+        <div class="xn_c_li_head_one">
+          <div class="xn_c_li_bg" id="lab_2"></div>借款会员分配
+        </div>
+        <div class="xn_c_li_head_two" id="hi_2">
+          <a id="mg_9" class="xn_c_li_head_twoli" href="@{supervisor.billCollectionManager.ToAssignLoanUsers.toAssignUsers()}">待分配借款会员</a>
+          <a id="mg_16" class="xn_c_li_head_twoli" href="@{supervisor.billCollectionManager.LoanUsers.deptLoanUserManager()}">已分配借款会员</a>
+          <a id="mg_11" href="@{supervisor.billCollectionManager.UserLoanBills.overdueBillDept()}" class="xn_c_li_three_twli">逾期借款会员</a>
+          <a id="mg_18" class="xn_c_li_head_twoli" href="@{supervisor.billCollectionManager.CustomerManager.customers()}">客服管理</a>
+        </div>
+      </li>
+      <li>
+        <div class="xn_c_li_head_one">
+          <div class="xn_c_li_bg" id="lab_1"></div>我的会员账单
+        </div>
+        <div class="xn_c_li_head_two" id="hi_1">
+          <a id="mg_1" href="@{supervisor.billCollectionManager.UserLoanBills.thisMonthMaturityBills()}" class="xn_c_li_three_twli">本月将到期账单</a>
+          <a id="mg_3" href="@{supervisor.billCollectionManager.UserLoanBills.paidBills()}" class="xn_c_li_three_twli">已还账单</a>
+          <a id="mg_2" href="@{supervisor.billCollectionManager.UserLoanBills.overdueBills()}" class="xn_c_li_three_twli">逾期账单</a>
+          <a id="mg_20" href="@{supervisor.billCollectionManager.UserLoanBills.badloansList()}" class="xn_c_li_three_twli">坏账账单</a>
+        </div>
+      </li>
+      #{if constants?.Constants?.DEV_PROD}
+      <li>
+        <div class="xn_c_li_head_one">
+          <div class="xn_c_li_bg" id="lab_3"></div>手动逾期
+        </div>
+        <div class="xn_c_li_head_two" id="hi_3">
+          <a id="mg_19" class="xn_c_li_head_twoli" href="@{supervisor.billCollectionManager.MyOverdue.billList()}">账单列表</a>
+		</div>
+      </li>
+      #{/if}
+    </ul>
+  </div>
+  <div class="xn_c_con_leftbutton">
+    <div class="xn_c_con_enimg">导航点击</div>
+  </div>
+</div>
+<script type="text/javascript" src="@{'/public/javascripts/tab/tab_mg_account.js'}"></script>

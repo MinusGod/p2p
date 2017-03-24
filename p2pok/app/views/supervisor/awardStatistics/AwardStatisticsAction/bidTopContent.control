@@ -1,0 +1,283 @@
+﻿<div class="xn_c_content">
+  <div class="xf_ht_tablelist">
+    <!-- 搜索 -->
+    #{form @bidTop(), id:'submit'}
+    <input type="hidden" id="currPage" name="currPage"/>
+    <input type="hidden" id="pageSize" name="pageSize"/>
+    <div class="xf_ht_search">
+      <div class="xf_ht_search_l">
+        <span id="div_0" onClick="conditonSearch(0)">默认排序</span>
+      </div>
+    </div>
+    <div class="xf_ht_search_inon">
+      <div class="xf_ht_search_r">
+        <div class="xf_ht_search_xl">
+          <span class="search_timesp">投标时间：</span>
+                    <input  name="beginTime"   type="text" id="beginTime" class="search_time" onclick="laydate({istime: true,format:'YYYY-MM-DD hh:mm:ss'});" style="cursor: pointer;width: 128px;" value="${page?.conditions?.beginTime}"   />
+
+          <span class="search_timesp">--</span>
+                    <input name="endTime" type="text" id="endTime" class="search_time" onclick="laydate({istime: true,format:'YYYY-MM-DD hh:mm:ss'});" style="cursor: pointer;width: 128px;" value="${page?.conditions?.endTime}"  />
+        </div>
+        <div class="xf_ht_search_xl">
+          <input type="button" class="search_button" onclick="searchSubmit();" value="搜 索" />
+        </div>
+
+
+
+      </div>
+    </div>
+    #{/form}
+    <!-- 列表内容 -->
+    <div class="xn_c_content_top">
+      #{table class:"xn_c_content_list1",cellspacing:"0",cellpadding:"0",border:"0",tr_class_even:"xn_tr_bj"}
+        #{tr}
+          #{th}序号#{/th}
+          #{th}用户名#{/th}
+          #{th}手机号#{/th}
+          #{th}投标次数#{/th}
+            #{th}投标金额#{/th}
+        #{/tr}
+        #{list page?.page}
+        #{tr tr_index:_index}
+          #{td}${(page?.currPage - 1) * page?.pageSize + _index}#{/td}
+          #{td}${_?.name}#{/td}
+          #{td }${_?.bidMobile}#{/td}
+          #{td}${_?.bidCount}#{/td}
+           #{td}${_?.sumBidAmount}#{/td}
+          
+        #{/tr}
+        #{/list}
+      #{/table}
+    </div>
+
+    <!-- 列表底部 -->
+    <div class="xn_c_content_bottom">
+      <div class="page_warp">
+      #{page currPage:page.currPage,totalCount:page.totalCount,pageSize:page.pageSize,theme:2,style:4/}
+      </div>
+    </div>
+
+<!--choujiang-->
+    <div class="bgcover">
+    <div class="xycj">投资幸运抽奖</div>
+    <div class="cont">
+        <!--<div class="serches">
+            <input id="startTime" type="text"  value="" class="sang_Calender"/>        <span>至</span>
+            <input id="endTime" type="text"  value="" class="sang_Calender"/>
+            <button class="btnserch" onclick="getInfos()">查询</button> <button class="btnserch" id="queryStatus" onclick="">状态</button>
+        </div>-->
+        <div class="usenames">
+            <br/> <br/> <br/>
+            <p>
+                <span class="usernames">用户名</span>&nbsp;--
+                &nbsp;<span class="telsw">手机号</span>&nbsp;--
+                &nbsp;<span class="times">投资金额</span>&nbsp;
+            </p>
+
+        </div>
+        <div style="width: 200px;margin: 0px auto;"><button onclick="start()" id="btntxt">开始</button></div>
+        <!--<div class="zhongjiangmd"></div>-->
+
+    </div>
+
+    </div>
+    <!--choujiang-->
+  </div>
+</div>
+
+	%{
+	java.util.Random random=new java.util.Random();// 定义随机类
+	Integer rand=0;
+	if(page?.page?.size()!=0){
+	  rand=random.nextInt(page?.page.size());
+	  }
+	
+	}%
+
+<style>
+.oddClassName{background-color:red;}
+.xn_c_content_list1{width:100%;}
+</style>
+<script type="text/javascript">
+
+var xinm = new Array();
+xinm[0]={"name":"7777","bidMobile":"187****8102","sumBidAmount":"2000"};
+xinm[1]={"name":"feifei","bidMobile":"152****1542","sumBidAmount":"5000"};
+xinm[2]={"name":"王闯子","bidMobile":"156****8710","sumBidAmount":"1000"};
+xinm[3]={"name":"张河海","bidMobile":"155****0421","sumBidAmount":"3000"};
+xinm[4]={"name":"0000","bidMobile":"135****2006","sumBidAmount":"1000"};
+xinm[5]={"name":"nihaoa","bidMobile":"177****4235","sumBidAmount":"3000"};
+xinm[6]={"name":"weishemod","bidMobile":"155****8421","sumBidAmount":"3000"};
+var usernames = $('.usernames');
+var telsw = $('.telsw');
+var times = $('.times');
+var nametxt = $('.name');
+var runing = true;
+var num = 0;
+var t;
+var size="${page?.page.size()}";
+var rand="${rand}";
+//开始停止
+function start() {
+	if (runing) {
+	runing = false;
+	$('#btntxt').removeClass('start').addClass('stop');
+	$('#btntxt').html('停止');
+	startNum();
+	} else {
+	runing = true;
+	$('#btntxt').removeClass('stop').addClass('start');
+	$('#btntxt').html('开始');
+	stop();
+
+	}
+	}
+//循环参加名单
+function startNum() {
+    num = Math.floor(Math.random() * (xinm.length));
+	usernames.html(xinm[num].name);
+	telsw.html(xinm[num].bidMobile);
+	times.html(xinm[num].sumBidAmount);
+	
+	
+	t = setTimeout(startNum, 0);
+	}
+//停止跳动
+function stop() {
+	//pcount = xinm.length-1;
+	//xinm.splice(num,1);
+	clearInterval(t);
+	t = 0;
+		if(size!=0){
+		usernames.html("${page?.page[rand]?.name}");
+		telsw.html("${page?.page[rand]?.bidMobile}");
+		times.html("${page?.page[rand]?.sumBidAmount}");
+		}
+	}
+
+
+
+
+
+
+
+
+function conditonSearch(num){
+  if(orderType == 0){
+    $("#orderType").val(num);
+    $("#submit").submit();
+    return;
+  }
+  var sum = orderType/2;
+  if(sum.toString().indexOf('.') == -1){
+    var sum2 = orderType - 1;
+    $("#orderType").val(num);
+    $("#submit").submit();
+    return;
+  }else{
+    if(orderType == num){
+      $("#orderType").val(num + 1);
+      $("#submit").submit();
+      return;
+    }else{
+      $("#orderType").val(num);
+      $("#submit").submit();
+      return;
+    }
+  }
+}
+
+$(function(){  
+  /* 高亮显示 */
+  highLight(3);
+  
+  //条件查询控制样式
+  
+  if(num == 0){
+    $("#div_0").addClass("xf_sea_isshow");
+    return;
+  }
+
+  var sum = num/2;
+  if(sum.toString().indexOf('.') == -1){
+    var sum2 = num -1;
+    $("#div_"+sum2).addClass("xf_sea_isshow");
+    $("#div_a_"+sum2).html("↓");
+    return;
+  }
+
+  $("#div_"+num).addClass("xf_sea_isshow");
+  $("#div_a_"+num).html("↑");
+});
+
+function showPage(currPage, pageSize){
+  $("#currPage").val(currPage);
+  $("#pageSize").val(pageSize);
+  $("#submit").submit();
+}
+
+function searchSubmit(){
+  $("#submit").submit();
+}
+
+function edit(sign){
+  $.ajax({
+    url : "@{supervisor.userManager.AllUser.editUserInfoWin()}",
+    type : "POST",
+    data : {
+      "sign" : sign
+    },
+    success : function(data) {
+      if (data.code < 0) {
+        alert(data.msg);
+
+        return;
+      }
+        
+      $("#edit_user_info").html(data);
+      $.layer({
+		    type: 1,
+		    area: ['560px', 'auto'],
+		    title: '编辑用户信息',
+		    page: {dom : '#edit_user_info'}
+		  });
+    },
+    error : function() {
+      alert("对不起，出现错误!");
+    }
+  });
+}
+function changeSign(userId){
+ $.ajax({
+    url : "@{supervisor.userManager.AllUser.changeSign()}",
+    type : "POST",
+    data : {
+      "sign" : userId
+    },
+    success : function(data) {
+        alert(data.msg);
+    },
+    error : function() {
+      alert("对不起，出现错误!");
+    }
+  });
+}
+</script>
+
+    <style>
+        body{font-family:"微软雅黑"; background-size: cover; }
+        .xycj{padding-top:150px;font-family:"微软雅黑";margin:0px auto;font-size:33px;
+        text-align: center;color: #FFF; padding-bottom:50px;}
+        .cont{width:800px;margin:0px auto;height:300px;background-color: #fff;border: 2px; }
+        #btntxt{font-family:"微软雅黑";color:#fff;border:0px;width:200px;height:40px;border-radius: 4px;background-color: #24ADD7;}
+        .usenames{text-align: center;margin-top: 50px; }
+        .serches{width:510px;margin:0px auto;padding-top:100px;}
+        .serches input{float:left;padding:0px 10px;width:150px;line-height:25px;height:25px;border: 1px solid #dddddd;}
+        .btnserch{margin-left:5px;float:left;color:#fff;border-radius:2px;font-family:"微软雅黑";border: 0px;width: 60px;height: 27px;line-height: 27px;background-color: #24ADD7;}
+        .serches span{float: left; padding: 0px 10px;}
+        .name{height:50px;overflow:scroll-y;}
+        .usenames p{height:50px;}
+        .hrf_x{margin:0px auto;width: 800px;}
+        .hrf_x a{font-family:"微软雅黑";text-decoration:none;border-radius:2px;font-size:14px;color:#24ADD7;width:80px;text-align:center;background-color: #fff;display:inline-block;line-height: 30px;}
+
+    </style>

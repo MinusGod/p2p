@@ -1,0 +1,139 @@
+<div class="xn_c_content">
+  <div class="xf_ht_tablelist">
+    <!-- 搜索 -->
+    <input type="hidden" name="currPage" id="currPage" value="${page?.currPage}"/>
+	<input type="hidden" name="currSize" id="currSize" value="${page?.pageSize}"/>
+    <div class="xf_ht_search" align="right">
+      <div class="xf_ht_search_r">
+        <div class="xf_ht_search_xl">
+	         <input name="trueName" type="text" id="trueName" class="search_w" placeholder="请输入真实姓名" value="${page?.conditions?.name}"/>
+        </div>
+        <div class="xf_ht_search_xl">
+            <input type="button" class="search_button" onclick="searchall(0);" value="搜 索" />
+        </div>
+      </div>
+       <div class="xf_ht_search_xl" style="float:right;">
+            <input type="button" class="search_button" onclick="addSpreader();" value="添加直客">
+             <input type="button" class="search_button" onclick="searchall(1);" value="导出" />
+        </div>
+    </div>
+    
+	<!-- 列表内容 -->
+	<div class="xn_c_content_top">
+      #{table class:"xn_c_content_list",cellspacing:"0",cellpadding:"0",border:"0",tr_class_even:"xn_tr_bj"}
+        #{tr}
+       	  #{th}序号#{/th}
+          #{th}推广码#{/th}
+          #{th}直客#{/th}
+          #{th}真实姓名#{/th}
+          #{th}推广会员#{/th}
+          #{th}充值会员#{/th}
+          #{th}投资会员#{/th}
+          #{th}充值金额#{/th}
+          #{th}投资金额#{/th}
+          #{th}操作#{/th}
+        #{/tr}
+        #{list items:page.page,as:'spreaders'} 
+				#{tr tr_index:spreaders_index}
+					<td align="center">
+						${spreaders_index}
+					</td>
+					<td align="center">
+						${spreaders.spread_code}
+					</td>
+					<td align="center">
+						${spreaders.name}
+					</td>
+					<td align="center">
+						${spreaders.reality_name}
+					</td>
+					<td align="center">
+						${spreaders.spread_user_count}
+					</td>
+					<td align="center">
+						${spreaders.recharge_user_count}
+					</td>
+					<td align="center">
+						${spreaders.invest_user_count}
+					</td>
+					<td align="center">
+						${spreaders.recharge_amount?.format('###,##0.00')}
+					</td>
+					<td align="center">
+						${spreaders.invest_amount?.format('###,##0.00')}
+					</td>
+					<td align="center">
+						<input type ="hidden" value="${spreaders.status}" id="active${spreaders_index}" />
+						#{if spreaders.status == false} 
+						<span class="xf_ta_onclick" onclick="updateActive('${spreaders_index}','${spreaders.id}');" id ="change${spreaders_index}">启用</span>
+						#{/if}
+						#{if spreaders.status == true} 
+						<span class="xf_ta_onclick" id = "change${spreaders_index}" onclick="updateActive('${spreaders_index}','${spreaders.id}');" id ="change${spreaders_index}">停用</span>
+						#{/if}
+					</td>
+				#{/tr}
+		#{/list}
+      #{/table}
+    </div>
+    <!-- 列表底部 -->
+    <div class="xn_c_content_bottom">
+        <div>合计：直客 <b>${map?.spreader_count}</b> 人 ，推广会员 <b>${map?.allspread_user_count}</b> 人，充值会员  <b>${map?.allrecharge_user_count}</b> 人，投资会员 <b>${map?.allinvest_user_count}</b> 人，投资金额 <b>${map?.allinvest_amount?.format('###,##0.00')}</b> 元
+   	    <span style="float:right;color:#8b8b8b;">数据更新时间:<b> ${lastUpdatetime?.format('yyyy年MM月dd日 HH:mm:ss')} </b></span>
+   	    </div>
+   	    <br/>
+        *{<div class="page_warp_l">
+            <input type="button" class="xf_htbutton" onclick="addSpreader();" value="添加直客">
+        </div>}*
+        <div class="page_warp">
+          #{page currPage:page.currPage,totalCount:page.totalCount,pageSize:page.pageSize,theme:2,style:4/}
+        </div>
+    </div>
+  </div>
+</div>
+
+<script>
+	//搜索
+	function searchall(isExport) {
+		window.location.href = "spreaderManager?trueName=" + $("#trueName").val() + "&currPage=" + $("#currPage").val() + "&currSize=" + $("#currSize").val() + "&isExport=" + isExport;
+	}
+	
+	function showPage(currPage,pageSize){
+		$("#currPage").val(currPage);
+		$("#currSize").val(pageSize);
+		searchall();
+	}
+	//更新直客启用状态
+	function updateActive(index, id){
+	    var active = $("#active" + index).val();
+		var tips = "";
+	    if (active == "true"){
+			active = 0;		
+			tips = "停用期间，直客将无法获得提成，是否确认停用？";
+		}else if (active == "false"){
+			active = 1;
+			tips = "启用期间，直客将获得提成，是否确认启用？"
+		}
+		
+	    if(confirm(tips)){
+			var updateActiveUrl = #{jsAction @supervisor.networkMarketing.SpreadAction.updateSpreaderStatus(':id',":active")/};
+			$.post(updateActiveUrl({id:id,active:active}),function(data){
+		    if(data == "1"){
+		    // 成功，更改隐藏域active的值，更显页面显示信息
+		    	if(active == 1){
+		    		$("#active" + index).val(true);
+		    		$("#change" + index).html('停用');
+		    	}else if(active == 0){
+				    $("#active" + index).val(false);
+				    $("#change" + index).html('启用');
+		    	}
+		    	
+		    }
+		    else if(data == "0"){
+		    //失败，就提示用户失败
+		    	alert("更新是否启用失败");
+		    }
+		  	});
+	    }
+	}
+
+</script>

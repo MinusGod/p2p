@@ -1,0 +1,93 @@
+<div class="xn_c_content">
+  <div class="xf_ht_tablelist">
+    <!-- 搜索 -->
+   	 <input type="hidden" name="currPage" id="currPage" value="${page?.currPage}"/>
+	<input type="hidden" name="currSize" id="currSize" value="${page?.pageSize}"/>
+	<!-- 列表内容 -->
+	<div class="xn_c_content_top">
+      #{table class:"xn_c_content_list",cellspacing:"0",cellpadding:"0",border:"0",tr_class_even:"xn_tr_bj"}
+        #{tr}
+          #{th}年#{/th}
+          #{th}月#{/th}
+          #{th}新增直客#{/th}
+          #{th}新增推广会员#{/th}
+          #{th}新增充值会员#{/th}
+          #{th}新增投资会员#{/th}
+          #{th}充值金额(元)#{/th}
+          #{th}投资金额(元)#{/th}
+          #{th}当月提成合计(元)#{/th}
+          #{th}操作#{/th}
+         
+        #{/tr}
+         #{list items:page.page,as:'statisticSpread'}
+       	 #{tr tr_index:statisticSpread_index}
+		<td align="center">
+			${statisticSpread.year}
+		</td>
+		<td align="center">
+			${statisticSpread.month}
+		</td>
+		<td align="center">
+			${statisticSpread.spreader_count}
+		</td>
+		<td align="center">
+			${statisticSpread.spread_user_count}
+		</td>
+		<td align="center">
+			${statisticSpread.recharge_user_count}
+		</td>
+		<td align="center">
+			${statisticSpread.invest_user_count}
+		</td>
+		<td align="center">
+			${statisticSpread.recharge_amount?.format('###,##0.00')}
+		</td>
+		<td align="center">
+			${statisticSpread.invest_amount?.format('###,##0.00')}
+		</td>
+		<td align="center">
+			${statisticSpread.cut_amount?.format('###,##0.00')}
+		</td>
+		<td align="center">
+			<span class="xf_ta_onclick" onclick="showSpreadStatisticDetail(${statisticSpread.year},${statisticSpread.month});">提成明细</span>&nbsp;&nbsp;&nbsp;&nbsp;
+		</td>
+		  #{/tr}
+       #{/list}
+       #{else}
+      		<tr><td colspan="9">没有任何的数据!</td></tr>
+      #{/else}
+
+      #{/table}
+      
+    
+    </div>
+    <!-- 列表底部 -->
+    <div class="xn_c_content_bottom">
+    	<div >
+    	
+    	<span>&nbsp;</span>
+    	<span style="float:right;color:#8b8b8b;">数据更新时间:<b> ${lastUpdatetime?.format('yyyy年MM月dd日 HH:mm:ss')} </b></span>
+    	</div>
+        <div class="page_warp" style="margin-top:15px;">
+        	#{if page}
+          #{page currPage:page.currPage,totalCount:page.totalCount,pageSize:page.pageSize,theme:2,style:4/}
+          #{/if}
+        </div>
+    </div>
+  </div>
+</div>
+
+<script>
+	//搜索
+	function searchall() {
+		window.location.href = "@{supervisor.networkMarketing.SpreadAction.spreadStatistic()}?currPage=" + $("#currPage").val() + "&currSize=" + $("#currSize").val();
+	}
+	
+	function showPage(currPage,pageSize){
+		$("#currPage").val(currPage);
+		$("#currSize").val(pageSize);
+		searchall();
+	}
+		
+</script>
+

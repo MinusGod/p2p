@@ -1,0 +1,68 @@
+#{extends 'common/frontMain.html' /} 
+%{
+	business.BackstageSet  currBackstageSet = business.BackstageSet.getCurrentBackstageSet();
+	java.lang.String type2Name = business.NewsType.queryName(2);
+}%
+#{set title:currBackstageSet.seoTitle+'|帮助中心' /}
+	<div class="y_wtbg">
+		<div class="y_wtss">
+			<input id="keyword"  type="text" value="${pageBean.conditions.keyword}" placeholder="请输入你要查询的关键字">
+
+			<i class="y_bg" onclick="search()"></i>
+		</div>
+	</div>
+	
+	<div class="y_wtmain clr">
+		<!-- left-nav -->
+		<div class="y_wtnav">
+			<ul>
+				<li><p>${type2Name}</p></li>
+				#{list types}
+				<li id="bzzx${_?.id}">
+				<a href="javascript:list('${_?.id}');">${_?.name}</a>
+				</li>
+				#{/list}
+			</ul>
+		</div>
+		<!-- right-main -->
+		<div class="y_wtrgh">
+			<h3 class="y_wth2"><span>${type?.name}</span></h3>
+			<ul class="y_wtul">
+				#{list pageBean?.page}
+				<li>
+						<h3 class="y_wth3"><span class="fl">${_?.title}</span><span class="fr">+</span></h3>
+						<div class="y_wtdiv">
+							${_?.content?.raw()}
+					</div>
+				</li>
+				#{/list}
+			</ul>
+			<div class="y_page">
+				#{page pageTitle:"条",currPage:pageBean.currPage,pageSize:pageBean.pageSize,totalCount:pageBean.totalCount,theme:1,style:2}
+		typeId=${pageBean?.conditions?.typeId}&keyword=${pageBean?.conditions?.keyword}
+		#{/page}
+			</div>
+		</div>
+	</div>
+<script type="text/javascript">
+	$(function() {
+	    $(".xf_bzzx_home_list_ul_c").limit();
+	    $("#bzzx" + ${typeId}).addClass("click");
+	})
+	
+	function list(typeId) {
+		window.location=("index?typeId=" + typeId);
+	}
+	
+	function detail(newsId) {
+		var keyword = encodeURIComponent($("#keyword").val());
+		window.open("detail?newsId=" + newsId + "&keyword=" + keyword, "_self");
+	}
+	
+	function search() {
+		var keyword = encodeURIComponent($("#keyword").val());
+		window.open("index?typeId=" + ${pageBean?.conditions?.typeId} + "&keyword=" + keyword);
+	}
+	
+</script>
+<script type="text/javascript" src="@{'/public/javascripts/tab/tab_help.js'}"></script>

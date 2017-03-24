@@ -1,0 +1,252 @@
+		<div class="y_bdmain" id="xf_wyjkview_xxk">
+		<ul class="y_bdul">
+			<li class="click">标的详情</li>
+			<li id="investRecords">投标记录</li>
+			<!--<li  id="bidInvestQuestions">标的详情咨询</li>-->
+		</ul>
+		<div class="y_bdbox">
+			<h2 class="y_bdh2">基本资料</h2>
+				<table class="y_bdtab">
+					<tbody>
+						<tr>
+							<!--<td  width="13%" >借款目的：</td>
+							<td width="26%" >${bid?.purpose?.name}</td>
+							<td width="9%">性别：</td>
+							<td width="24%">${bid?.user?.sex}</td>
+							<td width="7.5%">年龄：</td>
+							<td width="20.5%">${bid?.user?.age}岁</td>-->
+							
+							<td  width="13%" >用户名：</td>
+							<td width="26%" class="names">${bid?.user?.name}</td>
+							<td width="9%">借款目的：</td>
+							<td width="24%">${bid?.purpose?.name}</td>
+							<td width="7.5%">年龄：</td>
+							<td width="20.5%">${bid?.user?.age}岁</td>
+						</tr>
+						<tr>
+							<!--<td >身份证号：</td>
+							<td >${bid?.user?.idNumber?.asterisk()}</td>-->
+							<td>性别：</td>
+							<td>${bid?.user?.sex}</td>
+							<td>户口所在地：</td>
+							<td>${bid?.user?.provinceName}${bid?.user?.cityName}</td>
+							<td>文化程度：</td>
+							<td>${bid?.user?.educationName}</td>
+							
+						</tr>
+						<tr>
+							<td >婚姻情况：</td>
+							<td>${bid?.user?.maritalName}</td>
+							<td>购房情况：</td>
+							<td>${bid?.user?.houseName}</td>
+							<td>购车情况：</td>
+							<td>${bid?.user?.carName}</td>
+							
+						</tr>
+						<tr>
+                            <td>长期居住地：</td>
+                            <td>测试</td>
+                            <td>年收入：</td>
+                            <td>测试</td>
+                            <td>工作年限：</td>
+                            <td>测试</td>
+                        </tr>
+						<tr>
+                        <td >商业保险：</td>
+                        <td>测试</td>
+                        <td>信用卡额度：</td>
+                        <td>测试</td>
+
+                        </tr>
+					</tbody>
+				</table>
+							<h2 class="y_bdh2">企业资料</h2>
+                				<table class="y_bdtab">
+                					<tbody>
+                						<tr>
+
+
+                							<td width="13%" >企业名称：</td>
+                							<td width="26%" class="names">测试</td>
+                							<td width="9%">执照编号：</td>
+                							<td width="24%">测试</td>
+                							<td width="7.5%">法人姓名：</td>
+                							<td width="20.5%">测试</td>
+                						</tr>
+                						<tr>
+                							<td>注册资本：</td>
+                							<td>测试</td>
+                							<td>员工人数：</td>
+                							<td>测试</td>
+                						</tr>
+                						<tr>
+                							<td>经营范围：</td>
+                							<td colspan="4" style="width:700px;padding-top:18px;">
+                							文字描述文字描述文字描述文字描述文字描述文字描述，文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描
+                                            文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述。
+                							</td>
+                						</tr>
+                					</tbody>
+                				</table>
+					<h2 class="y_bdh2">借款详情</h2>
+			<div class="y_bdp1">${bid?.description}</div>
+			<!-- part3 -->
+			<table class="y_bdtab2">
+				<tr>
+					<!--<td width="">序号</td>-->
+					<td width="200">审核科目</td>
+					<td width="180">状态</td>
+					<td width="200">操作</td>
+					<td width="">CBO风控体系审核</td>
+				</tr>
+				#{list uItems}	
+					#{if _?.status==2}
+						<tr>
+							<!--<td >
+								${_index}
+							</td>-->
+							<td >
+								${_?.auditItem?.name}
+							</td>
+							<td >
+								${_?.strStatus}
+							</td>
+							<td  >
+									<a onclick="showitemNow('${_?.mark}','${bid?.signUserId}');">查看</a>
+							</td>
+							#{if _index == 1}
+							<td  rowspan="${uItems?.size}" class="brgh">
+								${bid?.auditSuggest}
+							</td>
+							#{/if}
+						</tr>
+					#{/if}
+		    	#{/list}
+			</table>
+			<h2 class="y_bdh2">历史情况</h2>
+							<table class="y_bdtab">
+								<tbody>
+									<tr>
+										<td >注册时间：${bid?.user?.time?.format('yyyy-MM-dd HH:mm:ss')}</td>
+										<td>成功借款次数：${historySituationMap?.successBidCount}次</td>
+										<td>正常还款次数：${historySituationMap?.normalRepaymentCount}次</td>
+										<td>逾期还清次数：${historySituationMap?.overdueRepaymentCount}次</td>
+									</tr>
+									<tr>
+										<td>待付款金额：${historySituationMap?.pendingRepaymentAmount}元</td>
+										<td>共计借入金额：${historySituationMap?.loanAmount}元</td>
+										<td>投资投标笔数：${historySituationMap?.financialCount} 笔</td>
+										<td>待收款金额：${historySituationMap?.receivingAmount} 元</td>
+									</tr>
+								</tbody>
+							</table>
+			
+				
+				
+
+		
+		<input type="hidden" id="hiddenbidvalue" name="hiddenbidvalue" value=${bid?.sign} />
+		<input type="hidden" id="hiddenUserId" name="hiddenbidvalue" value=${bid?.signUserId} />
+		
+	    </div>
+	    <!--借款投标记录 -->
+		<div class="y_bdbox" id="bidInvestRecords">
+
+		
+		</div>
+			<!--借款提问记录 -->
+			<div class="y_bdbox" id="bidQuestions">
+			</div>
+		
+	 </div>
+	 			
+			<!-- 查看资料弹出层 -->
+	    	<div id="showitem" class="xf_ht_ttc" >  
+	    	
+	    	</div>
+<script>
+$(function(){
+    var names=$(".names").html();
+    var dats=names.split("");
+    $(".names").html(dats[0]+"**"+ dats[dats.length-1]);
+})
+
+
+	function showitemNow(mark,signUserId){
+	   /** 检查用户是否激活, fronMain.html 中的拦截器*/
+	   var result = frontJSIntercepter();
+	  
+	   if(!result){
+      	  showitem(mark,signUserId);  
+	   }		
+	}
+	      
+	/* 查看弹出层 */
+	function showitem(mark,signUserId){
+		var listAction = #{jsAction @front.invest.InvestAction.showitem(':mark',':signUserId') /};
+		$.post(listAction({mark:mark,signUserId:signUserId}), function(data) {
+			
+			//拦截器，拦截判断。frontMain.html
+			if(checkIntercepterResult(data)){
+				return;
+			}
+			showDiv($("#showitem").html(data));
+		});		
+	}
+	      
+	      
+	      $(function(){
+	      
+	      	$("#investRecords").click(function(){
+	      		 var bidId = $("#hiddenbidvalue").val();
+	      		 var pageSize = 10;
+	      		 var pageNum = 1;
+	      		 showBidRecords(pageNum, pageSize,bidId);
+	      	})
+	      	
+	      		$("#bidInvestQuestions").click(function(){
+	      		 showBidAllQuestion(1, 10);
+	      	})
+	      	
+	     })
+	      
+	      function showBidRecords(pageNum, pageSize,bidId) {
+	      
+	       var bidId = $("#hiddenbidvalue").val();
+	     
+		   $.ajax({
+		     	url : "@{viewBidInvestRecords()}",
+			    type : "POST",
+			    data : {
+			     	"pageNum" : pageNum, "pageSize":pageSize, "bidIdSign":bidId
+			     },
+			    success : function(data) {
+				     $("#bidInvestRecords").html(data);
+			     },
+			   error : function() {
+				alert("对不起，出现错误!");
+			}
+		});
+	}
+	
+		function showBidAllQuestion(pageNum, pageSize){
+				var bidId = $("#hiddenbidvalue").val();
+				$.ajax({
+		     	url : "@{viewBidAllQuestion()}",
+			    type : "POST",
+			    data : {
+			     	"pageNum" : pageNum, "pageSize":pageSize, "bidIdSign":bidId
+			     },
+			    success : function(data) {
+				     $("#bidQuestions").html(data);
+			     },
+			    error : function() {
+					alert("对不起，出现错误!");
+				}
+		});
+				
+		}
+	
+	
+	      </script>
+	      

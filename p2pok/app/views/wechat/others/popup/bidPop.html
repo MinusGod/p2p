@@ -1,0 +1,96 @@
+#{extends 'wechat/common.html' /}
+<body>
+<div id="paypop"  >
+       <div class="ln_bobo"  >
+              <br><a href="@{wechat.account.WechatAccountHome.myInvestBids}">
+              <img id="close"
+               src="/public/images/wechat/popup/clos.jpg"></a><br>
+              <img class="err"  src="/public/images/wechat/popup/err.png">
+              <img class="wrong"  src="/public/images/wechat/popup/wrong.png">
+              <img class="rig" style="" src="/public/images/wechat/popup/right.png"><br><br>
+              <p class="zhuangtai">
+                     <span>恭喜您${error.msg}!</span></p>
+              <br><br>
+              <p class="neirong">
+                     <span >想要更多收益，去看看<a href="@{wechat.service.InvestAction.queryAllBids}">其他借款信息</a>吧！</span></p>
+              <br>
+              <a href="@{wechat.account.WechatAccountHome.myInvestBids}"> <button> 确定</button></a>
+       </div>
+</div>
+<style>
+       #paypop{
+              background-color: #666666;width:100%;min-height: 600px; text-align: center
+       }
+       .ln_bobo{
+              padding-bottom: 20px;position: relative;top:50px;
+              -moz-border-radius: 10px 10px 10px 10px;
+              -webkit-border-radius: 10px 10px 10px 10px;
+              border-radius: 10px 10px 10px 10px;width: 90%;
+              height:auto;background-color: #ffffff;
+              margin-left: 5%;
+       }
+       #close{
+              float: right;margin-right: 20px;width: 20px;height: 20px
+       }
+       .err{
+              margin-left:10%;display:none
+       }
+       .wrong{
+              margin-left:10%;display:none
+       }
+       .rig{
+              margin-left: 10%
+       }
+
+       .neirong{
+              font-size: 18px; font-weight: bold; color: #999999;
+       }
+       .neirong a{
+              color: #309DCD;
+       }
+       button{
+              border-radius: 5px ;border:solid 1px #309DCD;
+              background-color: #309DCD;width: 80%;height: 40px;
+              font-size: 20px;
+              color:#ffffff;
+       }
+       .zhuangtai{
+              font-size: 20px; font-weight: bold; color: #309DCD;
+       }
+</style>
+<script type="text/javascript">
+//       $(document).ready(function () {
+//             if(("${error.msg}")=="投标成功"){
+//                    $("button").css("display", "inline-block");
+//                    $(".err").css("display", "none");
+//                     $(".rig").css("display", "inline-block");
+//             }else{
+//                    $("button").css("display", "inline-block");
+//                    $(".wrong").css("display", "inline-block");
+//                     $(".rig").css("display", "none");
+//
+//              }
+//       });
+       $("#close").click(function () {
+              $("#paypop").css("display", "none");
+
+
+       });
+
+
+       function countDown(secs, surl) {
+              var jumpTo = document.getElementById('jumpTo');
+              jumpTo.innerHTML = secs + "秒后将自动跳转至${error.returnMsg}！";
+              if (--secs > 0) {
+                     setTimeout("countDown(" + secs + ",'" + surl + "')", 1000);
+              } else {
+                     location.href = surl;
+                     //window.close();
+              }
+       }
+</script>
+
+<script type="text/javascript">$(function () {
+       countDown(5, '${error.returnUrl}');
+})</script>
+

@@ -1,0 +1,49 @@
+#{extends 'common/supervisor.html' /} #{set title:'直客管理' /}
+<div class="xfht_t_j_k"> 
+<!--左-->
+#{include "supervisor/networkMarketing/CPSSpreadAction/networkMarketingLeft.control"/}
+ <!--右-->
+#{include "supervisor/networkMarketing/SpreadAction/spreaderManager.control"/}
+</div>
+<!--弹出层-->
+<div id="xf_ht_tjkf_ttc" style="display: none;"></div>
+
+<script type="text/javascript">
+var p2p;
+var pt = 1;
+var layer_index;
+	
+function addSpreader(){
+	 $.ajax({
+		    url : "@{selectSupervisorInit()}",
+		    type : "POST",
+		    data : {
+		        "currPage" : 1,
+		        "pageSize" : 5
+		    },
+		    success : function(data) {
+		      if (data.code < 0) {
+		        alert(data.msg);
+		          
+		        return;
+		      }
+		      
+		      $("#xf_ht_tjkf_ttc").html(data);
+		      $.layer({
+		        type: 1,
+		        area: ['900px', 'auto'],
+		        title: '添加直客',
+		        page: {dom : '#xf_ht_tjkf_ttc'}
+		      });
+		    },
+		    error : function() {
+		      alert("对不起，出现错误!");
+		    }
+		  });
+} 
+
+$(function(){
+	//高亮显示
+	showHighLight(4,4,10);
+})
+</script>

@@ -1,0 +1,174 @@
+#{extends 'common/frontMain.html' /}
+#{set title:'通过手机重置密码页面' /}
+<div class="xf_login_centent clr">
+	<div class="xf_login_title xf_login_title2">
+		<span class="xf_login_title_yhdl">重置密码</span>
+	</div>
+	<div style="padding: 0 0 10px 0" class="xf_register_email">
+		<ul class="xf_register_email_ul clr" id="xf_wyjkview_xxk">
+			<li onClick="byEmail()">通过邮箱重置密码</li>
+			<li style="border-right: 1px solid #FFFFFF;"   class="xf_con_wyjk_r_liishot xf_con_wyjk_r_liwyhm">通过手机重置密码</li>
+		</ul>
+		#{form @savePasswordByMobile(), id:'resetPassword'}
+		<div class="xf_con_wyjk_tentultbody">
+			<ul style=";padding: 30px 0 0 233px;" class="xf_login_inputsrul xf_login_inputsrul_zhyhm">
+				<li>
+					<div class="xf_login_inputsrul_l xf_login_inputsrul_lyhm">请输入绑定手机：</div>
+					<div class="xf_login_inputsrul_">
+						<input class="xf_login_shurk" type="text" id="mobile1" name="mobile">
+					</div>
+				</li>
+				#{if checkMsgCode}
+				<li>
+					<div class="xf_login_inputsrul_l xf_login_inputsrul_lyhm">请输入图形验证码：</div>
+					<div class="xf_login_inputsrul_">
+							<input class="xf_login_yzm" type="text" name="captcha" id="captcha" >
+						<input id="randomID5" name="randomID" value="${randomId}" type="hidden" />
+            			<img id="captchaImage" class="xf_login_yzmimg" src="@{Application.captcha(randomId)}" style="width: 60px;height: 30px;" alt="验证码" onclick="refreshCaptcha();">
+            			<input type="button" class="login_sx" onclick="refreshCaptcha()" id="m3" value="刷新"></input>
+					</div>
+				</li>
+				#{/if}
+				<li>
+					<div class="xf_login_inputsrul_l xf_login_inputsrul_lyhm">输入校验码：</div>
+					<div class="xf_login_inputsrul_">
+						<input class="xf_login_shurk" type="text" id="code5" name="code"
+							#{if !constants.Constants.CHECK_MSG_CODE}
+								value="" title="演示站点任意输入"
+							#{/if}
+						>
+						<input type="button" onClick="getMobile()" id="teleTime" value="点击获取手机验证码" class="p_x31307"/>
+					</div>
+				</li>
+				<li>
+					<div class="xf_login_inputsrul_l xf_login_inputsrul_lyhm">输入新密码：</div>
+					<div class="xf_login_inputsrul_">
+						<input class="xf_login_shurk" type="password" id="password5" name="password"><span class="p_x31307">6-16位数字、字母、'_'组合</span>
+					</div>
+				</li>
+				<li>
+					<div class="xf_login_inputsrul_l xf_login_inputsrul_lyhm">再次输入新密码：</div>
+					<div class="xf_login_inputsrul_">
+						<input class="xf_login_shurk" type="password" id="confirmPassword5" name="confirmPassword" >
+					</div>
+				</li>
+				<li>
+					<div class="xf_login_inputsrul_l xf_login_inputsrul_lyhm">&nbsp;</div>
+					<div class="xf_login_inputsrul_r">
+						<a href="javascript:void(0);" class="xf_con_inputfbjk" onClick="resetPassword()">确定</a>
+					</div>
+				</li>
+			</ul>
+		</div>
+		#{/form}
+	</div>
+</div>
+<!-- 底部阴影 -->
+<div class="xf_login_kjyy"></div>
+<script>
+     
+     function resetPassword(){
+        if($("#mobile1").val() == ''){
+            alert("请输入手机号码");
+            return;
+            
+        }  
+     
+        if($("#code5").val() == ''){
+            alert("请输入校验码");
+            return;
+        }
+        
+        if(!$("#mobile1").val().isMobileNum()) {
+        	alert("请输入正确的手机号码");
+            return;
+       }
+       
+       var password = $("#password5").val();
+		   
+      if(password == ""){
+          alert("请设置您的密码");
+          return; 
+      }else if(password.length < 6){
+         alert("密码长度为：6-16位数字、字母、'_'组合"); 
+         return;
+      }else if(password.length >16){
+          alert("密码长度为：6-16位数字、字母、'_'组合"); 
+          return;
+      }
+      for(var i=0;i<password.length;i++){
+    	    if (!/^[a-zA-Z0-9_]$/g.test(password[i])) {
+    	        alert("密码长度为：6-16位数字、字母、'_'组合")
+    	        return;
+    	    }
+    	}
+	  var confirmPassword = $("#confirmPassword5").val();
+	    
+      if(confirmPassword == ""){
+           alert("请输入密码确认"); 
+           return;
+      }else if(confirmPassword != $("#password5").val()){ 
+           alert("两次输入的密码不一致"); 
+           return;
+      } 
+      $("#resetPassword").submit();
+    }
+      
+	function byEmail(){
+        window.location.href = "@{resetPasswordByEmail()}";
+    }
+	
+	function refreshCaptcha() {
+	    $.ajax({
+		  url : "@{Application.randomID()}",
+		  type : "POST",
+		  data : {
+		  },
+		  success : function(randomID) {
+		    $("#captchaImage").attr("src","@{Application.captcha()}?id="+randomID);
+			  $("#randomID5").val(randomID);
+			},
+		  error : function() {
+		    alert("对不起，出现错误!");
+		  }
+		 });
+	  }
+    
+    function getMobile(){
+    	var mobile = $("#mobile1").val().trim();
+    	var captcha = '';
+    	var randomId = '';
+    	
+    	if(mobile == '') {
+			alert("请输入手机号码");
+			return;
+		}
+		
+		if(!mobile.isMobileNum()) {
+			alert("请输入正确的手机号码");
+			return;
+		}
+		
+		if(${checkMsgCode}){
+			captcha = $("#captcha").val().trim();
+			randomID = $("#randomID5").val().trim();
+			
+			if(captcha == ''){
+				alert("请输入图形验证码");
+				return;
+			}
+		}
+    	
+        var findPasswordByMobile = #{jsAction @findPasswordByMobile(':mobile',':captcha',':randomID')/}
+		$.post(findPasswordByMobile({mobile:mobile,captcha:captcha,randomID:randomID}),function(data){
+		    var arr = eval(data);
+		      
+		    if(arr.error.code < 0){
+		        alert(arr.error.msg);
+		        return;
+		    } 
+		    
+		    teleCodeTimer("teleTime");
+		});
+    }
+</script>

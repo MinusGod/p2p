@@ -1,0 +1,165 @@
+				<!-- 借款标详情 -->
+					<div class="y_bdmain" id="xf_wyjkview_xxk">
+					<ul class="y_bdul">
+						<li class="cllick">转让标详情</li>
+						<li  id="debtAuctionRecords" onclick="showDebtAuctionRecords(1,10);">竞拍记录</li>
+					</ul>
+					
+                    <input type="hidden" id="debtId" value="${debt?.id}" />
+					<div class="y_bdbox">
+                    	<table class="y_bdtab">
+							<h2 class="y_bdh2">基本资料</h2>
+								  		<table class="y_bdtab">
+											<tbody>
+												<tr>
+													<td  width="8%">真实姓名：</td>
+												  	<td width="26%" >${debt?.invest?.bid?.user?.realityName?.asterisk()}</td>
+												  	<td width="9%">性别：</td>
+												  	<td width="24%">${debt?.invest?.bid?.user?.sex}</td>
+												  	<td width="7.5%">年龄：</td>
+												  	<td width="24.5%">${debt?.invest?.bid?.user?.age}岁</td>
+												</tr>
+												<tr>
+													<td  >身份证号：</td>
+												  	<td >${debt?.invest.bid?.user?.idNumber?.asterisk()}</td>
+												  	<td>户口所在地：</td>
+												  	<td>${debt?.invest?.bid?.user?.provinceName}${debt?.invest?.bid?.user?.cityName}</td>
+												  	<td>文化程度：</td>
+												  	<td>${debt?.invest?.bid?.user?.educationName}</td>
+												</tr>
+												<tr>
+													<td >婚姻情况：</td>
+												  	<td>${debt?.invest?.bid?.user?.maritalName}</td>
+												  	<td>购房情况：</td>
+												  	<td>${debt?.invest?.bid?.user?.houseName}</td>
+												  	<td>购车情况：</td>
+												  	<td>${debt?.invest?.bid?.user?.carName}</td>
+												</tr>
+												<tr>
+													<td valign="middle">借款目的：</td>
+										            <td colspan="5">${debt?.invest?.bid?.purpose?.name}</td>
+												</tr>
+											</tbody>
+										</table>
+								  	<h2 class="y_bdh2">借款详情</h2>
+								<div class="y_bdp1">${debt?.invest?.bid?.description}</div>
+							<table class="y_bdtab2">
+								<tr>
+									<td width="">序号</td>
+									<td width="">审核科目</td>
+									<td width="">状态</td>
+									<td width="">操作</td>
+									<td width="">CBO风控体系审核</td>
+								</tr>
+												
+									#{list uItems}	
+									#{if _?.status == 2}
+									<tr>
+										<td align="center">
+											${_index}
+										</td>
+										<td >
+											${_?.auditItem?.name}
+										</td>
+										<td >
+											${_?.strStatus}
+										</td>
+										<td  >
+											#{if _?.isVisible}
+												<a onclick="showitemNow('${_?.mark}','${debt?.invest?.bid?.signUserId}');">查看</a>
+											#{/if}
+											#{else}
+												不可见
+											#{/else}
+										</td>
+										#{if _index == 1}
+										<td  rowspan="${uItems?.size}" class="brgh">
+											<pre class="multiline_show_cbo">${debt?.invest?.bid?.auditSuggest}</pre>
+										</td>
+										#{/if}
+									</tr>
+									#{/if}
+									#{/list}	
+										
+										<h2 class="y_bdh2">历史情况</h2>
+										<table class="y_bdtab">
+											<tbody>
+												<tr>
+													<td >注册时间：${debt?.invest?.bid?.user?.time?.format('yyyy-MM-dd HH:mm:ss')}</td>
+												  	<td>成功借款次数：${historySituationMap?.successBidCount} 次</td>
+												  	<td>正常还款次数：${historySituationMap?.normalRepaymentCount} 次</td>
+												  	<td>逾期还清次数：${historySituationMap?.overdueRepaymentCount}  次</td>
+												</tr>
+												<tr>
+												  	<td>待付款金额：${historySituationMap?.pendingRepaymentAmount} 元</td>
+												  	<td>共计借入金额：${historySituationMap?.loanAmount} 元</td>
+												  	<td>投资投标笔数：${historySituationMap?.financialCount}  笔</td>
+												  	<td>待收款金额：${historySituationMap?.receivingAmount}  元</td>
+												</tr>
+											</tbody>
+										</table>
+							#{if !(constants.Constants.IPS_ENABLE && bid?.isAgency)}
+					<!--
+					<h2 class="y_bdh2">投标奖励</h2>
+					<div class="y_bdp1"#{if debt?.invest.bid?.bonusType == 0}
+							不设置奖励
+							#{/if}
+							#{if debt?.invest.bid?.bonusType == 1}
+							按固定奖金${debt?.invest.bid?.bonus}元进行奖励
+							#{/if}
+							#{if debt?.invest.bid?.bonusType == 2}
+							按借款总额${debt?.invest.bid?.awardScale}%进行奖励
+					#{/if}</div>
+							
+					
+					-->
+					#{/if}	  	
+                              
+				</div>			
+				<div class="y_bdbox" id="debtAuctionsRecords">
+                    </div>
+                    
+			</div>
+			
+			<!-- 资料图片显示层-->
+			<div id="itemImage" class="xf_ht_ttc"></div>
+			
+			
+			<script>
+		
+			function showDebtAuctionRecords(pageNum,pageSize){
+				var debtId = ${debt?.id};
+				$.ajax({
+					url:"@{viewDebtAllAuctionRecords()}",
+					type:"POST",
+					data: {"pageNum" : pageNum, "pageSize" : pageSize , "debtId":debtId},
+			    	success:function(data){$("#debtAuctionsRecords").html(data);},
+			    	error:function(){alert("对不起，出现错误!");}
+				})
+			}
+			
+			
+			
+	function showitemNow(mark,signUserId){
+	  /** 检查用户是否激活, fronMain.html 中的拦截器*/
+	  var result = frontJSIntercepter();
+	  
+	  if(!result){
+      	 showitem(mark,signUserId); 
+	  }		  		
+	}
+	
+	/* 查看弹出层 */
+	function showitem(mark,signUserId){
+		var listAction = #{jsAction @front.invest.InvestAction.showitem(':mark',':signUserId') /};
+		$.post(listAction({mark:mark,signUserId:signUserId}), function(data) {
+			
+			//拦截器，拦截判断。frontMain.html
+			if(checkIntercepterResult(data)){
+				return;
+			}
+			
+			showDiv($("#itemImage").html(data));
+		});		
+	}
+	</script>

@@ -1,0 +1,120 @@
+#{extends 'common/supervisor.html' /}
+#{set title:'系统提醒设置' /} 
+<div class="xn_c_contentwarp">
+  <div class="xn_c_contentlist">
+    #{include "supervisor/systemSettings/common/leftBar.control"/}
+    <div class="xn_c_content">
+      <div class="xf_content_add">
+         #{form @saveNotice(), id:'submit'}
+        <div class="xfht_t_j_y_2">
+          <!--右上-->
+          <div class="xf_ht_obu_fklm"> 系统提醒设置</div>
+          <!-- 短信通道 -->
+          <div class="xf_htgl_jg_tongdao">
+            <table border="0" cellspacing="0" cellpadding="0" class="xf_htgl_jg_tableone_table">
+            <tr>
+              <td width="280" align="right">标的数量提醒1：</td>
+              <td>
+              <input class="xfht_zr_input xfht_zr_input_shoping" type="text" id="publishBid1" name="publishBid1" value="${backstageSet?.publishBid1}">
+              </td>
+            </tr>
+            <tr>
+              <td width="280" align="right">标的数量提醒2：</td>
+              <td>
+              <input class="xfht_zr_input xfht_zr_input_shoping" type="text" id="publishBid2" name="publishBid2" value="${backstageSet?.publishBid2}">
+              </td>
+            </tr>
+           
+            <tr>
+              <td width="280" align="right">满标时间提醒：</td>
+              <td>
+              <input class="xfht_zr_input xfht_zr_input_shoping" type="text" id="fullBid" name="fullBid" value="${backstageSet?.fullBid}">
+              </td>
+            </tr>
+            <tr>
+              <td width="280" align="right">满标审核提醒：</td>
+              <td>
+              <input class="xfht_zr_input xfht_zr_input_shoping" type="text" id="auditBid" name="auditBid" value="${backstageSet?.auditBid}">
+              </td>
+            </tr>
+            
+             <tr>
+              <td width="280" align="right">还款提醒1：</td>
+              <td>
+              <input class="xfht_zr_input xfht_zr_input_shoping" type="text" id="payment1" name="payment1" value="${backstageSet?.payment2}">
+              </td>
+            </tr>
+            
+             <tr>
+              <td width="280" align="right">还款提醒2：</td>
+              <td>
+              <input class="xfht_zr_input xfht_zr_input_shoping" type="text" id="payment2" name="payment2" value="${backstageSet?.dueover1}">
+              </td>
+            </tr>
+            
+              <tr>
+              <td width="280" align="right"> 逾期预警提醒1：</td>
+              <td>
+              <input class="xfht_zr_input xfht_zr_input_shoping" type="text" id="dueover1" name="dueover1" value="${backstageSet?.dueover1}">
+              </td>
+            </tr>
+            
+              <tr>
+              <td width="280" align="right">逾期预警提醒2：</td>
+              <td>
+              <input class="xfht_zr_input xfht_zr_input_shoping" type="text" id="dueover2" name="dueover2" value="${backstageSet?.dueover2}">
+              </td>
+            </tr>
+           
+            </table>
+          </div>
+          <div class="xf_htgl_jgsix_hyg">
+            <input class="xf_ht_tcc_button_ok" type="button"  onClick="submits()" value="确  定">
+          </div>
+        </div>
+        #{/form}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(function() {
+    /* 高亮显示 */
+	showHighLight(5,5,14);
+  });
+  
+  function submits(){
+    if($("#emailWebsite").val() == ''){
+      alert("邮箱登录网址不能为空");
+      
+      return;
+    }
+          
+    if($("#mailAccount").val() == ''){
+      alert("Email不能为空");
+      
+      return;
+    }
+          
+    if($("#mailPassword").val() == ''){
+    
+      alert("密码不能为空");
+      return;
+    }
+          
+    if($("#POP3Server").val() == ''){
+      alert("POP3服务器不能为空");
+      
+      return;
+    }
+          
+    if($("#STMPServer").val() == ''){
+      alert("SMTP服务器不能为空");
+      
+      return;
+    }
+          
+    $("#submit").submit();
+  }
+</script>   

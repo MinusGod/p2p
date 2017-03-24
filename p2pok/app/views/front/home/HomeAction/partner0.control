@@ -1,0 +1,80 @@
+		<div class="y_dexhz">
+			<h2 class="y_dexh2"><span class="fl">合作伙伴 </span><a href="@
+{front.help.HelpCenterAction.partner(-1008)}" title="">更多>></a></h2>
+			<div class="y_hzbox" style="position:relative;">
+				<div class="y_hz_inner">
+				#{list items:adsPartner,as:'adsPartner'}
+					<a   href="${adsPartner?.url}" target="_blank">
+			 	#{img class:"lazy", 
+data_original:"${adsPartner?.imageFileName}",alt:"",width:"136px",height:"65px"}#{/img}
+			         </a>
+
+			    #{/list}
+
+			</div>
+			</div>
+		</div>
+
+
+
+
+<style>
+.y_hz_inner{width:1140px;margin-top:20px; height:65px;overflow:hidden;}
+</style>
+<script>
+/***合作伙伴轮播***/
+$(function(){
+    var partner=$('.y_hz_inner a img');
+    var partnerW=partner.width();
+    var inner=$('.y_hz_inner');
+    var partnert=setInterval(partnermove,2000);
+    var btnR=$('.y_dexh_btn .go_r');
+    var btnL=$('.y_dexh_btn .go_l');
+    var flag=true;
+    function partnermove(){
+        inner.animate({left:-partnerW-10},1000,function(){
+            var onefirst=$('.y_hz_inner a:first');
+            onefirst.appendTo(inner);
+            inner.css({left:0})
+            flag=true;
+        })
+    }
+    partner.hover(function(){
+        clearInterval(partnert)
+    },function(){
+        partnert=setInterval(partnermove,2000);
+    })
+    btnR.hover(function(){
+        clearInterval(partnert)
+    },function(){
+        partnert=setInterval(partnermove,2000);
+    })
+    btnL.hover(function(){
+        clearInterval(partnert)
+    },function(){
+        partnert=setInterval(partnermove,2000);
+    })
+    btnR.click(function(){
+        if(flag==true){
+            flag=false;
+            partnermove()
+        }
+
+    })
+    btnL.click(function(){
+        if(flag==true){
+            flag=false;
+            inner.animate({left:partnerW-10},1000,function(){
+                var onelast=$('.y_hz_inner a:last');
+                onelast.prependTo(inner);
+                inner.css({left:0})
+                flag=true;
+            })
+
+        }
+
+
+    })
+
+})
+</script>

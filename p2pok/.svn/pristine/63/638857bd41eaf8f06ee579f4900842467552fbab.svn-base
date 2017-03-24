@@ -1,0 +1,46 @@
+﻿
+<ul class="y_dexmtbox clr">
+			<li>
+				<h2 class="y_dexh2"><span class="fl">${types?.get(1)?.name}</span><a href="@{front.wealthinfomation.WealthInfomationAction.newsList(8)}" title="">更多>></a></h2>
+				<ul class="y_dexul1">
+					#{list items:marketDynamics,as:'news'}
+		<li><i class="y_bg"></i><a href="front/wealthinfomation/newDetails?id=${news?.id}" title="" limit="26">${news.title}</a>
+<span style="color:#999;">${news.start_show_time.format("yyyy-MM-dd")}</span>
+</li>
+					#{/list}
+				</ul>
+			</li>
+			<!-- gu-shi -->
+			<li style="margin-left:25px;">
+				<h2 class="y_dexh2"><span class="fl">${types?.get(2)?.name}</span><a href="@{front.wealthinfomation.WealthInfomationAction.newsList(10)}" title="">更多>></a></h2>
+				<ul class="y_dexul1">
+					#{list items:investSkills,as:'story'}
+					<li><i class="y_bg"></i><a href="front/wealthinfomation/newDetails?id=${story?.id}" title="" limit="26">${story?.title}</a>
+<span style="color:#999;">${story?.start_show_time.format("yyyy-MM-dd")}</span>
+</li>
+						
+						#{/list}
+				</ul>
+			</li>
+			<!-- li-cai-bang -->
+			<!--<li>
+				<h2 class="y_dexh2"><span class="fl">投资风云榜 </span>
+				</h2>
+				<table width="100%">
+					<tr height="47">
+						<td width="">排名</td>
+						<td width="">用户名</td>
+						<td width="">投资金额</td>
+						<td width="">收益率</td>
+					</tr>
+					#{list items:investBillboard,as:'investBillboard'}
+						<tr height="47">
+							<td><i class="i${investBillboard_index}"></i></td>
+							<td>${investBillboard?.name?.asterisk()}</td>
+							<td>￥#{format money:investBillboard?.corpus}#{/format}</td>
+							<td>${(investBillboard?.interest*100/investBillboard?.corpus).format('0.00')}%</td>
+						</tr>
+					#{/list}
+				</table>
+			</li>-->
+</ul>

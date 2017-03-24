@@ -1,0 +1,56 @@
+#{extends 'common/supervisor.html' /} #{set title:'直客统计' /}
+<div class="xfht_t_j_k"> 
+<!--左-->
+#{include "supervisor/networkMarketing/CPSSpreadAction/networkMarketingLeft.control"/}
+ <!--右-->
+#{include "supervisor/networkMarketing/SpreadAction/spreadStatisticList.control"/}
+</div>
+<!--弹出层-->
+<div class="xn_c_ban_jox xn_c_ban_jox_hyxq" id="xf_ht_fkzh_ttc" style="display: none;"></div>
+
+
+<script type="text/javascript">
+
+
+*{显示某个月的统计明细}*
+function showSpreadStatisticDetail(year,month){
+	$.ajax({
+		url:"@{supervisor.networkMarketing.SpreadAction.spreadStatisticDetail()}",
+		type:"POST",
+		data:{
+			"year":year,
+			"month":month
+		},
+		success:function(dat){
+			if(dat.code<0){
+				alert(dat.msg);
+				return;
+			}
+			$("#xf_ht_fkzh_ttc").html(dat);
+			$.layer({
+				type:1,
+				area:['820px','auto'],
+				title:'提成明细',
+				page:{dom:'#xf_ht_fkzh_ttc'}
+			});
+		},
+		error:function(){
+			alert("出现了未知的系统错误!");
+		}
+	});
+}
+
+
+
+$(function(){
+	//高亮显示
+	showHighLight(4,4,11);
+})
+</script>
+
+
+
+
+
+
+	

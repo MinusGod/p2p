@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+    <script type="text/javascript" src="@{'/public/javascripts/jquery-2.0.js'}"></script>
+<script type="text/javascript">
+    $(function(){
+        var recName="${name}";
+        var u = navigator.userAgent;
+        var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+        var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+        if(isAndroid){
+            var the_href="http://a.app.qq.com/o/simple.jsp?pkgname=com.p2pok";//获得下载链接
+            //window.location.href = "app://RegisterActivity2?params=zhangsan";
+            window.location.href ="http://zhang.com";
+            setTimeout(function(){
+                window.location.href=the_href;//如果超时就跳转到app下载页
+            },600);
+        }else{
+            if(isiOS){
+                var the_href=$(".down_app").attr("https://itunes.apple.com/cn/app/rong-you-wang/id1153923099?l=en&mt=8");//获得下载链接
+                window.location.href = "iOSDevRongyouwang://?name="+recName;
+                setTimeout(function(){
+                    window.location=the_href;//如果超时就跳转到app下载页
+                },600);
+            };
+        }
+    });
+
+
+
+
+
+</script>
+</head>
+<body>
+
+</body>
+</html>

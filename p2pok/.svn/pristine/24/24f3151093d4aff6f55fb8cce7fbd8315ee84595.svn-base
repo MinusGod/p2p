@@ -1,0 +1,287 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    %{
+    business.User currUser = business.User.currUser();
+    business.BackstageSet  currBackstageSet = business.BackstageSet.getCurrentBackstageSet();
+    String platUrl = constants.Constants.BASE_URL;
+    java.util.Map<String,java.util.List<business.BottomLinks>> bottomLinks = business.BottomLinks.currentBottomlinks();
+    java.lang.String type1Name = business.NewsType.queryName(1);
+    java.lang.String type2Name = business.NewsType.queryName(2);
+    java.lang.String type4Name = business.NewsType.queryName(4);
+    boolean ipsEnable = constants.Constants.IPS_ENABLE;
+    boolean debtUse = constants.Constants.DEBT_USE;
+    }%
+    <title>#{get 'title' /}</title>
+    <meta name="keywords" content="${currBackstageSet?.seoKeywords}" />
+    <meta name="description" content="${currBackstageSet?.seoDescription}" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta property="qc:admins" content="133011667666155146375" />
+    <meta property="wb:webmaster" content="6582954f8f7d9e1d" />
+    <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.ico'}">
+    <link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/temp.css'}" />
+    <link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/zccj.css'}" />
+    <script type="text/javascript" src="@{'/public/javascripts/koala.min.1.5.js'}"></script>
+    <script type="text/javascript" src="@{'/public/javascripts/jquery-2.0.js'}"></script>
+    <script type="text/javascript" src="@{'/public/javascripts/jquery.json-2.4.min.js'}"></script>
+    <script type="text/javascript" src="@{'/public/javascripts/xf_front.js'}"></script>
+    <script charset="utf-8" src="@{'public/javascripts/ajaxfileupload.js'}"></script>
+    <script type="text/javascript" src="@{'/public/javascripts/common.js'}"></script>
+    <script type="text/javascript" src="@{'/public/javascripts/jquery.lazyload.min.js'}"></script>
+    <link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/site1.css'}" />
+    <link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/reset1.css'}" />
+    <script type="text/javascript" src="@{'/public/javascripts/yycommon.js'}"></script>
+    <script type="text/javascript" src="@{'/public/javascripts/tab_center.js'}"></script>
+    <script type="text/javascript" src="@{'/public/javascripts/jquery.mousewheel.min.js'}"></script>
+
+</head>
+
+<body>
+
+#{include "front/account/LoginAndRegisterAction/head.html"/}
+<div class="regBg">
+    <div class="registerBg">
+        <div class="registerL">
+            <h2>投资用户注册<a href="@{front.account.LoginAndRegisterAction.registLoaner}" class="clr37 ft16">&nbsp;&nbsp;<b class="clr37">更换角色?</b></a><span>
+                <b class="col80">已有账户?</b>&nbsp;
+                <a href="" class="clr37">立即登录</a></span>
+            </h2>
+        </div>
+        <div class="login400 regTer">
+            #{form @front.account.loginAndRegisterAction.registering(), id:'registerSubmit'}
+
+            <div class="form-item">
+                <label class="uerN"></label>
+                <input type="text" placeholder="请输入手机号码" maxlength="11"  name="name" id="name"  autocomplete="off">
+            </div>
+            <div class="input-tip">
+                <span class="colFd ft12">手机号不存在</span>
+            </div>
+            <div class="form-item">
+                <label class="usePw"></label>
+                <input type="password" maxlength="16" minlength="6" name="password"  id="password" placeholder="请输入密码">
+            </div>
+            <div class="input-tip">
+                <span class="colFd ft12">密码长度为6-16个字符</span>
+            </div>
+            <div class="formCode">
+                <div class="form-itemCode">
+                    <input type="text" id="code" name="code" placeholder="图形验证码"  />
+                </div>
+                <div>
+                    <a href="javascript:void(0);" title="" class="y_yzms"><img src="" id="img" onclick="change()" alt="" title=""></a>
+                </div>
+            </div>
+            <div  class="formText">
+                <input type="text" placeholder="推荐人邀请码（选填）"/>
+            </div>
+            <div class="agreeUser">
+                <input type="checkbox" id="remInput"><label for="remInput">我已阅读并同意《融友网注册协议》</label>
+
+            </div>
+
+            <div>
+                <a onClick="register();focusError();" title="" class="y_dlsa">立即注册</a>
+            </div>
+
+            #{/form}
+        </div>
+    </div>
+</div>
+
+#{include "front/account/LoginAndRegisterAction/foot.html"/}
+
+</body>
+<script type="text/javascript">
+
+    $(function(){
+        $('.wxffry').click(function(){
+            $('.weixryw').show();
+            $('.weixrywbg').show();
+            $('.wxbgbg').show();
+        });
+    });
+    $(function(){
+        $('.weixrywbg').click(function(){
+            $('.weixryw').hide();
+            $('.weixrywbg').hide();
+            $('.wxbgbg').hide();
+        });
+    });
+    $(function(){
+        $('.wxbgbg').click(function(){
+            $('.weixryw').hide();
+            $('.weixrywbg').hide();
+            $('.wxbgbg').hide();
+        });
+    });
+    $(document).keydown(function(event){
+        if(event.keyCode == 13){
+            if(document.activeElement.id == 'name' || document.activeElement.id == 'code' || document.activeElement.id == 'password'){
+                login();
+            }
+        }
+    });
+
+    (function(){document.getElementById('___szfw_logo___').oncontextmenu = function(){return false;}})();
+    $(function(){
+        $('img.lazy').lazyload({
+            //effect:'fadeIn'
+        });
+
+        var logins = '${login}';
+        if(logins=='login'){
+            $(".ydl_dl").click();
+        }else if(logins=="register"){
+            $(".y_topzc").click();
+        }
+        $("#xf_h_idx_1_hydjfdgdf").limit();
+
+        /* 所有继承页面flash.error的值弹框,被继承页面则无需再写 */
+        if('${flash.error}' !='') {
+            alert('${flash?.error}');
+            if('${flash?.emailUrl}' !='') {
+                window.open('${flash?.emailUrl}');
+            }
+        }
+        /*与重复提交冲突，注释，如功能发生冲突，请更改其他处
+         if('${flash.success}' != ''){
+         alert('${flash?.success}');
+         }
+         */
+        //获取图片验证码
+        if('${currUser?.name}' == '' && '${loginOrRegister}' == '') {
+            var setCode = #{jsAction @front.account.LoginAndRegisterAction.setCode()/}
+                    $.post(setCode({}),function(data){
+                        var arr=eval(data);
+                        var img = arr.img;
+                        $("#img").attr("src","@{front.account.LoginAndRegisterAction.getImg()}?id="+img)
+                        $("#randomID").val(img);
+                    });
+        }
+    });
+
+    function vipApply(){
+
+        /** 检查用户是否激活*/
+        var result = frontJSIntercepter();
+
+        if(!result){
+            showDiv($("#xf_mem_acc_sjvip_tcc"));
+        }
+    };
+
+    function login(){
+        var name = $("#name").val();
+
+        if(name == ''){
+            alert("请输入用户名或手机号");
+            return;
+        }
+
+        if($("#password").val() == ''){
+            alert("请输入密码");
+            return;
+        }
+
+        if($("#code").val() == ''){
+            alert("请输入验证码");
+            return;
+        }
+        $("#loginsubmit").submit();
+    };
+
+    function change(){
+        var setCode = #{jsAction @front.account.LoginAndRegisterAction.setCode()/}
+                $.post(setCode({}),function(data){
+                    var arr=eval(data);
+                    var img = arr.img;
+                    $("#img").attr("src","@{front.account.LoginAndRegisterAction.getImg()}?id="+img);
+                    $("#randomID").val(img);
+                });
+    };
+
+    function AddFavorite(url,title) {
+        var ua = navigator.userAgent.toLowerCase();
+        if(ua.indexOf("msie 8")>-1){
+            external.AddToFavoritesBar(url,title,'');//IE8
+        }else{
+            try {
+                window.external.addFavorite(url, title);
+            } catch(e) {
+                try {
+                    window.sidebar.addPanel(title, url, "");//firefox
+                } catch(e) {
+                    alert("加入收藏失败，请使用Ctrl+D进行添加");
+                }
+            }
+        }
+    }
+
+    /** 前台，拦截器 ，拦截内容：登陆拦截，资金托管开户拦截，已被拦截返回true */
+    function frontJSIntercepter(){
+        //未登录
+        if('${currUser?.name}' == ''){
+
+            window.location.href=http_path+"/login";
+            return true;
+        }
+
+        //托管未开户
+        if('${ipsEnable}'=='true' && '${currUser?.ipsAcctNo}'==''){
+
+            window.location.href=http_path+"/front/account/trustAccount";
+            return true;
+        }
+
+        //用户未激活
+        if('${ipsEnable}'=='false' && '${currUser?.isEmailVerified}'=='false' && '${currUser?.isMobileVerified}'=='false'){  //邮箱和手机都未激活，则用户未激活
+
+            window.location.href=http_path+"/front/account/inactiveUser";
+            return true;
+        }
+
+        if('${currUser?.realityName}' == ''){
+
+            window.location.href=http_path+"/front/account/certification";
+            return true;
+        }
+
+        return false;
+
+    }
+
+    /**
+     * 拦截器拦截后，跳转到相应的页面（AJAX）
+     */
+    function checkIntercepterResult(data){
+
+        if('UnLogin' == data){
+
+            window.location.href=http_path+"/login";
+            return true;
+        }
+
+        if('NullIpsAccount' == data){
+
+            window.location.href=http_path+"/front/account/trustAccount";
+            return true;
+        }
+
+        if('InactiveUser' == data){
+
+            window.location.href=http_path+"/front/account/inactiveUser";
+            return true;
+        }
+
+        if('NullRealName' == data){
+
+            window.location.href=http_path+"/front/account/certification";
+            return true;
+        }
+
+        return false;
+
+    }
+</script>
+</html>

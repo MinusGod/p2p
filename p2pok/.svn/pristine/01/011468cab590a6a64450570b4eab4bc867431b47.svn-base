@@ -1,0 +1,51 @@
+<!--投标搜索 start-->
+
+	
+
+		<table class="y_lctoptab">
+			        <tr id="apr">
+            	<td>用户类型：</td>
+            	<td #{if pageBean?.conditions?.apr == 0} class="y_w90" #{/if}><a value="0" #{if pageBean?.conditions?.apr == 0} class="click" #{/if} title="" >全部</a></td>
+            	<td #{if pageBean?.conditions?.apr == 1} class="y_w90" #{/if}><a value="1" #{if pageBean?.conditions?.apr == 1} class="click" #{/if} title="">个人借款</a></td>
+            	<td #{if pageBean?.conditions?.apr == 2} class="y_w90" #{/if}><a value="2" #{if pageBean?.conditions?.apr == 2} class="click" #{/if} title="">企业借款</a></td>
+
+            		</tr>
+					<tr id="apr">
+					<td>年化利率：</td>
+					<td #{if pageBean?.conditions?.apr == 0} class="y_w90" #{/if}><a value="0" #{if pageBean?.conditions?.apr == 0} class="click" #{/if} title="" >全部</a></td>
+					<td #{if pageBean?.conditions?.apr == 1} class="y_w90" #{/if}><a value="1" #{if pageBean?.conditions?.apr == 1} class="click" #{/if} title="">6%-8%</a></td>
+					<td #{if pageBean?.conditions?.apr == 2} class="y_w90" #{/if}><a value="2" #{if pageBean?.conditions?.apr == 2} class="click" #{/if} title="">8%-10%</a></td>
+					<td #{if pageBean?.conditions?.apr == 3} class="y_w90" #{/if}><a value="3" #{if pageBean?.conditions?.apr == 3} class="click" #{/if} title="">10%-12%</a></td>
+					<td #{if pageBean?.conditions?.apr == 4} class="y_w90" #{/if}><a value="4" #{if pageBean?.conditions?.apr == 4} class="click" #{/if} title="">12%以上</a></td>
+				</tr>
+				<tr id="amount">
+					<td>借款金额：</td>
+					<td #{if pageBean?.conditions?.amount == 0} class="y_w90" #{/if}><a value="0" #{if pageBean?.conditions?.amount == 0} class="click" #{/if} title="" >全部</a></td>
+					<td #{if pageBean?.conditions?.amount == 1} class="y_w90" #{/if}><a value="1" #{if pageBean?.conditions?.amount == 1} class="click" #{/if}  title="">10万以下</a></td>
+					<td #{if pageBean?.conditions?.amount == 2} class="y_w90" #{/if}><a value="2" #{if pageBean?.conditions?.amount == 2} class="click" #{/if}  title="">10万-50万</a></td>
+					<td #{if pageBean?.conditions?.amount == 3} class="y_w90" #{/if}><a value="3" #{if pageBean?.conditions?.amount == 3} class="click" #{/if}  title="">50万-100万</a></td>
+					<td #{if pageBean?.conditions?.amount == 4} class="y_w90" #{/if}><a value="4" #{if pageBean?.conditions?.amount == 4} class="click" #{/if}  title="">100万以上</a></td>
+				</tr>
+				<!--<tr id="loanSchedule">
+					<td >认购进度：</td>
+					<td  #{if pageBean?.conditions?.loanSchedule == 0} class="y_w90" #{/if}><a value="0" #{if pageBean?.conditions?.loanSchedule == 0} class="click" #{/if} title="" >全部</a></td>
+					<td #{if pageBean?.conditions?.loanSchedule == 1} class="y_w90" #{/if}><a value="1" #{if pageBean?.conditions?.loanSchedule == 1} class="click" #{/if} title="">50%以下</a></td>
+					<td #{if pageBean?.conditions?.loanSchedule == 2} class="y_w90" #{/if}><a value="2" #{if pageBean?.conditions?.loanSchedule == 2} class="click" #{/if} title="">50%-80%</a></td>
+					<td #{if pageBean?.conditions?.loanSchedule == 3} class="y_w90" #{/if}><a value="3" #{if pageBean?.conditions?.loanSchedule == 3} class="click" #{/if} title="">80%以上</a></td>
+				</tr>-->
+				<tr id="loanType">
+					<td>借款类型：</td>
+					<td  #{if pageBean?.conditions?.loanType == 0} class="y_w90" #{/if} ><a value="0" #{if pageBean?.conditions?.loanType == 0} class="click" #{/if} title="">全部</a></td>
+					#{list items:list, as : 'product'}
+					<td #{if pageBean?.conditions?.loanType == product?.id} class="y_w90"  #{/if}>
+					<a value="${product?.id}" #{if pageBean?.conditions?.loanType == product?.id} class="click"  #{/if} title="">${product?.name}</a></td>
+					 #{/list}	
+				</tr>
+			</table>
+
+
+
+<!-- 排序条件 -->
+
+
+<script src="@{'/public/javascripts/laydate/laydate.js'}"></script>

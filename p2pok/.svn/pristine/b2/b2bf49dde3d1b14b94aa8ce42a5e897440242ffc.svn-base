@@ -1,0 +1,51 @@
+		<div class="y_bdlef">
+				<h2 class="y_bdh2">
+					#{img src:"${bid?.product?.smallImageFilename}", width:"20px", height:"20px"}#{/img}${bid?.title}
+				</h2>
+				<table class="y_bdtabtop">
+					<tr height="40">
+						<th width=""><span>${bid?.apr}<span>%</span></span></th>
+						<th width=""><span>${bid?.amount?.format('###,##0.00')}<span>元</span></span></th>
+						<th width=""><span>${bid?.period}</span>${bid?.strPeriodUnit}</th>
+						<td rowspan="2">
+						<div class="ui-progressbar-mid">
+						#{if 100==Math.floor(bid?.loanSchedule)}
+					    100%
+						#{/if}
+						#{else}
+						${bid?.loanSchedule.format('###,##0.00')}%
+						#{/else}
+						</div></td>
+					</tr>
+                    <script>
+                    var s=parseInt(${bid?.loanSchedule});
+                    $('.ui-progressbar-mid').addClass('ui-progressbar-mid-'+s);
+                    </script>
+					<tr height="24">
+						<td>预期年化收益率</td>
+						<td>标的总额</td>
+						<td>借款期限</td>
+					</tr>
+				</table>
+				<ul class="y_bdtopul clr">
+					<li><i class="i1"></i>发布时间：${bid?.time?.format('yyyy-MM-dd')}</li>
+					<li><i class="i4"></i>剩余时间：<span class="xf_wylc_l_memhyA"><span id="day"></span><span
+				class="font_onetwo">天</span><span id="hours"></span><span class="font_onetwo">小时</span><span id="minutes"></span><span
+				class="font_onetwo">分</span><span id="seconds"></span><span class="font_onetwo">秒</span> </span></li>
+					<li><i class="i2"></i>还款方式： ${bid?.repayment?.name}</li>
+					<li><i class="i5"></i>投标人数：${bid?.investCount}</li>
+					<li><i class="i3"></i>已投金额：${bid?.hasInvestedAmount?.format('###,##0.00')}元</li>
+					<li><i class="i6"></i>浏览次数：${bid?.readCount}</li>
+				</ul>
+			</div>
+		
+		
+		
+<script>
+     $(function(){
+
+			 $('#loanSchedule').css({"width":${bid?.loanSchedule}})
+      })
+
+
+</script>

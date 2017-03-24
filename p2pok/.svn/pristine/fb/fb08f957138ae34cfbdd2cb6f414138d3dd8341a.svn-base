@@ -1,0 +1,122 @@
+#{extends 'wechat/common.html' /}
+%{
+	String TRUST_FUNDS_TYPE = constants.Constants.TRUST_FUNDS_TYPE;
+}%
+<body>
+	<div class="s_center">
+		<header class="s_header">
+			<span>充值</span>
+			<a href="@{wechat.account.WechatAccountHome.accountInfo()}" class="icobg"></a>
+		</header>
+		<div class="s_czbody">
+		#{form @wechat.account.WechatAccountHome.submitRecharge(), id:'paySubmit'}
+		    <input type="hidden" name="uuidRepeat" value="${flash?.success}">
+			<ul class="s_czuser">
+				<li>真实姓名：<strong>${user?.realityName}</strong></li>
+				<li>账户：<strong>${user?.name}</strong></li>
+				<li>请输入充值金额：<input type="text" class="text" id="money" name="money" /><span>元</span></li>
+				
+				<!-- 是否需要选择银行，环讯，富友需要 -->
+				#{if isNeedSelectBank}
+				<li id ="tr_bankCode">
+					选择充值银行：
+					<select name="bankCode" class="xf_membill_selectAge" id="bankType">
+						<option value="0">-请选择-</option>
+						#{list bankList}
+						<option value="${_?.code}">${_?.name}</option>
+						#{/list}
+					</select>
+				</li>
+				#{/if}
+				
+				<li>
+					<input value="确定充值" type="button" class="s_czsubbtn"  Onclick="recharge()"/>
+				</li>
+			</ul>
+		#{/form}
+		</div>
+	</div>
+	
+	<script type="text/javascript">
+var bankNum;
+var typeNum
+
+$(function(){
+	
+	if('${flash.error}' != '') {
+		alert('${flash.error}');
+	}
+})
+
+$(function(){	
+	$("#money").focus();
+
+	#{if TRUST_FUNDS_TYPE == "FY"}	
+		$("#bankCode").html('<option value="1">-请选择-</option>');
+		$("#tr_bankCode").hide();
+	#{/if} 
+});
+
+function recharge(){
+    
+	if(${isNeedSelectBank} && $("#bankType").val() == '0'){
+		   alert("请选择充值银行");
+		   return;
+	} 
+	
+    if($("#money").val() == ''){
+  	  alert("充值金额不能为空");
+  	  retur;
+    }
+    
+    if($("#money").val() < ${rechargeLowest} ){
+    	alert("最低充值${rechargeLowest}元");
+    	return;
+    }
+    
+    if($("#money").val() > ${rechargeHighest}){
+  	  alert("充值金额不能大于${rechargeHighest}元");
+  	  return;
+    }
+    
+    $("#paySubmit").submit();
+}	
+
+function select(num){
+ if(num == 1){
+    $("#payTypes").hide();
+    $("#selectBank").show();
+    $("#huanxunCheck").removeAttr("checked");
+    $("#guofuCheck").attr("checked","checked");
+    $("#type").val(num);
+ }
+  
+  if(num == 2){
+    $("#payTypes").show();
+    $("#selectBank").hide();
+    $("#guofuCheck").removeAttr("checked");
+    $("#huanxunCheck").attr("checked","checked");
+    $("#type").val(num);
+  }
+}
+
+function selectBank(num){
+  $("#bank_0").removeClass("clicked");
+  $("#bank_"+bankNum).removeClass("clicked");
+  $("#bank_"+num).addClass("clicked");
+  $("#bankType").val(num)
+  bankNum = num;
+}
+
+function payTypes(num){
+  $("#pay_"+typeNum).removeClass("clicked");
+  $("#pay_0").removeClass("clicked");
+  $("#pay_"+num).addClass("clicked");
+  $("#bankType").val(num);
+  typeNum = num;
+}
+</script>
+</body>
+
+
+

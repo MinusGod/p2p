@@ -1,0 +1,404 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    %{
+    business.User currUser = business.User.currUser();
+    business.BackstageSet  currBackstageSet = business.BackstageSet.getCurrentBackstageSet();
+    String platUrl = constants.Constants.BASE_URL;
+    java.util.Map<String,java.util.List<business.BottomLinks>> bottomLinks = business.BottomLinks.currentBottomlinks();
+    java.lang.String type1Name = business.NewsType.queryName(1);
+    java.lang.String type2Name = business.NewsType.queryName(2);
+    java.lang.String type4Name = business.NewsType.queryName(4);
+    boolean ipsEnable = constants.Constants.IPS_ENABLE;
+    boolean debtUse = constants.Constants.DEBT_USE;
+    }%
+    <title>#{get 'title' /}</title>
+    <meta name="keywords" content="${currBackstageSet?.seoKeywords}" />
+    <meta name="description" content="${currBackstageSet?.seoDescription}" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta property="qc:admins" content="133011667666155146375" />
+    <meta property="wb:webmaster" content="6582954f8f7d9e1d" />
+    <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.ico'}">
+    <script type="text/javascript" src="@{'/public/javascripts/jquery-2.0.js'}"></script>
+    <link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/site1.css'}" />
+    <link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/reset1.css'}" />
+    <script type="text/javascript" src="@{'/public/javascripts/yycommon.js'}"></script>
+    <script type="text/javascript" src="@{'/public/javascripts/commonmark.js'}"></script>
+
+
+
+
+
+
+</head>
+
+<body>
+
+
+#{include "common/frontMainTop.html"/}
+<div style="position: relative;z-index: 20;background-color: #ffffff;width: 100%;">
+    <div style="width: 1085px;margin: 0px auto;height: 80px;">
+        <a href="@{front.home.HomeAction.home}"  class="y_logo">#{img src:"${currBackstageSet.platformLogoFilename}"}#{/img}</a>
+        <div style="height:20px;padding-top:25px;float: right;width:600px;text-align: right;">
+            <ul class="fftopul" style="float: right;">
+
+                <li><a href="@{front.help.HelpCenterAction.index(13)}">帮助中心</a>|</li>
+                <li><a href="@{front.home.HomeAction.getStart(27)}">新手指引</a></li>
+                <li>全国服务热线：40000-10068</li>
+            </ul>
+
+            #{if currUser == null || loginOrRegister == "loginOrRegister"}
+            <div class="y_navbox" style="float:right;">
+                <a href="javascript:void(0);" title="" class="ydl_dl"><i class="y_topdl y_bg"></i><span style="color: #86b34b">立即登录</span></a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+                <a href="javascript:void(0);" title="" class="y_topzc"><span style="color: #2e9ece" class="kszcfff">快速注册</span></a>&nbsp;&nbsp;&nbsp;|
+            </div>
+            #{/if}
+            #{elseif currUser != null && loginOrRegister == null }
+            <div class="y_navbox">
+                您好，【<a href="@{front.account.AccountHome.home()}"><i class="y_topdl y_bg"></i>${currUser?.name}</a>】/
+                <a href="@{front.account.loginAndRegisterAction.logout()}" >安全退出</a>
+            </div>
+            #{/elseif}
+        </div>
+    </div>
+</div>
+<!--<div class="y_mainmax">-->
+
+
+<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+<meta name="renderer" content="webkit"/>
+<script type="text/javascript">
+    document.write("<scr"+"ipt   src=\"@{'/public/javascripts/ryw-canvas.js'}\"   ></sc"+"ript>")
+</script>
+
+<style>
+    a{text-decoration:none;}
+    .top_01{background: url("/public/images/marketImgs/ryyd_01_01.jpg") top center no-repeat;width: 100%;height: 132px; }
+    .top_02{background: url("/public/images/marketImgs/ryyd_01_02.jpg") top center no-repeat;width: 100%;height: 158px; }
+    .top_03{background: url("/public/images/marketImgs/ryyd_01_03.jpg") top center no-repeat;width: 100%;height: 152px; }
+    .top_04{background: url("/public/images/marketImgs/ryyd_01_04.jpg") top center no-repeat;width: 100%;height: 152px; }
+    .top_05{background: url("/public/images/marketImgs/ryyd_01_05.jpg") top center no-repeat;width: 100%;height: 194px; }
+    .special_center .sp_top{background: url("/public/images/marketImgs/ryyd_2.png") top center no-repeat ;height: 319px;width: 100%;}
+    .special_center .sp_center01{background: #bf201a url("/public/images/marketImgs/circle_01.jpg") center no-repeat;height:153px;}
+    .special_center .sp_center02{background: #bf201a url("/public/images/marketImgs/circle_02.jpg") center no-repeat;height:151px;}
+    .special_center .sp_center03{background: #bf201a url("/public/images/marketImgs/circle_03.jpg") center no-repeat;height:197px;}
+
+    .special_center .sp_house01{background: #c22c25 url("/public/images/marketImgs/house_01.jpg") center no-repeat;height: 250px;}
+    .special_center .sp_house02{background: #c22c25 url("/public/images/marketImgs/house_02.jpg") center no-repeat;height: 299px;}
+    .special_center .sp_house03{background: #c22c25 url("/public/images/marketImgs/house_03.jpg") center no-repeat;height: 112px;}
+
+    .special_center .sp_door01{background: #bf201a url("/public/images/marketImgs/invest_01.jpg") center no-repeat;height:199px;}
+    .special_center .sp_door02{background: #bf201a url("/public/images/marketImgs/invest_02.jpg") center no-repeat;height:203px;}
+    .special_center .sp_door03{background: #bf201a url("/public/images/marketImgs/invest_03.jpg") center no-repeat;height:174px;}
+    .special_center .sp_door04{background: #bf201a url("/public/images/marketImgs/invest_04.jpg") center no-repeat;height:196px;}
+    .special_center .sp_txt{background: #c22c25 url("/public/images/marketImgs/foot01.jpg") center no-repeat;height:334px;}
+    .special_center .sp_txt02{background: #c22c25 url("/public/images/marketImgs/foot02.jpg") center no-repeat;height:336px;}
+
+    .special_center .sp_txt03{background: #c22c25 url("/public/images/marketImgs/red_p.png") center no-repeat;height:540px;}
+
+
+
+    .special_bot{background: url("/public/images/marketImgs/ryyd_7.png") top center no-repeat ;width: 100%;height:415px;}
+    .ryw-canvas{position: fixed;top: -745px;}
+    .special_bot h5{width:220px;position:relative;top:80px;left:30px;font-family:'microsoft yahei';font-size:32px;margin: auto auto;}
+    .special_bot h5 a{color: #c22c25;}
+    .special_bot h5 a:hover{color: #5d0300;}
+</style>
+
+
+
+<div class="ryw-canvas">
+    <canvas width="1583" height="780"></canvas>
+</div>
+
+<div>
+    <div>
+        <div class="top_01"></div>
+        <div class="top_02"></div>
+        <div class="top_03"></div>
+        <div class="top_04"></div>
+        <div class="top_05"></div>
+    </div>
+    <div class="special_center">
+        <div class="sp_top">
+        </div>
+        <div class="sp_center01">
+        </div>
+        <div class="sp_center02">
+        </div>
+        <div class="sp_center03">
+        </div>
+        <div class="sp_house01">
+        </div>
+        <div class="sp_house02">
+        </div>
+        <div class="sp_house03">
+        </div>
+        <div class="sp_door01">
+        </div>
+        <div class="sp_door02">
+        </div>
+        <div class="sp_door03">
+        </div>
+        <div class="sp_door04">
+        </div>
+        <div class="sp_txt">
+        </div>
+        <div class="sp_txt02">
+
+        </div>
+        <div class="sp_txt03">
+
+        </div>
+
+    </div>
+    <div class="special_bot">
+        <h5>
+            #{if currUser == null || loginOrRegister == "loginOrRegister"}
+            <div class="y_navbox">
+                <a href="javascript:void(0);" title="" class="y_topzc"><span style="position: relative;z-index: 500;" class="kszcfff">注册抢红包</span></a>
+            </div>
+            #{/if}
+            #{elseif currUser != null && loginOrRegister == null }
+            <div class="y_navbox">
+                <span style="color:#c22c25;">您已是会员</span>
+            </div>
+            #{/elseif}
+
+
+        </h5>
+    </div>
+</div>
+
+<!--ff-->
+<!-- footer start -->
+
+<div class="ry_footer" style="padding-top:20px;padding-bottom: 20px;">
+    <table style="width: 1085px;margin: 0px auto; text-align: center;position: relative;z-index: 3000;">
+        <tr>
+            <td rowspan="2" align="right" width="400">
+                <a id="logoshow" href='https://credit.szfw.org/CX20151207012561220358.html' target='_blank' style="background:url('/public/images/ry_bottom_01.png') no-repeat;width: 113px;height: 49px;display: block;">
+                </a>
+            </td>
+            <script>
+                $("#logoshow").mouseover(function(){
+                    $('#logoshow').css('background-image','url("/public/images/ry_bottom_01_hover.png")');
+                });
+                $("#logoshow").mouseout(function(){
+                    $('#logoshow').css('background-image','url("/public/images/ry_bottom_01.png")');
+                });
+            </script>
+            <td style="width:10px"></td>
+            <td align="left">沪ICP备15020738号-2 | 融友网All rights reserved © 2016</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td align="left">WWW.P2POK.COM | 上海融友金融信息服务有限公司</td>
+        </tr>
+    </table>
+</div>
+<div style="text-align: center;color: #c0c0c0; background-color: #6b6a6a;font-size: 14px;line-height: 30px;">市场有风险 &nbsp;&nbsp;&nbsp;投资需谨慎</div>
+<!-- footer end -->
+
+
+
+</body>
+
+
+<script type="text/javascript">
+
+    $(function(){
+        $('.wxffry').click(function(){
+            $('.weixryw').show();
+            $('.weixrywbg').show();
+            $('.wxbgbg').show();
+        });
+    });
+    $(function(){
+        $('.weixrywbg').click(function(){
+            $('.weixryw').hide();
+            $('.weixrywbg').hide();
+            $('.wxbgbg').hide();
+        });
+    });
+    $(function(){
+        $('.wxbgbg').click(function(){
+            $('.weixryw').hide();
+            $('.weixrywbg').hide();
+            $('.wxbgbg').hide();
+        });
+    });
+    $(document).keydown(function(event){
+        if(event.keyCode == 13){
+            if(document.activeElement.id == 'name' || document.activeElement.id == 'code' || document.activeElement.id == 'password'){
+                login();
+            }
+        }
+    });
+
+    (function(){document.getElementById('___szfw_logo___').oncontextmenu = function(){return false;}})();
+    $(function(){
+        $('img.lazy').lazyload({
+            //effect:'fadeIn'
+        });
+
+        var logins = '${login}';
+        if(logins=='login'){
+            $(".ydl_dl").click();
+        }else if(logins=="register"){
+            $(".y_topzc").click();
+        }
+        $("#xf_h_idx_1_hydjfdgdf").limit();
+
+        /* 所有继承页面flash.error的值弹框,被继承页面则无需再写 */
+        if('${flash.error}' !='') {
+            alert('${flash?.error}');
+            if('${flash?.emailUrl}' !='') {
+                window.open('${flash?.emailUrl}');
+            }
+        }
+        /*与重复提交冲突，注释，如功能发生冲突，请更改其他处
+         if('${flash.success}' != ''){
+         alert('${flash?.success}');
+         }
+         */
+        //获取图片验证码
+        if('${currUser?.name}' == '' && '${loginOrRegister}' == '') {
+            var setCode = #{jsAction @front.account.LoginAndRegisterAction.setCode()/}
+                    $.post(setCode({}),function(data){
+                        var arr=eval(data);
+                        var img = arr.img;
+                        $("#img").attr("src","@{front.account.LoginAndRegisterAction.getImg()}?id="+img)
+                        $("#randomID").val(img);
+                    });
+        }
+    });
+
+    function vipApply(){
+
+        /** 检查用户是否激活*/
+        var result = frontJSIntercepter();
+
+        if(!result){
+            showDiv($("#xf_mem_acc_sjvip_tcc"));
+        }
+    };
+
+    function login(){
+        var name = $("#name").val();
+
+        if(name == ''){
+            alert("请输入用户名或手机号");
+            return;
+        }
+
+        if($("#password").val() == ''){
+            alert("请输入密码");
+            return;
+        }
+
+        if($("#code").val() == ''){
+            alert("请输入验证码");
+            return;
+        }
+        $("#loginsubmit").submit();
+    };
+
+    function change(){
+        var setCode = #{jsAction @front.account.LoginAndRegisterAction.setCode()/}
+                $.post(setCode({}),function(data){
+                    var arr=eval(data);
+                    var img = arr.img;
+                    $("#img").attr("src","@{front.account.LoginAndRegisterAction.getImg()}?id="+img);
+                    $("#randomID").val(img);
+                });
+    };
+
+    function AddFavorite(url,title) {
+        var ua = navigator.userAgent.toLowerCase();
+        if(ua.indexOf("msie 8")>-1){
+            external.AddToFavoritesBar(url,title,'');//IE8
+        }else{
+            try {
+                window.external.addFavorite(url, title);
+            } catch(e) {
+                try {
+                    window.sidebar.addPanel(title, url, "");//firefox
+                } catch(e) {
+                    alert("加入收藏失败，请使用Ctrl+D进行添加");
+                }
+            }
+        }
+    }
+
+    /** 前台，拦截器 ，拦截内容：登陆拦截，资金托管开户拦截，已被拦截返回true */
+    function frontJSIntercepter(){
+        //未登录
+        if('${currUser?.name}' == ''){
+
+            window.location.href=http_path+"/login";
+            return true;
+        }
+
+        //托管未开户
+        if('${ipsEnable}'=='true' && '${currUser?.ipsAcctNo}'==''){
+
+            window.location.href=http_path+"/front/account/trustAccount";
+            return true;
+        }
+
+        //用户未激活
+        if('${ipsEnable}'=='false' && '${currUser?.isEmailVerified}'=='false' && '${currUser?.isMobileVerified}'=='false'){  //邮箱和手机都未激活，则用户未激活
+
+            window.location.href=http_path+"/front/account/inactiveUser";
+            return true;
+        }
+
+        if('${currUser?.realityName}' == ''){
+
+            window.location.href=http_path+"/front/account/certification";
+            return true;
+        }
+
+        return false;
+
+    }
+
+    /**
+     * 拦截器拦截后，跳转到相应的页面（AJAX）
+     */
+    function checkIntercepterResult(data){
+
+        if('UnLogin' == data){
+
+            window.location.href=http_path+"/login";
+            return true;
+        }
+
+        if('NullIpsAccount' == data){
+
+            window.location.href=http_path+"/front/account/trustAccount";
+            return true;
+        }
+
+        if('InactiveUser' == data){
+
+            window.location.href=http_path+"/front/account/inactiveUser";
+            return true;
+        }
+
+        if('NullRealName' == data){
+
+            window.location.href=http_path+"/front/account/certification";
+            return true;
+        }
+
+        return false;
+
+    }
+</script>
+</html>
+
+
+
+

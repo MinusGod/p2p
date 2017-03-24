@@ -1,0 +1,91 @@
+#{extends 'wechat/common.html' /}
+<body>
+#{form @wechat.account.WechatAccountHome.submitWithdrawal(), id:'withdrawSubmit'}
+  <input type="hidden" name="bankId" id="bankId" />
+  <input type="hidden" name="type" value="1" />
+  <input type="hidden" name="ipsSelect" value="1"/>
+	<div class="s_center">
+		<header class="s_header">
+            <a onclick="javascript:history.go(-1)" class="s_goback"></a>
+			<span>提现</span>
+			<a href="@{wechat.account.WechatAccountHome.accountInfo()}" class="icobg"></a>
+		</header>
+		<ul class="s_getmoney">
+			<li>
+				账户余额：${(user?.balanceDetail?.user_amount+user?.balanceDetail?.freeze)?.format('###,##0.00')}元
+			</li>
+			<li>
+				其中可提现余额为：${withdrawalAmount?.format('###,##0.00')}元
+			</li>
+			<li>
+				<span class="lil">提现金额：</span>
+				<span class="lir">
+					<input type="text" class="text textw1" name="amount" id="amount" autocomplete="off" onkeyup="ndigitInteger(this,8)"/> 元
+ 					<!--  <p class="smallfont">单次最高提现金额为：${maxWithDrawalAmount?.format("###,##0.00")}元</p> -->
+					<p class="smallfont"> 温馨提示：取现金额若大于2000万请分两次操作</p>
+				</span>
+			</li>
+		
+		
+			
+		
+			<li>
+				<input type="button" class="s_czsubbtn" value="确认" onclick="withdrawSubmit()"/>
+			</li>
+		</ul>
+	</div>
+#{/form}
+</body>
+
+<script type="text/javascript">
+if('${flash?.error}' != ''){
+	alert('${flash?.error}');
+}
+
+function bankInfo(){
+	 var selecrValue = $("#bankList").val();
+   if(selecrValue == 'no'){
+	    $("#bank").html("");
+		  $("#account").html("");
+		  $("#banker").html("");
+		  
+	   }else{
+		   var QueryBankInfo = #{jsAction @front.account.FundsManage.QueryBankInfo(':id')/}
+		   $.post(QueryBankInfo({id:$("#bankList").val()}),function(data){
+			  var arr = eval(data);
+			  
+			  if(arr.bank.account == ''){
+			      return;
+			  }
+
+			  $("#bank").html(arr.bank.bankName);
+			  $("#account").html(arr.bank.account);
+			  $("#banker").html(arr.bank.accountName);
+		   });
+		 }
+}
+
+function withdrawSubmit(){
+	
+	
+  if($("#amount").val() == ''){
+	  alert("请输入提现金额");
+	  return;
+	}
+
+	  
+	  if($("#amount").val() > 50000000){
+	 	 alert("提现金额不能大于50000000");
+	 	 return;
+}
+
+
+
+	
+	
+	$("#withdrawSubmit").submit();
+}
+</script>
+
+
+

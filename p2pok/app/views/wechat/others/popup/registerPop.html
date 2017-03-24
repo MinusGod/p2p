@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+       <meta charset="UTF-8">
+       <title>注册成功</title>
+</head>
+<body style="background-color: #666666">
+<div class="s_main s_center">
+<div id="regpop">
+       <div>
+              <div class="headRp">
+                     <img src="/public/images/wechat/popup/zhuce.png">
+                     <a onclick="javascript:history.go(-1)"><img id="close" src="/public/images/wechat/popup/close.png"></a>
+              </div>
+              <div class="centreRp"><br><br>
+                     <img src="/public/images/wechat/popup/register_2.jpg">
+
+              </div>
+              <div class="endRp">
+                     <span>    <a href="@{wechat.account.WechatAccountHome.accountInfo}">暂不开通</a></span>
+                     <span>   <a href="@{wechat.service.RegistAndLogin.createAcctWX}">马上开通</a></span>
+              </div>
+
+       </div>
+       </div>
+       </div>
+<style>
+       #regpop {
+              text-align: center;
+              width: 100%;
+              height: 100%;
+
+       }
+
+       #regpop > div {
+              padding-top: 20%;
+       }
+
+       .headRp {
+              position: relative;
+              background-color: #2E4C6D;
+              width: 80%;
+              height: 180px;
+              margin-left: 10%;
+              -moz-border-radius: 10px 10px 0px 0px;
+              -webkit-border-radius: 10px 10px 0px 0px;
+              border-radius: 10px 10px 0px 0px
+       }
+
+       .headRp > img:first-child {
+              width: 80%;
+              height: 100px;
+              margin-top: 40px;
+
+       }
+
+       #close {
+              position: absolute;
+              top: -110px;
+              left: 85%;
+              width: 80px;
+              height: 110px
+       }
+
+       .centreRp {
+
+              border-right: solid 1px #E5E5E5;
+              border-left: solid 1px #E5E5E5;
+              background-color: #ffffff;
+              width: 80%;
+              height: 440px;
+              margin-left: 10%;
+       }
+
+       .centreRp > img {
+              width: 80%;
+              margin-top: 50px;
+              height: 300px;
+       }
+
+       .endRp {
+              border: solid 1px #E5E5E5;
+              margin-left: 10%;
+              background-color: #ffffff;
+              width: 80%;
+              height: 160px;
+              -moz-border-radius: 0px 0px 10px 10px;
+              -webkit-border-radius: 0px 0px 10px 10px;
+              border-radius: 0px 0px 10px 10px;
+              font-size: 50px;
+              text-align: center;
+              line-height: 160px;
+       }
+
+       .endRp > span {
+               float: left;
+              display: inline-block;
+              width: 49.5%;
+              height: 160px;
+              color: #999999;
+              padding-right: 1px;
+
+       }
+
+       .endRp a {
+              color: #999999;
+              text-decoration: none;
+              font-size: 50px;
+
+       }
+       .endRp > span:last-child {
+              border-left: solid 1px #E5E5E5;
+       }
+
+
+       .endRp > span:hover {
+              background-color: #E9F8FF;
+              color: #379ECB;
+       }
+</style>
+</body>
+<script type="text/javascript">
+       $("#close").click(function () {
+              $("#regpop").css("display", "none");
+       });
+
+ </script>
+
+</html>

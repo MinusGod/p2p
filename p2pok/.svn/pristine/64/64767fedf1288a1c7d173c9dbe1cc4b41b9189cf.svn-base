@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>融友网</title>
+    <link rel="stylesheet" href="@{'/public/stylesheets/css/style.css'}">
+    <link rel="stylesheet" href="@{'/public/stylesheets/css/progressbar.css'}">
+    <script type="text/javascript" src="@{'/public/javascripts/jquery.json-2.4.min.js'}"></script>
+    <script type="text/javascript" src="@{'/public/javascripts/jquery-2.0.js'}"></script>
+</head>
+<div  style="display: none"  >
+<script    src="http://s95.cnzz.com/z_stat.php?id=1256512809&web_id=1256512809" language="JavaScript"></script>
+</div>
+<body>
+<div class="ry_yy_banner"></div>
+<div class="ry_yy_main_1">
+    <div class="ry_yy_ph">
+        <div class="ry_yy_ph_l">
+            <img src="/public/images/ry_yy_ph.png">
+        </div>
+        <div class="ry_yy_ph_r">
+            <div class="ry_yy_title">公司介绍</div>
+            <div class="ry_yy_p">
+                融友普惠（北京）信息咨询有限公司（以下简称融友普惠）隶属于融友天下控股集团，由具有国际资本背景、资金规模超亿元的金融控股集团投资设立，并引进多家战略投资者为公司发展提供了雄厚的资金实力。公司总部位于北京，分支机构覆盖河北、山东、福建、内蒙古、上海等省市，拥有众多具有行业影响力的金融专家和金融工作者，是一家集信用风险评估与管理、信用数据整合服务、小微贷款咨询服务与交易促成等业务于一体的综合性金融信息服务企业。专注于解决“中、小微企业融资难、融资贵”等问题，追求做最好的“普惠金融”服务平台，以便更好的服务于中、小微企业和个人消费等金融需求，并以此推动财富中国梦的实现。
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ry_yy_main_2">
+    <div class="ry_yy_fk">
+        <div class="ry_yy_fk_b">
+            <img src="/public/images/ry_yy_fk.png">
+        </div>
+        <div class="ry_yy_d">
+            <img src="/public/images/ry_yy_12.png">
+            <div class="ry_yy_d_title">
+			  <div style="float:left; ">               
+			   <span class="ry_yy"  style="float:left;width:120px;  " data-ry="01" data-title="北京总部" data-dz="北京市西城区德外大街乙10号泰富大厦">
+                    <span class="ry_yy_y_before"></span><span class="ry_yy_n">北京总部</span>
+                </span>
+                <span class="ry_yy" data-ry="02" data-title="德州营业部" data-dz="山东省德州市德城区东风中路及解放中大道交叉口" style="float: right;">
+                    <span class="ry_yy_y_before"></span><span class="ry_yy_n">德州营业部</span>
+                </span>
+			  </div>
+              <div style="float:left;">   
+                <span class="ry_yy"  style="float:left;width:120px;  " data-ry="03" data-title="衡水营业部" data-dz="河北衡水桃城区和平西路富丽公寓底商融友普惠">
+                    <span class="ry_yy_y_before"></span><span class="ry_yy_n">衡水营业部</span>
+                </span>
+                <span class="ry_yy" data-ry="04" data-title="威海营业部" data-dz="威海经济技术开发区齐鲁大道127-8" style="float: right;">
+                    <span class="ry_yy_y_before"></span><span class="ry_yy_n">威海营业部</span>
+                </span>
+              </div>
+			  <div style="float:left;">  
+                <span class="ry_yy"  style="float:left; width:120px; " data-ry="05" data-title="枣庄营业部" data-dz="山东省枣庄市市中区文化东路泰和园头3-38号">
+                    <span class="ry_yy_y_before"></span><span class="ry_yy_n">枣庄营业部</span>
+                </span>
+                <span class="ry_yy" data-ry="06" data-title="临沂营业部" data-dz="临沂市兰山区人民广场北侧奥斯卡印象城CBD大厦1201室" style="float: right;">
+                    <span class="ry_yy_y_before"></span><span class="ry_yy_n">临沂营业部</span>
+                </span>
+			</div>
+            <div style="float:left;">  
+                <span class="ry_yy"  style="float:left; width:120px; " data-ry="07" data-title="建阳营业部" data-dz="南平市建阳区潭城街道办事处民主北路152号（北门旧货批发场）1幢301房">
+                    <span class="ry_yy_y_before"></span><span class="ry_yy_n">建阳营业部</span>
+                </span>
+                <span class="ry_yy" data-ry="08" data-title="福州营业部" data-dz="福州市台江区广达路108号世茂国际中心公寓楼3706" style="float: right;">
+                    <span class="ry_yy_y_before"></span><span class="ry_yy_n">福州营业部</span>
+                </span>
+            </div>
+			<div style="float:left;">  
+                <span class="ry_yy"  style="float:left;width:120px;  " data-ry="09" data-title="包头营业部" data-dz="包头市昆都仑区钢铁大街77号财富中心402室">
+                    <span class="ry_yy_y_before"></span><span class="ry_yy_n">包头营业部</span>
+                </span>
+                <span class="ry_yy" data-ry="10" data-title="赤峰营业部" data-dz="赤峰市松山区松山大街与广场路交叉口永业广场A座17层" style="float: right;">
+                    <span class="ry_yy_y_before"></span><span class="ry_yy_n">赤峰营业部</span>
+                </span>
+            </div>
+			<div style="float:left;">  
+                <span class="ry_yy" data-ry="13"  style="float:left;width:120px;  " data-title="三明营业部" data-dz="福建省泰宁市水南溪街丹霞名府一楼 5-6号店铺">
+                    <span class="ry_yy_y_before"></span><span class="ry_yy_n">三明营业部</span>
+                </span>
+                <span class="ry_yy" data-ry="14" data-title="苏州营业部" data-dz="太仓市城厢镇人民南路139号" style="float: right;">
+                    <span class="ry_yy_y_before"></span><span class="ry_yy_n">苏州营业部</span>
+                </span>
+            </div>
+			<div style="float:left;">   
+                <span class="ry_yy" data-ry="11"  style="float:left;width:120px; " data-title="呼和浩特营业部" data-dz="呼和浩特市赛罕区展西路长乐湾小区北门商业楼三楼融友普惠">
+                    <span class="ry_yy_y_before"></span><span class="ry_yy_n">呼和浩特营业部</span>
+                </span>
+                <span class="ry_yy" data-ry="12" data-title="" data-dz="" style="float: right;">
+
+                </span>
+            </div>
+            </div>
+            <div class="ry_yy_dz">
+                <div class="ry_yy_dz_title"></div>
+                <div class="ry_yy_dz_dz"></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+$(function(){
+    $(".ry_yy").hover(function(){
+        $.each($(".ry_yy"),function(){
+            $(this).children().eq(0).removeClass("ry_yy_y_after").addClass("ry_yy_y_before");
+            $(this).children().eq(1).css("color","#ffe4d9");
+        });
+        $(this).children().eq(0).removeClass("ry_yy_y_before").addClass("ry_yy_y_after");
+        $(this).children().eq(1).css("color","#173768");
+        var n = $(this).attr("data-ry");
+        $(".ry_yy_d").find("img").attr("src","/public/images/ry_yy_"+n+".png");
+        var title = $(this).attr("data-title");
+        var dz = $(this).attr("data-dz");
+        $(".ry_yy_dz_title").text(title);
+        $(".ry_yy_dz_dz").text(dz);
+
+    },function(){
+
+    });
+    $('.progressbar').each(function(index, el) {
+        var num = $(this).find('span').text();
+        $(this).addClass('progressbar-' + num);
+    })
+})
+</script>
+</body>
+</html>

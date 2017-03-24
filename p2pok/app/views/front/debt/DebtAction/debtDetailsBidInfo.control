@@ -1,0 +1,36 @@
+<div class="y_bdlef">
+				<h2 class="y_bdh2">
+					${debt?.title}
+				</h2>
+				<table class="y_bdtabtop">
+					<tr height="40">
+						<th width=""><span>${debt?.invest?.bid?.apr}<span>%</span></span></th>
+						<th width=""><span>${debt?.invest?.bid?.amount?.format("###,##0.00")}<span>元</span></span></th>
+						<th width=""><span>${debt?.invest?.amount?.format("###,##0.00")}元</th>
+						<td rowspan="2"></td>
+					</tr>
+					<tr height="24">
+						<td>年化收益</td>
+						<td>标的总额</td>
+						<td>投标本金</td>
+					</tr>
+				</table>
+				<ul class="y_bdtopul clr">
+					<li><i class="i1"></i>还款日期： ${debt?.map?.receive_time != "" ? debt?.map?.receive_time: '已还款'}</li>
+					<li><i class="i4"></i>剩余时间：<span class="xf_wylc_l_memhyA"><span id="day"></span><span
+				class="font_onetwo">天</span><span id="hour"></span><span class="font_onetwo">小时</span><span id="minutes"></span><span
+				class="font_onetwo">分</span><span id="seconds"></span><span class="font_onetwo">秒</span> </span></li>
+					<li><i class="i2"></i>本息合计应收金额： ${debt?.map?.receive_money}元</li>
+					<li><i class="i5"></i>已收金额： ${debt?.map?.has_receive_money}元</li>
+					<li><i class="i3"></i>剩余应收金额：${debt?.map?.remain_receive_money}元</li>
+					<li><i class="i6"></i>逾期情况： #{if debt?.invest?.bid?.hasOverdue == true}
+										有逾期
+										#{/if}
+										#{else}
+										无逾期
+										#{/else}</li>
+				</ul>
+			</div>
+		
+					
+					

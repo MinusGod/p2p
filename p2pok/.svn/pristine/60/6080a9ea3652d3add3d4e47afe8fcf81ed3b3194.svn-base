@@ -1,0 +1,25 @@
+ #{extends 'common/frontMain.html' /} 
+ #{set title:'修改用户名' /}
+
+<!-- 内容区域 start -->
+#{include "front/account/AccountHome/homeTop.html"/}
+<div class="y_wtmain clr">
+	<!-- 左边导航区域 -->
+	#{include "front/account/AccountHome/homeLeft.control"/}
+	<!-- 右侧内容区域 -->
+	<div class="y_wtrgh">
+		<h3 class="y_wth2"><span>修改用户名</span></h3>
+		<div class="y_zhrgh" >
+	       #{form @modifyUserName()}
+	        新用户名：<input type="text" name="userName" />
+			 <input type="submit" value="确认修改" />
+	       #{/form}  
+	       
+	       #{if flash.inform!=null}
+	         <p style="color: red">${flash?.inform}</p>
+	       #{/if}    
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="@{'/public/javascripts/tab/tab_usr.js'}"></script>

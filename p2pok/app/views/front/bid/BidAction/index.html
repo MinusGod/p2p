@@ -1,0 +1,38 @@
+%{
+	business.BackstageSet  currBackstageSet = business.BackstageSet.getCurrentBackstageSet();
+}%
+#{extends 'common/frontMain.html' /} 
+#{set title:currBackstageSet.seoTitle +'|我要借款  '/}
+<div class="y_jkbg y_wtbg"></div>
+	<!-- main -->
+	<div class="y_jklc"><div class="y_main">&nbsp;<img src="/public/images/jklc.png" alt="" title="" />&nbsp;</div></div>
+<div class="y_main">
+				<!-- 借款产品 -->
+				#{include 'front/bid/BidAction/indexProduct.control'/}
+</div>
+#{if code == -3}
+	#{include 'front/bid/BidAction/addBaseInfo.html'/}
+#{/if}
+<script type="text/javascript">
+
+	$(function(){
+
+		/* 自动投标签约 */
+		var code = ${code};		
+		if(code < 0){
+			$("#name").attr("disabled","disabled");
+			$("#name").attr("readonly","readonly");
+			$("#password").attr("disabled","disabled");
+			$("#password").attr("readonly","readonly");
+			$("#code").attr("disabled","disabled");
+			$("#code").attr("disabled","disabled");
+		}
+	});
+
+</script>
+<script type="text/javascript" src="@{'/public/javascripts/tab/tab_bid.js'}"></script>
+<script>
+    $(function(){
+        $("#biddf a span").addClass('clickedf');
+    })
+</script>

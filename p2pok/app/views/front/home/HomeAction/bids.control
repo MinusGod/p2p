@@ -1,0 +1,191 @@
+<div class="y_main">
+		<ul class="y_dexlcul">
+			<li class="click" ><a href="@{front.invest.InvestAction.investHome()}">推荐项目</a></li>
+			<span style="position:absolute;left:110px;"><img src="/public/images/fegnkong.png"  style="position:absolute;top:16px;"></span>
+			<a style="position:absolute;font-size:14px;right:0px;line-height:40px; " href="@{front.invest.InvestAction.investHome()}">更多&gt;&gt;</a>
+			<!--<li >债权转让</li>-->
+		</ul>
+<style>
+.y_dexlcul a{
+color:#999;
+}
+.y_dexlcul a:hover{
+color:#2e9ece;
+}
+</style>
+		<div class="y_dexbox clr">
+			<div class="y_dexlcli">
+				<!-- li-cai -->
+				<ul class="clr">
+			<!--	#{list items:bidList , as:'bid'}
+					<li>
+						<h2 class="y_dexh1">#{img class:"lazy", data_original:"${bid?.small_image_filename}", src:"/public/images/loading.gif",alt:"",align:"absmiddle",width:"30",heigth:"30"}#{/img}
+						 <img src="/public/images/img/qy.png">
+						<span>${bid?.repay_name}</span></h2>
+						<a href="@{front.invest.InvestAction.invest(bid?.id)}" class="y_dexa1">${bid?.title}</a>
+						<div class="y_dexlcdiv">
+							<i class="i1 y_bg"></i>借款金额：&nbsp;&nbsp;${bid?.amount?.format('###,##0.00')}元<br/>
+							<i class="i2 y_bg"></i>可投金额：&nbsp;&nbsp;${(bid?.amount-bid?.has_invested_amount)?.format('###,##0.00')}元
+						</div>
+						<div class="y_dexjd"><span>进度：</span><span class="y_jd"><span class="y_jds" style="width:${bid?.loan_schedule}%;"></span>
+						</span><span>${bid?.loan_schedule}%</span></div>
+						<div class="y_dexsj clr">
+							<span><span class="y_ff505"><span class="f24">${bid?.apr}</span>%</span>预期年化收益率</span>
+							<i></i>
+							<span><span class="y_333"><span class="f24">${bid?.period}</span>#{if bid?.period_unit ==-1}
+												年
+												#{/if}
+												#{if bid?.period_unit ==0}
+												个月
+												#{/if}
+												#{if bid?.period_unit ==1}
+												天
+												#{/if}</span>还款期限</span>
+						</div>
+						<a href="@{front.invest.InvestAction.invest(bid?.id)}" title="" class="y_dexbto">立即投标</a>
+					</li>
+				#{/list}-->
+				
+				<!-- 优化查询结果 modify by xd.wang-->
+				#{list items:bidList , as:'bid'}
+			<li>  #{if bid?.is_hot ==true}
+					<img src="/public/images/001.png" class="y_tjbimg"/>
+					#{/if}
+					<h2 class="y_dexh1">#{img class:"lazy", data_original:"${bid?.small_image_filename}", src:"/public/images/loading.gif",alt:"",align:"absmiddle",width:"40px",height:"40px"}#{/img}
+					<img src="/public/images/img/qy.png">
+					<span>${bid?.repay_name}</span></h2>
+					<a href="@{front.invest.InvestAction.invest(bid?.id)}" class="y_dexa1">${bid?.title}</a>
+					<div class="y_dexlcdiv">
+						<i class="i1 y_bg"></i>借款金额：&nbsp;&nbsp;${bid?.amount?.format('###,##0.00')}元<br/>
+						<i class="i2 y_bg"></i>可投金额：&nbsp;&nbsp;${(bid?.amount-bid?.has_invested_amount)?.format('###,##0.00')}元
+					</div>
+					<div class="y_dexjd"><span>进度：</span><span class="y_jd"><span class="y_jds" style="width:${bid?.loan_schedule}%;"></span></span>
+					 <span>
+					    #{if 100==Math.floor(bid?.loan_schedule)}
+					    100%
+						#{/if}
+						#{else}
+						${bid?.loan_schedule.format('###,##0.00')}%
+						#{/else}
+					 </span>
+					</div>
+					<div class="y_dexsj clr">
+						<span><span class="y_ff505"><span class="f24">${bid?.apr}</span>%</span>预期年化收益率</span>
+						<i></i>
+						<span><span class="y_333"><span class="f24">${bid?.period}</span>#{if bid?.period_unit ==-1}
+								年
+								#{/if}
+								#{if bid?.period_unit ==0}
+								个月
+								#{/if}
+								#{if bid?.period_unit ==1}
+								天
+								#{/if}</span>还款期限</span>
+					</div>
+					
+					#{if  bid?.amount > bid?.has_invested_amount}
+						<a href="@{front.invest.InvestAction.invest(bid?.id)}" title="" class="y_dexbto">立即投标</a>
+					 #{/if}
+					#{if bid?.amount == bid?.has_invested_amount && bid?.status!=2}
+					  <a href="@{front.invest.InvestAction.invest(bid?.id)}" title="" class="y_dexbto y_mbbto">${bid?.strStatus}</a>
+					#{/if}
+					#{if bid?.amount == bid?.has_invested_amount && bid?.status==2 }
+					 <a href="@{front.invest.InvestAction.invest(bid?.id)}" title="" class="y_dexbto y_mbbto">已满标</a>
+					#{/if}
+				</li>
+		
+			#{/list}
+				
+				</ul>
+				<!-- zhai-quan -->
+				<ul class="clr">
+					#{list items:debtList , as:'debt'}
+					<li>
+						<h2 class="y_dexh1">
+						#{img class:"lazy", data_original:"${debt?.small_image_filename}", src:"/public/images/loading.gif",alt:"",align:"absmiddle",width:"30",heigth:"30"}#{/img}
+						<span>${debt?.repaymentName}</span></h2>
+						<a href="#" class="y_dexa1">${debt?.title}</a>
+						<div class="y_dexlcdiv">
+							<i class="i1 y_bg"></i>待收本金：&nbsp;&nbsp;${debt?.debt_amount?.format('###,##0.00')}元<br/>
+							<i class="i2 y_bg"></i>拍卖底价：&nbsp;&nbsp;${debt?.transfer_price?.format('###,##0.00')}元
+						</div>
+						<div class="y_dexjd">
+								#{if debt?.status == 1 || debt?.status == 2 || debt?.status == 4}
+								<input id="hiddenTime${debt_index}" type="hidden" value="${debt?.end_time?.format('yyyy/MM/dd HH:mm:ss')}"></input>
+								剩余时间：<span class="y_333"><span class="f24" id="day${debt_index}"></span>天<span class="f24" id="hours${debt_index}"></span>小时
+						<span class="f24" id="minutes${debt_index}"></span>分<span class="f24" id="seconds${debt_index}"></span>秒</span>
+								#{/if}
+								#{else}
+								剩余时间：<span class="y_333">已结束</span>
+								#{/else}
+						</div>
+						<div class="y_dexsj clr">
+							<span><span class="y_ff505"><span class="f24">${debt?.apr}</span>%</span>年化收益</span>
+							<i></i>
+							<span><span class="y_333"><span class="f24">#{if debt?.max_price != null}
+								${debt?.max_price?.format('###,##0.00')}
+								#{/if}
+								#{else}
+								0
+								#{/else}</span>元</span>目前拍价</span>
+						</div>
+						<a href="@{front.debt.debtAction.debtDetails(debt.id)}" title="" class="y_dexbto">我要竞拍</a>
+					</li>
+					#{/list}
+				</ul>
+			</div>
+		</div>
+	</div>
+<script>
+
+showTime();
+ function showTime(){
+ 	var listsize = ${debtList?.size};
+
+	 for(var i = 1; i <= listsize; i++){
+ 		var time = $("#hiddenTime"+i).val();
+
+ 		if(typeof(time) == 'undefined' || time == null || time == "")
+ 			continue;
+ 	 	
+ 		var date = new Date(time);
+		var tt = date.getTime();
+		var now = new Date().getTime();
+		var cha = tt-now;
+		var SysSecond=parseInt(cha);
+	  
+	    if (SysSecond > 0) { 
+   	        int_day=Math.floor(SysSecond/86400000);
+            SysSecond-=int_day*86400000;
+            int_hour=Math.floor(SysSecond/3600000);
+            SysSecond-=int_hour*3600000;
+            int_minute=Math.floor(SysSecond/60000);
+            SysSecond-=int_minute*60000;
+            int_second=Math.floor(SysSecond/1000);
+            
+            if(int_hour<10){
+             	 int_hour="0"+int_hour;
+			 }
+			 
+            if(int_minute<10){
+           		int_minute="0"+int_minute;
+		     }
+		     
+       		if (int_second<10){
+            	int_second="0"+int_second;
+            }
+             
+  			$("#day"+i).html(int_day);
+  			$("#hours"+i).html(int_hour);
+  			$("#minutes"+i).html(int_minute);
+  			$("#seconds"+i).html(int_second);
+  		}else{
+	        $("#day"+i).html("00");
+		    $("#hour"+i).html("00");
+		    $("#minutes"+i).html("00");
+		    $("#seconds"+i).html("00");
+        }
+	   }
+	    setTimeout('showTime()',1000);
+	 }
+</script>

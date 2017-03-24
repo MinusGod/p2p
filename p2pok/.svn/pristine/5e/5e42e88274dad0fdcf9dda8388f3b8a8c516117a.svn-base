@@ -1,0 +1,23 @@
+#{extends 'common/supervisor.html' /} #{set title:'我的直客' /}
+<div class="xfht_t_j_k"> 
+<!--左-->
+#{include "supervisor/networkMarketing/CPSSpreadAction/networkMarketingLeft.control"/}
+ <!--右-->
+#{include "supervisor/networkMarketing/SpreadAction/spreadUsersList.control"/}
+</div>
+
+
+<script type="text/javascript">
+
+$(function(){
+	//高亮显示
+	showHighLight(4,4,12);
+})
+</script>
+
+
+
+
+
+
+	

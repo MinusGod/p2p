@@ -1,0 +1,248 @@
+%{
+	business.BackstageSet  currBackstageSet = business.BackstageSet.getCurrentBackstageSet();
+}%
+#{extends 'common/frontMain.html' /}
+#{set title:currBackstageSet.seoTitle +'| 债权转让' /}
+<div class="y_lcbg y_wtbg"></div>
+#{form @debtHome(),method:'GET',id :'debtsSearch'}
+<div class="y_lctop">
+		<div class="y_main">
+		<h2 class="y_lch2">
+				<a href="@{front.invest.InvestAction.investHome()}" title="">理财产品</a>
+				<a href="@{front.debt.debtAction.debtHome()}" title="" class="click">债权转让</a>
+			</h2>
+						<input type="hidden" id="keywords" name="keywords" value="${page?.conditions?.keywords}">
+						<input type="hidden" id="currPage" name="currPage"/>
+            <input type="hidden" id="pageSize" name="pageSize"/>
+            <input type="hidden" id="aprtemp" name="apr" value="${page?.conditions?.apr}"/>
+            <input type="hidden" id="debtAmounttemp" name="debtAmount" value="${page?.conditions?.amount}"/>
+            <input type="hidden" id="orderType" name="orderType" value="${page?.conditions?.orderType}"/>
+            <input type="hidden" id="loanTypetem" name="loanType" value="${page?.conditions?.loanType}"/>
+	  #{include 'front/debt/DebtAction/debtHomeCondition.control' /}
+	  
+	  
+		
+</div>
+</div>
+<div class="y_main">
+	<ul class="y_lcpxbox">
+			<li onClick="conditonSearch(0)" id="div_0">默认排序</li>
+			<li onClick="conditonSearch(1)" id="div_1">待收本金<span>↓</span></li>
+			<li onClick="conditonSearch(3)" id="div_3">利率<span>↓</span></li>
+			<li onClick="conditonSearch(5)" id="div_5">剩余时间<span>↓</span></li>
+				<li  onClick="conditonSearch(7)" id="div_7">还款日<span>↓</span></li>
+		</ul>
+		<div class="y_dexlcli" id = "debtList">
+					<ul class="clr">
+					<!--foreach start：-->
+					
+					
+				#{list items:page.page, as:'debt'}
+					<li>
+						<h2 class="y_dexh1">#{img class:"lazy", data_original:"${debt?.small_image_filename}", src:"/public/images/loading.gif",alt:"",align:"absmiddle",width:"40px",height:"40px"}#{/img}
+						<span>${debt?.repaymentName}</span></h2>
+						<a href="@{debtDetails(debt?.id)}" class="y_dexa1">${debt?.title}</a>
+						<div class="y_dexlcdiv">
+							<i class="i1 y_bg"></i>待收本金：&nbsp;&nbsp;${debt?.debt_amount?.format('###,##0.00')}元<br/>
+							<i class="i2 y_bg"></i>拍卖底价：&nbsp;&nbsp;${debt?.transfer_price?.format('###,##0.00')}元
+						</div>
+						<div class="y_dexjd">
+						#{if debt?.status == 1 || debt?.status == 2 || debt?.status == 4}
+								<input id="hiddenTime${debt_index}" type="hidden" value="${debt?.end_time?.format('yyyy/MM/dd HH:mm:ss')}"></input>
+								剩余时间：<span class="y_333"><span class="f24" id="day${debt_index}"></span>天<span class="f24" id="hours${debt_index}"></span>小时
+						<span class="f24" id="minutes${debt_index}"></span>分<span class="f24" id="seconds${debt_index}"></span>秒</span>
+								#{/if}
+								#{else}
+								剩余时间：<span class="y_333">已结束</span>
+								#{/else}
+						</div>
+						<div class="y_dexsj clr">
+							<span><span class="y_ff505"><span class="f24">${debt?.apr}</span>%</span>年化收益</span>
+							<i></i>
+							<span><span class="y_333"><span class="f24">#{if debt?.max_price != null}
+								${debt?.max_price?.format('###,##0.00')}
+								#{/if}
+								#{else}
+								0
+								#{/else}</span>元</span>目前拍价</span>
+						</div>
+						#{if debt?.status == 1 && new java.util.Date() < debt?.end_time}
+									<a href="@{debtDetails(debt.id)}" class="y_dexbto" target="_self">我要竞拍</a>
+									#{/if}
+									#{else}
+							<a href="@{debtDetails(debt.id)}" title="" class="y_dexbto">查看详情</a>
+						#{/else}
+					</li>
+					
+					#{/list}
+					
+					
+					<!--foreach ends-->
+				</ul>
+	
+	</div>
+			<div class="y_page">
+				<!-- 分页器 -->
+					#{page pageTitle:"个债权标",currPage:page.currPage,pageSize:page.pageSize,totalCount:page.totalCount,theme:2,style:3 /}
+				</div>
+	</div>
+	#{/form}
+<script type="text/javascript" src="@{'/public/javascripts/tab/tab_claim.js'}"></script>		
+<script>
+		
+		$(function(){
+			$('img.lazy').lazyload({ 
+			  //effect:'fadeIn' 
+			});
+			$("#debtDetails").click(function(){
+				$("#xf_wyjkfb_4_window").hide();
+			})
+		})
+	</script>
+	
+	
+	
+	<script type="text/javascript">
+  showTime();
+ function showTime(){
+ 	var listsize = ${page?.page.size};
+
+	 for(var i = 1; i <= listsize; i++){
+ 		var time = $("#hiddenTime"+i).val();
+
+ 		if(typeof(time) == 'undefined' || time == null || time == "")
+ 			continue;
+ 	 	
+ 		var date = new Date(time);
+		var tt = date.getTime();
+		var now = new Date().getTime();
+		var cha = tt-now;
+		var SysSecond=parseInt(cha);
+	  
+	    if (SysSecond > 0) { 
+   	        int_day=Math.floor(SysSecond/86400000);
+            SysSecond-=int_day*86400000;
+            int_hour=Math.floor(SysSecond/3600000);
+            SysSecond-=int_hour*3600000;
+            int_minute=Math.floor(SysSecond/60000);
+            SysSecond-=int_minute*60000;
+            int_second=Math.floor(SysSecond/1000);
+            
+            if(int_hour<10){
+             	 int_hour="0"+int_hour;
+			 }
+			 
+            if(int_minute<10){
+           		int_minute="0"+int_minute;
+		     }
+		     
+       		if (int_second<10){
+            	int_second="0"+int_second;
+            }
+             
+  			$("#day"+i).html(int_day);
+  			$("#hours"+i).html(int_hour);
+  			$("#minutes"+i).html(int_minute);
+  			$("#seconds"+i).html(int_second);
+  		}else{
+	        $("#day"+i).html("00");
+		    $("#hour"+i).html("00");
+		    $("#minutes"+i).html("00");
+		    $("#seconds"+i).html("00");
+        }
+	   }
+	    setTimeout('showTime()',1000);
+	 }
+
+	var debtAmount = "";
+	var apr = "";
+	var loanType = "";
+	$(function(){
+			 $("#apr td a").click(function(){ 
+			    	$("#apr td a").removeClass("click");
+				    $(this).addClass("click");
+				      apr = $(this).attr("value");  
+				       $("#aprtemp").val(apr);
+				      showDebtLists();
+			    });
+			   $("#debtAmount td a").click(function(){ 
+			    	$("#debtAmount td a").removeClass("click");
+				    $(this).addClass("click");
+				      debtAmount = $(this).attr("value");  
+				       $("#debtAmounttemp").val(debtAmount);
+				      showDebtLists();
+			  });
+
+			   $("#loanType td a").click(function(){ 
+			    	$("#loanType td a").removeClass("click");
+				    $(this).addClass("click");
+				   	 loanType = $(this).attr("value");  
+				       $("#loanTypetem").val(loanType);
+				      showDebtLists();
+			  });
+			  
+	         //条件查询控制样式
+			      var num= '${page?.conditions?.orderType}';
+					  if(num == 0){
+					  $("#div_0").addClass("click");
+					    return;
+					  }
+			
+					  var sum = num/2;
+					  if(sum.toString().indexOf('.') == -1){
+					    var sum2 = num -1;
+					    $("#div_"+sum2).addClass("click").find("span").text("↑");
+					    return;
+					  }else{
+					    $("#div_"+num).addClass("click").find("span").text("↓");;
+					  }
+	
+		      
+	})
+	
+function conditonSearch(num){
+  var order= '${page?.conditions?.orderType}';
+  if(order == 0){
+    $("#orderType").val(num);
+    $("#debtsSearch").submit();
+    return;
+  }
+  var sum = order/2;
+  if(sum.toString().indexOf('.') == -1){
+    var sum2 = order - 1;
+    $("#orderType").val(num);
+    $("#debtsSearch").submit();
+    return;
+  }else{
+    if(order == num){
+      $("#orderType").val(num + 1);
+      $("#debtsSearch").submit();
+      return;
+    }else{
+      $("#orderType").val(num);
+      $("#debtsSearch").submit();
+      return;
+    }
+  }
+}
+	
+	
+	
+	
+	function showDebtLists(){
+    	
+    	 $("#debtsSearch").submit();
+    }
+	
+	function showPage(currPage, pageSize){
+        $("#currPage").val(currPage);
+        $("#pageSize").val(pageSize);
+        $("#debtsSearch").submit();
+    }
+ 
+</script>
+		
+	
+		
+		
+		

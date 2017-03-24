@@ -1,0 +1,197 @@
+%{
+	business.BackstageSet  currBackstageSet = business.BackstageSet.getCurrentBackstageSet();
+}%
+#{extends 'common/frontMain.html' /} #{set title:currBackstageSet.seoTitle +' | 我的账户 | 站内信 | 借款提问' /}
+
+#{include "front/account/AccountHome/homeTop.html"/}
+<div class="y_wtmain clr">
+	<!-- 左边导航区域 -->
+	#{include "front/account/AccountHome/homeLeft.control"/}
+<div class="y_wtrgh">
+<h3 class="y_wth2"><span>借款提问</span></h3>
+	<div class="y_zhrgh" id="mymessages">
+		<div id="msglist" class="xf_con_wyjk_tentultbody">
+			#{form @bidQuestions(), id:'bidQuestions'}
+			<div class="xf_mem_Account">
+			<!-- 搜索区域 -->
+			<ul class="xf_membill_search clr">
+				<li class="xf_membill_searchLi"><span class="xf_membill_segjc">借款标题：</span>
+					<input type="text" value="${pageBean?.conditions?.title}" title="请输入借款标题" 
+					id="title" name="title" class="xf_membill_shurk_yhm" />
+				</li>
+				<li><span class="xf_membill_segjc xf_membill_segjc2">是否回答：</span> <select
+					name="isAnswer" class="xf_membill_selectAge"
+					id="isAnswer">
+						<option value="0">-全部-</option>
+						<option value="1" #{if pageBean?.conditions?.isAnswer==1}selected="selected"#{/if}>已回答</option>
+						<option value="2" #{if pageBean?.conditions?.isAnswer==2}selected="selected"#{/if}>未回答</option>
+				</select></li>
+				<li>
+					<input type="submit" value="搜 索"
+						class="xf_membill_button_yhm xf_membill_button_yhm2"/>
+				</li>
+			</ul>
+			#{/form}
+		
+			<table border="0" cellpadding="0" cellspacing="0" width="739"
+				class="xf_mem_znx_viewcpms">
+				<tr>
+					<th><input type="checkbox" name="check_all" onclick="checkAll()" value="-1"/></th>
+					<th>序号</th>
+					<th>提问人</th>
+					<th>借款标题</th>
+					<th>提问时间</th>
+					<th>是否回答</th>
+					<th>操作</th>
+				</tr>
+		
+				#{list pageBean?.page}
+				<tr #{if !_?.isAnswer}class="xf_mem_znx_wdtr"#{/if}>
+					<td>
+						<input name="check_box" type="checkbox" class="xf_mem_znx_wdtr_checkbox" value="${_?.id}"/>
+					</td>
+					<td>${_index}</td>
+					<td>${_?.name}</td>
+					<td>${_?.title}</td>
+					<td>${_?.time?.format("yyyy-MM-dd")}</td>
+					<td>
+						<span class="xf_mem_znx_wd">
+							#{if _?.isAnswer}
+								已回答
+							#{/if}
+							#{else}
+								未回答
+							#{/else}
+						</span>
+					</td>
+					<td>
+						<span style="cursor: pointer;" onclick="bidQuestionDetail(${_?.id});">查看</span>
+					</td>
+				</tr>
+				#{/list}
+		
+			</table>
+		
+			<div class="xf_mem_znx_cc">
+				<span class="xf_accout_cont_imginput" onclick="deleteBidQuestion()">删除</span>
+			</div>
+		
+			<!-- 分页器 -->
+			<div class="xf_wylc_page xf_zqzr_view_page1 xf_znx_view_page1">
+				#{page currPage:pageBean?.currPage,pageSize:pageBean?.pageSize,totalCount:pageBean?.totalCount,theme:2,style:2}#{/page}
+			</div>
+		</div>
+		</div>
+		<div id="detail" class="xf_con_wyjk_tentultbody"></div>
+
+	</div>
+	<!-- 清除浮动 -->
+	<div class="clear"></div>
+</div>
+</div>
+<!-- 内容区域 end -->
+
+<!-- 后期补充-回复 -->
+<div class="xf_zqzr_znx_window" id="xf_zqzr_tgxyed_window">
+	<div class="xf_wyjkwszl_4_windowInner xf_zqzr_znxback_window">
+		<div class="xf_wyjkfb_4_windowClose" onclick="$('#xf_zqzr_tgxyed_window').hide();"></div>
+		<div class="xf_wyjkfb_4_windowColName">
+			回复
+		</div>
+		<div class="xf_zqzr_znx_windowCot">
+			<table border="0" cellpadding="0" cellspacing="0" width="426" class="xf_zqzr_znx_teot">
+				<tr>
+					<td align="right" width=50>
+						回复：
+					</td>
+					<td>
+						${bidQuestion?.name}
+					</td>
+				</tr>
+				<tr>
+					<td align="right" valign="top">
+						<span class="xf_zqzr_znx_title">内容：</span>
+					</td>
+					<td>
+						<div class="xf_zqzr_znx_text_hfbox" style="word-break:break-all;">
+							<textarea id="content" class="xf_zqzr_znx_text_hf" name="xf_zqzr_znx_text_hf" rows="5"></textarea>
+							<div class="xf_zqzr_znx_text_hfbox_t">
+								提问人：${bidQuestion?.name}
+								<br />
+								提问时间：${bidQuestion?.time?.format('yyyy-MM-dd')}
+								<br />
+								提问内容：${bidQuestion?.content}
+							</div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+				<td colspan="2" class="xf_con_znx_hf_span_two">
+					<a class="xf_con_inputfbjk" onclick="createAnswers();">发送</a> <span/>
+				</td>
+			</tr>
+			</table>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript" src="@{'/public/javascripts/tab/tab_usr.js'}"></script>
+<script type="text/javascript">
+	$(function() {
+		/* 高亮显示 */
+		showHighLightFront(6);
+		showHighLightFront2(7, 2);
+	});
+
+	function showPage() {
+		$("#title").val(title);
+		$("#isAnswer").val(isAnswer);
+	}
+	
+	/* 详情 */
+	function bidQuestionDetail(id) {
+		var listAction = #{jsAction @bidQuestionDetail(':id') /};
+		$.post(listAction({id:id}), function(data) {
+			$("#msglist").hide();
+			$("#detail").html(data).show();
+		});	
+	}
+
+	/* 删除 */
+	function deleteBidQuestion() {
+		
+		var arr = new Array();
+
+		$('input:checkbox[name=check_box]:checked').each(function() {
+			arr.push($(this).val());
+		});
+		
+		var ids = arr.join(",");
+		
+		if (ids == "") {
+			alert("请选择要删除的信息!");
+			return;
+		}
+		
+		if (!confirm("确认要删除？")) {
+            return;
+        }
+		
+		$.ajax({
+			url : "@{deleteBidQuestion()}",
+			type : "POST",
+			data : {
+				"ids" : ids
+			},
+			success : function(data) {
+				if(data != '')
+					alert(data);
+				
+				location.reload();				
+			},
+			error : function() {
+				alert("对不起，出现错误!");
+			}
+		});
+	}
+</script>

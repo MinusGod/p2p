@@ -1,0 +1,154 @@
+﻿<link rel="stylesheet" type="text/css"  href="/public/stylesheets/css/base.css">
+<link rel="stylesheet" type="text/css"  href="/public/stylesheets/css/layer.css">
+<link rel="stylesheet" type="text/css"  href="/public/stylesheets/css/safety.css">
+<link rel="stylesheet" type="text/css"  href="/public/stylesheets/css/sina.css">
+
+<script type="text/javascript" src="@{'/public/javascripts/jquery-2.0.js'}"></script>
+<div class="main">
+    <div class="platform">
+        <div class="w">
+            <p class="top">平台安全</p>
+            <div class="info">
+                <div class="info1 fl" style="width:286px;">
+                    <img class="fl" src="/public/images/platform_1.png" alt="" style="float:left">
+                    <p class="txt1">O2O借贷投资模式</p>
+                    <p class="" style="font-size:18px;color:#ababab;">全国设风控，目前已经进驻20多个城市</p>
+                </div>
+                <div class="info2 fl" style="width:286px;">
+                    <img class="fl" src="/public/images/platform_2.png" alt="" style="float:left">
+                    <p class="txt1">中短期借款</p>
+                    <p class="" style="font-size:18px;color:#ababab;">1-12个月中短期有条件借款：实物抵押、实地风控
+                    </p>
+                </div>
+                <div class="info3 fl" style="width:286px;">
+                    <img class="fl" src="/public/images/platform_3.png" alt="" style="float:left">
+                    <p class="txt1">实地贷前贷后管理</p>
+                    <p class="" style="font-size:18px;color:#ababab;">2013年运营至今,未出现一例坏账</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="risk_con">
+        <div class="w">
+            <p class="top">风控保障</p>
+            <img src="/public/images/risk.png" alt="">
+            <a href="/front/principal/safeguardhelp">我们是这样做风控的&gt;&gt;&gt;</a>
+        </div>
+    </div>
+    <div class="security">
+        <div class="w">
+            <p class="top">资金安全</p>
+            <div class="sec1 fl">
+                <img class="fl" src="/public/images/security1.png" alt="">
+                <p class="txt1">汇付天下—资金托管</p>
+                <p class="txt2">第三方支付为融友网每一位用户在其合作银行建立了专门账户，对融友网每一位用户所产生的交易进行<a href="/front/principal/safeguardmoney">资金托管</a>，确保资金安全</p>
+            </div>
+            <div class="sec2 fl">
+                <img class="fl" src="/public/images/security2.png" alt="">
+                <p class="txt1">优质借款人</p>
+                <p class="txt2">融友网创建了适合中国国情的O2O模式，筛选出的借款人均为中小企业主，具有稳定的还款能力和良好的信用意识，此模式亦抵御了逾期坏账的风险</p>
+            </div>
+        </div>
+    </div>
+    <div class="law">
+        <div class="w">
+            <p class="top">法律保障</p>
+            <div class="law_info">
+                <div class="law1 fl rel">
+                    <img src="/public/images/law1.png" alt="">
+
+                    <div class="abs hide">
+                        &nbsp;&nbsp;根据《中华人民共和国合同法》、《最高人民法院关于审理民间借贷案件适用法律若干问题的规定》，自然人之间以及自然人与非金融机构之间的借贷属于民间借贷范畴，受法律保护
+                    </div>
+                </div>
+                <div class="law2 fl rel">
+                    <img src="/public/images/law2.png" alt="">
+
+                    <div class="abs hide">
+                        &nbsp;&nbsp;根据《中华人民共和国合同法》第七十九条规定，债权人可以将合同的权利全部或部分转让给第三方(特殊情况除外)，即债权经合法转让后形成的新的债权债务关系受法律保护
+                    </div>
+                </div>
+                <div class="law3 fl rel">
+                    <img src="/public/images/law3.png" alt="">
+
+                    <div class="abs hide">
+                        &nbsp;&nbsp;凡经融友网促成的投资人与借款人的借贷关系，亦属于民间借贷范畴，受法律保护
+                    </div>
+                </div>
+                <div class="law4 fl rel">
+                    <img src="/public/images/law4.png" alt="">
+
+                    <div class="abs hide">
+                        &nbsp;&nbsp;根据《最高人民法院关于审理民间借贷案件适用法律若干问题的规定》，借贷双方约定的利率未超过年利率24%的，出借人有权请求借款人按照约定的利率支付利息； 借贷双方约定的年利率超过36%的，则超过部分无效
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="data">
+        <div class="w">
+            <p class="top">数据及隐私保障</p>
+            <div class="data_info rel">
+                <div class="data1 fl">
+                    <img src="/public/images/data1.png" alt="">
+                    <p class="txt1">网站技术保障</p>
+                    <p class="txt2">融友网采用先进的安全技术，保护用户在融友网账户中存储的个人及账户信息和交易记录的安全<br>融友网拥有完善的安全监测系统，可以及时发现网站的非正常访问并做出安全响应 </p>
+                </div>
+                <div class="data2 fl">
+                    <img src="/public/images/data2.png" alt="">
+                    <p class="txt1">容灾备份</p>
+                    <p class="txt2">融友网采取生产、容灾两个数据中心彼此同步护卫备份，确保历史数据永久保存</p>
+                </div>
+                <div class="data3 fl">
+                    <img src="/public/images/data3.png" alt="">
+                    <p class="txt1">隐私保障</p>
+                    <p class="txt2">融友网有严格的权限管理制度及用户信息操作规范，遵守国家相关的法律法规，对用户的隐私信息进行保护，未经用户的同意不会将用户信息泄露给其他外部机构，除以下情形外：<br>
+                        <span>●</span>&nbsp;&nbsp;应政府机关、司法检查机关<br>&nbsp;&nbsp;&nbsp;及相关部门的要求披露的<br>
+                        <span>●</span>&nbsp;&nbsp;应监管机构要求披露的<br>
+                        <span>●</span>&nbsp;&nbsp;征得用户事先同意披露的</p>
+                </div>
+                <div class="arrow_down abs fl">
+                    <img id="down_btn" src="/public/images/arrow_down.png" alt="" onclick="myFunction()">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+	<script>
+
+
+		function myFunction(){
+			$(".txt2").css({"height":285})
+			$('.arrow_down img').css({"display":'none'})
+		}
+        setInterval(function(){
+            $('.arrow_down img').css({top:100})
+        },60,function(){
+            $('.arrow_down img').css({top:-10})
+        })
+
+		$('.law_info img').each(function(index){
+            $(this).hover(function(){
+                $(this).fadeOut("slow");
+                $(this).next().fadeIn("slow");
+            },function(){})
+        })
+        $('.law_info .abs').each(function(index){
+            $(this).hover(function(){
+
+            },function(){
+                $(this).fadeOut("slow");
+                $(this).prev().fadeIn("slow");
+            })
+        })
+
+
+
+
+
+	</script>
+
+

@@ -1,0 +1,32 @@
+%{
+	business.BackstageSet  currBackstageSet = business.BackstageSet.getCurrentBackstageSet();
+}%
+#{extends 'common/frontMain.html' /}
+#{set title:currBackstageSet.seoTitle + ' | 我的账户   | 理财子账户  | 投标机器人'/}
+
+<!-- 内容区域 start -->
+#{include "front/account/AccountHome/homeTop.html"/}
+<div class="y_wtmain clr">
+	<!-- 左边导航区域 -->
+	#{include "front/account/AccountHome/homeLeft.control"/}
+	<!-- 右侧内容区域 -->
+	<div class="y_wtrgh">
+		<h3 class="y_wth2"><span>投标机器人</span></h3>
+		<div class="y_zhrgh" >
+		#{include "front/account/InvestAccount/auditmaticInvestContent.control"/}
+		<!-- 清除浮动 -->
+		<div class="clear"></div>
+	</div>
+	</div>
+	</div>
+<!-- 内容区域 end -->
+<script type="text/javascript" src="@{'/public/javascripts/tab/tab_usr.js'}"></script>
+<script type="text/javascript">
+<!--
+	$(function(){
+		/* 高亮显示 */
+		showHighLightFront(23);
+		showHighLightFront2(7, 4);
+	});
+//-->
+</script>

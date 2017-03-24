@@ -1,0 +1,26 @@
+<div align="left">#{extends 'common/frontMain.html' /} 
+#{set title:'我的关注的人' /} 
+<!-- 内容区域 start -->
+#{include "front/account/AccountHome/homeTop.html"/}
+<div class="y_wtmain clr">
+		#{include "front/account/AccountHome/homeLeft.control"/}
+		<div class="y_wtrgh">
+		<h3 class="y_wth2"><span>我关注的人</span></h3>
+		<div class="y_zhrgh">
+		<!-- 右侧内容区域 -->
+		#{include "front/account/AccountHome/myAttentionUserContent.control"/}
+		<!-- 清除浮动 -->
+		</div>
+		</div>
+	</div>
+<!-- 内容区域 end -->
+<script type="text/javascript" src="@{'/public/javascripts/tab/tab_usr.js'}"></script>
+<script type="text/javascript">
+<!--
+	$(function(){
+		/* 高亮显示 */
+		showHighLightFront(1);
+		showHighLightFront2(1, 1);
+	});
+//-->
+</script>

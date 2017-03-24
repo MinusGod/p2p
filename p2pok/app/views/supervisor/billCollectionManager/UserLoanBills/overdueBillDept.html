@@ -1,0 +1,160 @@
+#{extends 'common/supervisor.html' /}
+#{set title:'逾期借款会员' /}
+
+<div class="xn_c_contentwarp">
+  <div class="xn_c_contentlist">
+    #{include "supervisor/billCollectionManager/common/billCollectionManagerLeft.control"/}
+    <div class="xn_c_content">
+      <div class="xf_ht_tablelist">
+        <!-- 搜索 -->
+        #{form @overdueBillDept(), id:'submit'}
+        <input type="hidden" id="currPage" name="currPage"/>
+        <input type="hidden" id="pageSize" name="pageSize"/>
+        <div class="xf_ht_search">
+          <div class="xf_ht_search_r">
+            <div class="xf_ht_search_xl">
+              <input id="key" name="key" type="text" placeholder="借款人/客服" class="search_w" value="${page.conditions?.key}"/>
+            </div>
+            <div class="xf_ht_search_xl">
+			  <input type="submit" class="search_button" onclick="search();" value="搜索">
+            </div>
+          </div>
+          <div class="xf_ht_search_xl" style="float:right;">
+       		<input type="hidden" name="isExport" value="0" id="isExport">
+			<input type="submit" class="search_button" onmouseout="clearIsExport();" onclick="download();" value="导出">
+      	  </div>
+        </div>
+        #{/form}
+        <!-- 列表内容 -->
+        <div class="xn_c_content_top">
+          #{table class:"xn_c_content_list",cellspacing:"0",cellpadding:"0",border:"0",tr_class_even:"xn_tr_bj"}
+            #{tr}
+              #{th}序号#{/th}
+              #{th}借款人#{/th}
+              #{th}逾期未还期数#{/th}
+              #{th}逾期未还金额#{/th}
+              #{th}坏账未还期数#{/th}
+              #{th}坏账未还金额#{/th}
+              #{th}账户可用余额#{/th}
+              #{th}客服#{/th}
+              #{th}操作#{/th}
+            #{/tr}
+            #{list page?.page}
+            #{tr tr_index:_index}
+              #{td}${(page?.currPage - 1) * page?.pageSize + _index}#{/td}
+              #{td}${_?.name}#{/td}
+              #{td}${_?.overdue_bill_count}#{/td}
+              #{td}${_?.overdue_bill_amount?.format("###,##0.00")}#{/td}
+              #{td}${_?.bad_bill_count}#{/td}
+              #{td}${_?.bad_bill_amount?.format("###,##0.00")}#{/td}
+              #{td}${_?.balance?.format("###,##0.00")}#{/td}
+              #{td}${_?.supervisor_name}#{/td} 
+              #{td}
+                 <span class="xf_ta_onclick" onClick="details('${_?.sign}')">会员详情</span>
+                 <span class="xf_ta_onclick" onClick="allocation('${_?.sign}')">分配</span>
+              #{/td}
+            #{/tr}
+            #{/list}
+          #{/table}
+        </div>
+        <!-- 列表底部 -->
+        <div class="xn_c_content_bottom">
+          <div class="page_warp">
+            #{page currPage:page.currPage,totalCount:page.totalCount,pageSize:page.pageSize,theme:2,style:4}
+             yearStr=$(page.conditons.yearStr)&monthStr=$(page.conditons.monthStr)&typeStr=$(page.conditons.typeStr)&key=$(page.conditons.key) 
+            #{/page}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="kefu" style="display: none;"></div>
+<div class="xn_c_ban_jox xn_c_ban_jox_hyxq" id="xf_ht_fkzh_ttc" style="display: none;"></div>
+
+<script type="text/javascript">
+/* 搜索 */
+function search(){
+  $("#isExport").val(0);
+  $("#submit").submit();
+}
+
+/* 下载数据 */
+function download(){
+  $("#isExport").val(1);
+  $("#submit").submit();
+}
+
+/* 清除下载数据 */
+function clearIsExport(){
+  $('#isExport').val(0);
+}
+
+$(function(){  
+  /* 高亮样式 */
+  showHighLight(2, 2, 11);
+});
+
+function showPage(currPage, pageSize){
+  $("#currPage").val(currPage);
+  $("#pageSize").val(pageSize);
+  $("#submit").submit();
+}
+
+function details(userId){
+	  $.ajax({
+	    url : "@{supervisor.userManager.AllUser.detail()}",
+	    type : "POST",
+	    data : {
+	      "sign" : userId
+	    },
+	    success : function(data) {
+	      if (data.code < 0) {
+	        alert(data.msg);
+
+	        return;
+	      }
+	        
+	      $("#xf_ht_fkzh_ttc").html(data);
+	      $.layer({
+	        type: 1,
+	        area: ['700px', 'auto'],
+	        title: '会员详情',
+	        page: {dom : '#xf_ht_fkzh_ttc'}
+	      });
+	    },
+	    error : function() {
+	      alert("对不起，出现错误!");
+	    }
+	  });
+	}
+
+	function allocation(userId){
+	  $.ajax({
+	    url : "@{supervisor.billCollectionManager.ToAssignLoanUsers.loanUserAssign()}",
+	    type : "POST",
+	    data : {
+	      "currPage" : 1,
+	      "pageSize" : 5,
+	      "keyword"  :"",
+	      "userIdSign"    : userId
+	    },
+	    success : function(data) {
+	      if (data.code < 0) {
+	        alert(data.msg);
+	        return;
+	      }
+	      $("#kefu").html(data);
+	      $.layer({
+	        type: 1,
+	        area: ['60%', 'auto'],
+	        title: '借款会员贷后管理分配',
+	        page: {dom : '#kefu'}
+	      });
+	    },
+	    error : function() {
+	      alert(data.msg);
+	    }
+	  });
+	}
+</script>

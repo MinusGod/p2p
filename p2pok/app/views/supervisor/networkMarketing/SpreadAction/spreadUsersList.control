@@ -1,0 +1,100 @@
+
+*{我的直客}*
+<div class="xn_c_content">
+  <div class="xf_ht_tablelist">
+    <!-- 搜索 -->
+   	 <input type="hidden" name="currPage" id="currPage" value="${page?.currPage}"/>
+	<input type="hidden" name="currSize" id="currSize" value="${page?.pageSize}"/>
+    <div class="xf_ht_search">
+      <div class="xf_ht_search_r">
+      	
+        <div class="xf_ht_search_xl">
+           	 <input name="user_name" id="user_name" type="text" class="search_w"  #{if page?.conditions?.user_name}placeholder="${page?.conditions?.user_name}"#{/if}#{else}placeholder="请输入真实姓名"#{/else} />
+        </div>
+        <div class="xf_ht_search_xl">
+            <input type="button" class="search_button" onclick="searchall();" value="搜 索" />
+           
+        </div>
+      </div>
+    </div>
+    
+	<!-- 列表内容 -->
+	<div class="xn_c_content_top">
+      #{table class:"xn_c_content_list",cellspacing:"0",cellpadding:"0",border:"0",tr_class_even:"xn_tr_bj"}
+      *{#{table class:"xn_c_content_list",cellspacing:"0",cellpadding:"0",border:"0",tr_class_even:"xn_tr_bj"}}*
+        #{tr}
+          #{th}序号#{/th}
+          #{th}推广会员#{/th}
+          #{th}注册时间#{/th}
+          #{th}投资优惠#{/th}
+          #{th}充值金额(元)#{/th}
+          #{th}投资金额(元)#{/th}
+         
+          #{th}绑定手机#{/th}
+        #{/tr}
+     
+       #{list items:page.page,as:'spreadUser'}
+         #{tr tr_index:spreadUser_index}
+			#{td}
+				${spreadUser_index}
+			#{/td}
+			#{td}
+				${spreadUser.user_name}
+			#{/td}
+			#{td}
+				${spreadUser.user_register_time?.format('yyyy-MM-dd')}
+			#{/td}
+			#{td}
+				${spreadUser.discount_rate}%
+			#{/td}
+			#{td}
+				${spreadUser.recharge_amount?.format('###,##0.00')}
+			#{/td}
+			#{td}
+				${spreadUser.invest_amount?.format('###,##0.00')}
+			#{/td}
+			
+			#{td}
+				${spreadUser.mobile}
+			#{/td}
+		  #{/tr}
+      	#{/list}  
+      	#{else}
+      		 #{tr}<td colspan="7">没有任何的数据!</td> #{/tr}
+      	#{/else}
+       
+      #{/table}
+      
+      
+    </div>
+    <!-- 列表底部 -->
+    <div class="xn_c_content_bottom">
+    	<div >
+    	<span style="color:#8b8b8b;">合计推广<b> ${spreadUserCount} </b>人，总充值金额<b> ${spreadUserRecharge?.format('###,##0.00')} </b>元，总投资金额<b> ${spreadUserInvest?.format('###,##0.00')} </b>元</span>
+    	<span style="float:right;color:#8b8b8b;">数据更新时间: <b>${jobs.SpreaderDataUpdateJob.date?.format('yyyy年MM月dd日 HH:mm:ss')}<b> </span>
+    	</div>
+        <div class="page_warp" style="margin-top:15px;">
+          #{if page}
+          	#{page currPage:page.currPage,totalCount:page.totalCount,pageSize:page.pageSize,theme:2,style:4/}
+          #{/if}
+        </div>
+    </div>
+  </div>
+</div>
+
+<script>
+	//搜索
+	function searchall() {
+		var url = "@{supervisor.networkMarketing.SpreadAction.spreadUsers()}?user_name=" + $("#user_name").val() + "&currPage=" + $("#currPage").val() + "&currSize=" + $("#currSize").val();
+		window.location.href = url;
+	}
+	
+	function showPage(currPage,pageSize){
+		$("#currPage").val(currPage);
+		$("#currSize").val(pageSize);
+		searchall();
+	}
+	
+	
+</script>
+

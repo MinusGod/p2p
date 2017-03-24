@@ -1,0 +1,103 @@
+<html>
+<head>
+<title>欢迎下载哈哈贷App </title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style>
+#weixin-tip {
+	display: none;
+	position: fixed;
+	left: 0;
+	top: 0;
+	background: rgba(0, 0, 0, 0.8);
+	filter: alpha(opacity = 80);
+	width: 100%;
+	height: 100%;
+	z-index: 100;
+}
+
+#weixin-tip p {
+	text-align: center;
+	margin-top: 10%;
+    padding: 0 5%;
+	position: relative;
+}
+
+</style>
+
+<script language="JavaScript">
+	
+	/* 不同项目更换以下文件path */
+	//IOS 此地址由IOS开发同学提供
+	var ipa_path = "https://appstore.qiwangyun.com/sp2p/ios/hahadai/download.html";
+	//Android 此地址是Apk文件所在服务器的路径（apk文件由Android开发同学提供）
+	var apk_path = "http://www.hahadai.com.cn/public/sp2p6.0.apk"; 
+	//qq扫描是否可以下载，默认true，如不行改为false 。
+	var isQQok = false;
+	
+	window.onload = function() {
+		
+		var ua = navigator.userAgent.toLowerCase();
+       //  alert("系统信息："+ua);
+        if (/mac|iphone|ipad|ipod/.test(ua)) {
+         //  alert("您使用的是ios（苹果）设备！");
+  		    location.href = ipa_path;
+        } else if (/android/.test(ua)) {
+         //   alert("您使用的是android设备！");
+          	downloadApk();
+        }else if(/windows/.test(ua)){
+   			//alert("您使用的是windows系统设备！");
+   		 	downloadApk();
+        }else{
+        //	alert("此二维码不支持 您使用的设备！");
+        	downloadApk();
+        }
+       
+	}
+	
+	
+	function downloadApk(){
+		var winHeight = typeof window.innerHeight != 'undefined' ? window.innerHeight
+				: document.documentElement.clientHeight; //兼容IOS，不需要的可以去掉
+		var btn = document.getElementById('J_weixin');
+		btn.style.display = "block";
+		btn.herf = apk_path;
+		
+		var tip = document.getElementById('weixin-tip');
+		var ua = navigator.userAgent.toLowerCase();
+        
+		//如果是微信扫描, 或qq扫描也不能下载。
+        //用ua.indexOf("qq/") != -1条件区别是用QQ还是用qq浏览器扫描的。
+        var isqqScan = ua.indexOf("qq/") != -1;
+		if (ua.match(/MicroMessenger/i) == "micromessenger" || (!isQQok && isqqScan)){
+         //   alert("提示用浏览器打开"+ua);
+			btn.onclick = function(e) {
+				tip.style.height = winHeight + 'px'; 
+				tip.style.display = 'block';
+			}
+			tip.style.height = winHeight + 'px'; //兼容IOS弹窗整屏
+			tip.style.display = 'block';
+
+			tip.onclick = function() {
+				tip.style.display = 'none';
+			}
+		}else { //非微信浏览器
+		  	location.href = apk_path;
+			// alert("非微信浏览器");
+		}
+	
+	}
+	
+</script>
+</head>
+<body style="height: 100%; ">
+	<a id="J_weixin" href="" style="text-align: center; margin-top: 60px; display: none;" > 
+		<img src="android-btn.png" alt="安卓版下载" />
+	 </a>
+
+	<div id="weixin-tip">
+		<p>
+			<img src="live_weixin.png" alt="微信/QQ扫描打开APP下载链接提示" />
+		</p>
+	</div>
+</body>
+</html>
